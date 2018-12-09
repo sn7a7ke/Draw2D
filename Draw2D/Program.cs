@@ -16,7 +16,9 @@ namespace Draw2D
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Form1 form1 = new Form1();
+            Presenter presenter = new Presenter(form1);
+            Application.Run(form1);
         }
     }
 }
