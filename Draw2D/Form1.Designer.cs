@@ -49,21 +49,18 @@
             this.Symmetry = new System.Windows.Forms.Button();
             this.Rotate = new System.Windows.Forms.Button();
             this.Shift = new System.Windows.Forms.Button();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nUP_DeltaY = new System.Windows.Forms.NumericUpDown();
+            this.nUP_DeltaX = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUP_DeltaY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUP_DeltaX)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox
             // 
-            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox.BackColor = System.Drawing.Color.White;
             this.pictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.BackgroundImage")));
             this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
@@ -128,9 +125,9 @@
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clearToolStripMenuItem.Text = "Clear";
-            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+            this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
             // contextMenuStrip1
             // 
@@ -204,8 +201,8 @@
             this.panel1.Controls.Add(this.Symmetry);
             this.panel1.Controls.Add(this.Rotate);
             this.panel1.Controls.Add(this.Shift);
-            this.panel1.Controls.Add(this.numericUpDown2);
-            this.panel1.Controls.Add(this.numericUpDown1);
+            this.panel1.Controls.Add(this.nUP_DeltaY);
+            this.panel1.Controls.Add(this.nUP_DeltaX);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Location = new System.Drawing.Point(606, 247);
             this.panel1.Name = "panel1";
@@ -243,45 +240,45 @@
             this.Shift.UseVisualStyleBackColor = true;
             this.Shift.Click += new System.EventHandler(this.Shift_Click);
             // 
-            // numericUpDown2
+            // nUP_DeltaY
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(79, 7);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.nUP_DeltaY.Location = new System.Drawing.Point(80, 3);
+            this.nUP_DeltaY.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.nUP_DeltaY.Minimum = new decimal(new int[] {
             999,
             0,
             0,
             -2147483648});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDown2.TabIndex = 8;
+            this.nUP_DeltaY.Name = "nUP_DeltaY";
+            this.nUP_DeltaY.Size = new System.Drawing.Size(42, 20);
+            this.nUP_DeltaY.TabIndex = 8;
             // 
-            // numericUpDown1
+            // nUP_DeltaX
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(36, 7);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.nUP_DeltaX.Location = new System.Drawing.Point(37, 3);
+            this.nUP_DeltaX.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.nUP_DeltaX.Minimum = new decimal(new int[] {
             999,
             0,
             0,
             -2147483648});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDown1.TabIndex = 7;
+            this.nUP_DeltaX.Name = "nUP_DeltaX";
+            this.nUP_DeltaX.Size = new System.Drawing.Size(42, 20);
+            this.nUP_DeltaX.TabIndex = 7;
             // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 7);
+            this.label2.Location = new System.Drawing.Point(4, 7);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(27, 13);
             this.label2.TabIndex = 6;
@@ -312,8 +309,8 @@
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUP_DeltaY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUP_DeltaX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -337,8 +334,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nUP_DeltaY;
+        private System.Windows.Forms.NumericUpDown nUP_DeltaX;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button Shift;
         private System.Windows.Forms.Button Symmetry;

@@ -9,6 +9,9 @@ namespace Draw2D
         Image Image { get; set; }
         int GetImageHeight { get; }
         int GetImageWidth { get; }
+        int DeltaX { get; }
+        int DeltaY { get; }
+
         string SetLabelMouseLocation { set; }
 
         string OutputText { get; set; }
@@ -25,5 +28,7 @@ namespace Draw2D
         event EventHandler DoPictureBox_Resize;
         event EventHandler DoPictureBox_MouseClick;
         event EventHandler DoPictureBox_MouseMove;
+
+        event EventHandler DoClearToolStripMenuItem_Click;
     }
 }

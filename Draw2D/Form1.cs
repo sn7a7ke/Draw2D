@@ -16,6 +16,8 @@ namespace Draw2D
         public Image Image { get { return pictureBox.Image; } set { pictureBox.Image = value; } } //Bitmap
         public int GetImageHeight => pictureBox.Height;
         public int GetImageWidth => pictureBox.Width;
+        public int DeltaX => (int)nUP_DeltaX.Value;
+        public int DeltaY => (int)nUP_DeltaY.Value;
         //public int GetImageHeight => pictureBox.Size.Height;
         //public int GetImageWidth => pictureBox.Size.Width;
 
@@ -23,18 +25,23 @@ namespace Draw2D
         public string OutputText { get { return Output.Text; } set { Output.Text = value; } }
         public Cursor SetCursorImage { set { pictureBox.Cursor = value; } }
 
+        // Mouse Event
         public event EventHandler DoDraw_Click;
         public event EventHandler DoSelect_Click;
         public event EventHandler DoShift_Click;
         public event EventHandler DoRotate_Click;
         public event EventHandler DoSymmetry_Click;
 
+        //PictureBox Event
         public event EventHandler DoPictureBox_Resize;
         public event EventHandler DoPictureBox_MouseClick;
         public event EventHandler DoPictureBox_MouseMove;
 
+        //Menu Event
+        public event EventHandler DoClearToolStripMenuItem_Click;
 
         #endregion
+
 
         #region Проброс событий
         void Draw_Click(object sender, EventArgs e) => DoDraw_Click?.Invoke(this, EventArgs.Empty);
@@ -46,11 +53,9 @@ namespace Draw2D
 
         private void PictureBox_Resize(object sender, EventArgs e) => DoPictureBox_Resize?.Invoke(this, EventArgs.Empty);
         private void PictureBox_MouseClick(object sender, MouseEventArgs e) => DoPictureBox_MouseClick?.Invoke(this, e);
-        private void PictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            //labelMouseLocation.Text = String.Format("{0}:{1}", e.X, e.Y);
-            DoPictureBox_MouseMove?.Invoke(this, e);
-        }
+        private void PictureBox_MouseMove(object sender, MouseEventArgs e) => DoPictureBox_MouseMove?.Invoke(this, e);
+        private void ClearToolStripMenuItem_Click(object sender, EventArgs e) => DoClearToolStripMenuItem_Click?.Invoke(this, e);
+
 
         #endregion
 
@@ -108,10 +113,6 @@ namespace Draw2D
             Application.Exit();
         }
 
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            pictureBox.Image = null;
-        }
 
     }
 }
