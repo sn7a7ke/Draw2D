@@ -25,7 +25,7 @@ namespace Plane2D
         }
 
         public int QuantityVertices => Vertices.Length;
-        public bool IsConvex { get; }
+        public bool IsConvex { get; protected set; }
         // LinkedList<Point2D> Может ТАК!?
         public Point2D[] Vertices { get; private set; }
         //public PointF[] VerticesToPointF
@@ -49,6 +49,8 @@ namespace Plane2D
             }
         }
 
+        public override string Name => base.Name + " v" + QuantityVertices + " c" + Center;
+
         public Polygon2D(params Point2D[] vertices) 
         {
             this.Vertices = vertices ?? throw new ArgumentNullException(nameof(vertices));
@@ -56,16 +58,6 @@ namespace Plane2D
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
         }
 
-        public static Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps, Point origin)
-        {
-            Point2D[] p2D = new Point2D[ps.Count];
-            for (int i = 0; i < ps.Count; i++)
-            {
-                p2D[i] = ps[i];
-                p2D[i] = Point2D.GetPointFromCoordinateSystem(origin,p2D[i]);
-            }
-            return new Polygon2D(p2D);
-        }
 
 
         public Polygon2D Shift(double dx, double dy)
@@ -82,6 +74,7 @@ namespace Plane2D
                 newC[i] = Vertices[i].Rotate(angle, center);
             return new Polygon2D(newC);
         }
+        public Polygon2D Rotate(double angle) => Rotate(angle, new Point2D(100,70));
         public Polygon2D Symmetry(Point2D center)
         {
             Point2D[] newC = new Point2D[QuantityVertices];
@@ -104,10 +97,20 @@ namespace Plane2D
             throw new NotImplementedException();
         }
 
-        public override string ToString() => GetType().Name + " (" + QuantityVertices + ")";
+        public override string ToString() => base.Name + " v" + QuantityVertices; //GetType().Name + " v" + QuantityVertices;
 
         public string VerticesToString(string separator = " ") => string.Join(separator, Vertices as object[]);
 
+        public static Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps, Point origin)
+        {
+            Point2D[] p2D = new Point2D[ps.Count];
+            for (int i = 0; i < ps.Count; i++)
+            {
+                //p2D[i] = ps[i];
+                p2D[i] = Point2D.GetPointFromCoordinateSystem(origin, ps[i]);
+            }
+            return new Polygon2D(p2D);
+        }
         public Polygon2D GetPolygonInCoordinateSystem(Point origin)
         {
             Point2D[] newC = new Point2D[QuantityVertices];
@@ -116,6 +119,7 @@ namespace Plane2D
             return new Polygon2D(newC);
 
         }
-        public void Draw(Graphics graph, Pen pen) => graph.DrawPolygon(pen, VerticesToPoint);
+
+        public override void Draw(Graphics graph, Pen pen) => graph.DrawPolygon(pen, VerticesToPoint);
     }
 }

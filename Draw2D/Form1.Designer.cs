@@ -36,36 +36,44 @@
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Tools = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Choose = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.labelMouseLocation = new System.Windows.Forms.Label();
             this.Output = new System.Windows.Forms.Label();
-            this.Select = new System.Windows.Forms.Button();
+            this.SelectPoly = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.nUD_Angle = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.Symmetry = new System.Windows.Forms.Button();
             this.Rotate = new System.Windows.Forms.Button();
             this.Shift = new System.Windows.Forms.Button();
-            this.nUP_DeltaY = new System.Windows.Forms.NumericUpDown();
-            this.nUP_DeltaX = new System.Windows.Forms.NumericUpDown();
+            this.nUD_DeltaY = new System.Windows.Forms.NumericUpDown();
+            this.nUD_DeltaX = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nUP_DeltaY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUP_DeltaX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_Angle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_DeltaY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_DeltaX)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox
             // 
+            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox.BackColor = System.Drawing.Color.White;
             this.pictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.BackgroundImage")));
             this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pictureBox.Location = new System.Drawing.Point(3, 30);
             this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox.MinimumSize = new System.Drawing.Size(601, 401);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(601, 401);
             this.pictureBox.TabIndex = 0;
@@ -78,7 +86,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem});
+            this.Tools});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(784, 24);
@@ -114,13 +122,15 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // toolsToolStripMenuItem
+            // Tools
             // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
+            this.Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearToolStripMenuItem,
+            this.Choose});
+            this.Tools.Name = "Tools";
+            this.Tools.Size = new System.Drawing.Size(48, 20);
+            this.Tools.Text = "Tools";
+            this.Tools.Click += new System.EventHandler(this.ToolsToolStripMenuItem_Click);
             // 
             // clearToolStripMenuItem
             // 
@@ -128,6 +138,12 @@
             this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
+            // 
+            // Choose
+            // 
+            this.Choose.Name = "Choose";
+            this.Choose.Size = new System.Drawing.Size(180, 22);
+            this.Choose.Text = "Choose a shape";
             // 
             // contextMenuStrip1
             // 
@@ -183,35 +199,65 @@
             this.Output.TabIndex = 7;
             this.Output.Text = ".";
             // 
-            // Select
+            // SelectPoly
             // 
-            this.Select.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Select.Location = new System.Drawing.Point(625, 409);
-            this.Select.Name = "Select";
-            this.Select.Size = new System.Drawing.Size(75, 23);
-            this.Select.TabIndex = 8;
-            this.Select.Text = "Select Poly";
-            this.Select.UseVisualStyleBackColor = true;
-            this.Select.Click += new System.EventHandler(this.Select_Click);
+            this.SelectPoly.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectPoly.Location = new System.Drawing.Point(625, 409);
+            this.SelectPoly.Name = "SelectPoly";
+            this.SelectPoly.Size = new System.Drawing.Size(75, 23);
+            this.SelectPoly.TabIndex = 8;
+            this.SelectPoly.Text = "Select Poly";
+            this.SelectPoly.UseVisualStyleBackColor = true;
+            this.SelectPoly.Click += new System.EventHandler(this.Select_Click);
             // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.nUD_Angle);
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.Symmetry);
             this.panel1.Controls.Add(this.Rotate);
             this.panel1.Controls.Add(this.Shift);
-            this.panel1.Controls.Add(this.nUP_DeltaY);
-            this.panel1.Controls.Add(this.nUP_DeltaX);
+            this.panel1.Controls.Add(this.nUD_DeltaY);
+            this.panel1.Controls.Add(this.nUD_DeltaX);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(606, 247);
+            this.panel1.Location = new System.Drawing.Point(606, 243);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(174, 162);
             this.panel1.TabIndex = 9;
             // 
+            // nUD_Angle
+            // 
+            this.nUD_Angle.DecimalPlaces = 6;
+            this.nUD_Angle.Location = new System.Drawing.Point(41, 30);
+            this.nUD_Angle.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nUD_Angle.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.nUD_Angle.Name = "nUD_Angle";
+            this.nUD_Angle.Size = new System.Drawing.Size(85, 20);
+            this.nUD_Angle.TabIndex = 13;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 30);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Angle:";
+            // 
             // Symmetry
             // 
-            this.Symmetry.Location = new System.Drawing.Point(103, 133);
+            this.Symmetry.Location = new System.Drawing.Point(102, 133);
             this.Symmetry.Name = "Symmetry";
             this.Symmetry.Size = new System.Drawing.Size(65, 23);
             this.Symmetry.TabIndex = 11;
@@ -221,7 +267,7 @@
             // 
             // Rotate
             // 
-            this.Rotate.Location = new System.Drawing.Point(49, 133);
+            this.Rotate.Location = new System.Drawing.Point(48, 133);
             this.Rotate.Name = "Rotate";
             this.Rotate.Size = new System.Drawing.Size(47, 23);
             this.Rotate.TabIndex = 10;
@@ -232,7 +278,7 @@
             // Shift
             // 
             this.Shift.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Shift.Location = new System.Drawing.Point(6, 131);
+            this.Shift.Location = new System.Drawing.Point(5, 133);
             this.Shift.Name = "Shift";
             this.Shift.Size = new System.Drawing.Size(36, 23);
             this.Shift.TabIndex = 9;
@@ -240,39 +286,39 @@
             this.Shift.UseVisualStyleBackColor = true;
             this.Shift.Click += new System.EventHandler(this.Shift_Click);
             // 
-            // nUP_DeltaY
+            // nUD_DeltaY
             // 
-            this.nUP_DeltaY.Location = new System.Drawing.Point(80, 3);
-            this.nUP_DeltaY.Maximum = new decimal(new int[] {
+            this.nUD_DeltaY.Location = new System.Drawing.Point(84, 3);
+            this.nUD_DeltaY.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
-            this.nUP_DeltaY.Minimum = new decimal(new int[] {
+            this.nUD_DeltaY.Minimum = new decimal(new int[] {
             999,
             0,
             0,
             -2147483648});
-            this.nUP_DeltaY.Name = "nUP_DeltaY";
-            this.nUP_DeltaY.Size = new System.Drawing.Size(42, 20);
-            this.nUP_DeltaY.TabIndex = 8;
+            this.nUD_DeltaY.Name = "nUD_DeltaY";
+            this.nUD_DeltaY.Size = new System.Drawing.Size(42, 20);
+            this.nUD_DeltaY.TabIndex = 8;
             // 
-            // nUP_DeltaX
+            // nUD_DeltaX
             // 
-            this.nUP_DeltaX.Location = new System.Drawing.Point(37, 3);
-            this.nUP_DeltaX.Maximum = new decimal(new int[] {
+            this.nUD_DeltaX.Location = new System.Drawing.Point(41, 3);
+            this.nUD_DeltaX.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
-            this.nUP_DeltaX.Minimum = new decimal(new int[] {
+            this.nUD_DeltaX.Minimum = new decimal(new int[] {
             999,
             0,
             0,
             -2147483648});
-            this.nUP_DeltaX.Name = "nUP_DeltaX";
-            this.nUP_DeltaX.Size = new System.Drawing.Size(42, 20);
-            this.nUP_DeltaX.TabIndex = 7;
+            this.nUD_DeltaX.Name = "nUD_DeltaX";
+            this.nUD_DeltaX.Size = new System.Drawing.Size(42, 20);
+            this.nUD_DeltaX.TabIndex = 7;
             // 
             // label2
             // 
@@ -290,7 +336,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 458);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.Select);
+            this.Controls.Add(this.SelectPoly);
             this.Controls.Add(this.Output);
             this.Controls.Add(this.labelMouseLocation);
             this.Controls.Add(this.label1);
@@ -302,15 +348,14 @@
             this.MinimumSize = new System.Drawing.Size(800, 496);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
-            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Form1_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nUP_DeltaY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUP_DeltaX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_Angle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_DeltaY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUD_DeltaX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -326,20 +371,23 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelMouseLocation;
         private System.Windows.Forms.Label Output;
-        private System.Windows.Forms.Button Select;
+        private System.Windows.Forms.Button SelectPoly;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Tools;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.NumericUpDown nUP_DeltaY;
-        private System.Windows.Forms.NumericUpDown nUP_DeltaX;
+        private System.Windows.Forms.NumericUpDown nUD_DeltaY;
+        private System.Windows.Forms.NumericUpDown nUD_DeltaX;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button Shift;
         private System.Windows.Forms.Button Symmetry;
         private System.Windows.Forms.Button Rotate;
+        private System.Windows.Forms.NumericUpDown nUD_Angle;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripMenuItem Choose;
     }
 }
 
