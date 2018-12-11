@@ -10,7 +10,9 @@ namespace Plane2D
     {
         public Triangle2D(Point2D vertexA, Point2D vertexB, Point2D vertexC) : base(vertexA, vertexB, vertexC)
         {
-            IsConvex = true;
+            
         }
+
+        public override bool IsConvex => true;
     }
 }

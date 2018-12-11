@@ -135,14 +135,14 @@
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
             // Choose
             // 
             this.Choose.Name = "Choose";
-            this.Choose.Size = new System.Drawing.Size(180, 22);
+            this.Choose.Size = new System.Drawing.Size(157, 22);
             this.Choose.Text = "Choose a shape";
             // 
             // contextMenuStrip1
@@ -230,6 +230,11 @@
             // nUD_Angle
             // 
             this.nUD_Angle.DecimalPlaces = 6;
+            this.nUD_Angle.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.nUD_Angle.Location = new System.Drawing.Point(41, 30);
             this.nUD_Angle.Maximum = new decimal(new int[] {
             10,
@@ -347,7 +352,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(800, 496);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Draw2D";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Plane2D
 {
-    public class Point2D //: ITransformation
+    public class Point2D : ICloneable //: ITransformation
     {
         public const double epsilon = 0.0000001;
 
@@ -24,12 +24,7 @@ namespace Plane2D
             double yy = (X - center.X) * Math.Sin(angle) + (Y - center.Y) * Math.Cos(angle) + center.Y;
             return new Point2D(xx, yy);
         }
-        //public Point2D Rotate(double angle) => Rotate(angle, new Point2D(0, 0));
         public Point2D Symmetry(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
-        //public Point2D Symmetry(Point2D A, Point2D B)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public void Draw(Graphics graph, Pen pen) => graph.DrawLine(pen, this, this);
 
@@ -38,7 +33,7 @@ namespace Plane2D
         public static double VectorProduct(Point2D A, Point2D B) => A.X * B.Y - A.Y * B.X;
         public static double ScalarProduct(Point2D A, Point2D B) => A.X * B.X + A.Y * B.Y;
         public static double LengthVector(Point2D A) => Math.Sqrt(A.X * A.X + A.Y * A.Y);
-        public static double AngleBetweenNormVector(Point2D A, Point2D B)
+        public static double AngleBetweenVector(Point2D A, Point2D B)
         {
             double scalar = ScalarProduct(A, B);
             double lenTwo = (LengthVector(A) * LengthVector(B));
@@ -47,11 +42,7 @@ namespace Plane2D
             double angle = Math.Acos(scalar / lenTwo);
             return angle;
         }
-
-
-
         #endregion
-
 
 
         public override bool Equals(object obj)
@@ -79,6 +70,8 @@ namespace Plane2D
         {
             return new Point2D(p.X - origin.X, origin.Y - p.Y);
         }
+
+        public object Clone() => new Point2D(X, Y);
 
 
         #endregion
