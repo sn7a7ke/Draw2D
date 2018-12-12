@@ -94,7 +94,7 @@ namespace Draw2D
                 _view.OutputText = selectedPolygon2D.VerticesToString(Environment.NewLine) + Environment.NewLine
                     + "QuantityVertices: " + selectedPolygon2D.QuantityVertices + Environment.NewLine
                     + "Center: " + selectedPolygon2D.Center + Environment.NewLine
-                    + "Perimeter: " + selectedPolygon2D.Perimeter();
+                    + "Perimeter: " + selectedPolygon2D.Perimeter;
             }
 
             //string chPoly = ((ToolStripMenuItem)sender).Text;
@@ -236,11 +236,6 @@ namespace Draw2D
                 RemoveLastVertex();
         }
 
-
-
-
-
-
         private void _view_DoShift_Click(object sender, EventArgs e)
         {
             if (selectedPolygon2D != null)
@@ -293,7 +288,7 @@ namespace Draw2D
                 _view.OutputText = selectedPolygon2D.VerticesToString(Environment.NewLine) + Environment.NewLine
                     + "QuantityVertices: " + selectedPolygon2D.QuantityVertices + Environment.NewLine
                     + "Center: " + selectedPolygon2D.Center + Environment.NewLine
-                    + "Perimeter: " + selectedPolygon2D.Perimeter();
+                    + "Perimeter: " + selectedPolygon2D.Perimeter;
                 polygon2D = null;
             }
         }

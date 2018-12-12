@@ -12,38 +12,59 @@ namespace Plane2D
         public const double epsilon = 0.0000001;
 
         public Point2D(double x, double y) { X = x; Y = y; }
+        private Point2D()        {        }
+
         public double X { get; private set; }
         public double Y { get; private set; }
         public double Distance(Point2D point) => Distance(this, point);
         public static double Distance(Point2D A, Point2D B) => Math.Sqrt(Math.Pow(A.X - B.X, 2) + Math.Pow(A.Y - B.Y, 2));
 
-        public Point2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
-        public Point2D Rotate(double angle, Point2D center)
+        public virtual Point2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
+        public virtual Point2D Rotate(double angle, Point2D center)
         {
             double xx = (X - center.X) * Math.Cos(angle) - (Y - center.Y) * Math.Sin(angle) + center.X;
             double yy = (X - center.X) * Math.Sin(angle) + (Y - center.Y) * Math.Cos(angle) + center.Y;
             return new Point2D(xx, yy);
         }
-        public Point2D Symmetry(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
+        public virtual Point2D Symmetry(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
 
-        public void Draw(Graphics graph, Pen pen) => graph.DrawLine(pen, this, this);
-
-        #region Vector
-        public static Point2D GetNormVector(Point2D start, Point2D finish) => new Point2D(finish.X - start.X, finish.Y - start.Y);
-        public static double VectorProduct(Point2D A, Point2D B) => A.X * B.Y - A.Y * B.X;
-        public static double ScalarProduct(Point2D A, Point2D B) => A.X * B.X + A.Y * B.Y;
-        public static double LengthVector(Point2D A) => Math.Sqrt(A.X * A.X + A.Y * A.Y);
-        public static double AngleBetweenVector(Point2D A, Point2D B)
+        /// <summary>
+        /// lower left corner of the circum rectangle
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public static Point2D Min(params Point2D[] points)
         {
-            double scalar = ScalarProduct(A, B);
-            double lenTwo = (LengthVector(A) * LengthVector(B));
-            if (Math.Abs(Math.Abs(scalar) - lenTwo) < epsilon)
-                lenTwo = scalar;
-            double angle = Math.Acos(scalar / lenTwo);
-            return angle;
+            Point2D p = (Point2D)points[0].Clone();
+            for (int i = 1; i < points.Length; i++)
+            {
+                if (p.X > points[i].X)
+                    p.X = points[i].X;
+                if (p.Y > points[i].Y)
+                    p.Y = points[i].Y;
+            }
+            return p;
         }
-        #endregion
+        /// <summary>
+        /// upper right corner of the circum rectangle
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public static Point2D Max(params Point2D[] points)
+        {
+            Point2D p = (Point2D)points[0].Clone();
+            for (int i = 1; i < points.Length; i++)
+            {
+                if (p.X < points[i].X)
+                    p.X = points[i].X;
+                if (p.Y < points[i].Y)
+                    p.Y = points[i].Y;
+            }
+            return p;
+        }
 
+
+        public virtual void Draw(Graphics graph, Pen pen) => graph.DrawLine(pen, this, this);
 
         public override bool Equals(object obj)
         {
@@ -59,21 +80,13 @@ namespace Plane2D
         public static implicit operator Point2D(PointF p) => new Point2D(p.X, p.Y);
         public static implicit operator Point(Point2D p) => new Point((int)p.X, (int)p.Y);
         public static implicit operator Point2D(Point p) => new Point2D(p.X, p.Y);
-        
+
         //TODO выкинуть из: класса и наследников?
-        public Point GetPointInCoordinateSystem(Point origin)
-        {
-            return new Point(origin.X + (int)X, origin.Y - (int)Y);
-        }
+        public Point ToPointInCoordinateSystem(Point origin) => new Point(origin.X + (int)X, origin.Y - (int)Y);
         //TODO выкинуть из: класса и наследников?
-        public static Point2D GetPointFromCoordinateSystem(Point origin, Point p)
-        {
-            return new Point2D(p.X - origin.X, origin.Y - p.Y);
-        }
+        public static Point2D ToPoint2DFromCoordinateSystem(Point origin, Point p) => new Point2D(p.X - origin.X, origin.Y - p.Y);
+        #endregion
 
         public object Clone() => new Point2D(X, Y);
-
-
-        #endregion
     }
 }

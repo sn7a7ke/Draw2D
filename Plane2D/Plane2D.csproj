@@ -48,6 +48,7 @@
     <Compile Include="Shape2D.cs" />
     <Compile Include="Triangle2D.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="Vector2D.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

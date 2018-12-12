@@ -11,8 +11,8 @@ namespace Plane2D
     {
         public virtual string Name => this.GetType().Name;
         public abstract bool IsConvex { get; }
-        public abstract double Square();
-        public abstract double Perimeter();
+        public abstract double Square { get; }
+        public abstract double Perimeter { get; }
         public abstract void Draw(Graphics graph, Pen pen);
     }
 }
