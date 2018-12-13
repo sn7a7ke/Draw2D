@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,10 +10,21 @@ namespace Plane2D
 {
     public class Polygon2D : Shape2D
     {
-        protected Node<Point2D> _head;
+        protected PolygonVertex _head;
         public int QuantityVertices { get; private set; }
-        //public Point2D VertexA { get; private set; }
-        private void Add(Node<Point2D> node)
+        public PolygonVertex this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= QuantityVertices)
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                PolygonVertex current = _head;
+                for (int i = 0; i < index; i++, current = current.Next)
+                    ;
+                return current;
+            }
+        }
+        private void Add(PolygonVertex node)
         {
             if (_head == null)
             {
@@ -29,7 +41,7 @@ namespace Plane2D
             }
             QuantityVertices++;
         }
-        private void Add(Point2D p) => Add(new Node<Point2D>(p));
+        private void Add(Point2D p) => Add(new PolygonVertex(p));
         public Polygon2D(params Point2D[] vertices)
         {
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
@@ -38,7 +50,15 @@ namespace Plane2D
             for (int i = 0; i < vertices.Length; i++)
                 Add(vertices[i]);
         }
-        private Polygon2D() { }
+
+        public Point2D[] GetVertices()
+        {
+            // Array!?
+            List<Point2D> verticies = new List<Point2D>();
+            foreach (PolygonVertex item in _head)
+                verticies.Add(item);
+            return verticies.ToArray();
+        }
 
         public Point2D Center
         {
@@ -46,10 +66,10 @@ namespace Plane2D
             {
                 double xx = 0;
                 double yy = 0;
-                foreach (Node<Point2D> item in _head)
+                foreach (PolygonVertex item in _head)
                 {
-                    xx += item.Value.X;
-                    yy += item.Value.Y;
+                    xx += item.X;
+                    yy += item.Y;
                 }
                 return new Point2D(xx / QuantityVertices, yy / QuantityVertices);
             }
@@ -59,8 +79,8 @@ namespace Plane2D
             get
             {
                 double perim = 0;
-                foreach (Node<Point2D> item in _head)
-                    perim += item.Value.Distance(item.Next.Value);
+                foreach (PolygonVertex item in _head)
+                    perim += item.Distance(item.Next);
                 return perim;
             }
         }
@@ -75,40 +95,35 @@ namespace Plane2D
 
         public Polygon2D Shift(double dx, double dy)
         {
-            Polygon2D newP = new Polygon2D();
-            foreach (Node<Point2D> item in _head)
-                newP.Add(item.Value.Shift(dx, dy));
-            return newP;
+            Point2D[] vers = GetVertices();
+            for (int i = 0; i < vers.Length; i++)
+                vers[i] = vers[i].Shift(dx, dy);
+            return new Polygon2D(vers);
         }
 
         public Polygon2D Rotate(double angle, Point2D center)
         {
-            Polygon2D newP = new Polygon2D();
-            foreach (Node<Point2D> item in _head)
-                newP.Add(item.Value.Rotate(angle, center));
-            return newP;
+            Point2D[] vers = GetVertices();
+            for (int i = 0; i < vers.Length; i++)
+                vers[i] = vers[i].Rotate(angle, center);
+            return new Polygon2D(vers);
         }
         public Polygon2D Rotate(double angle) => Rotate(angle, Center);
         public Polygon2D Symmetry(Point2D center)
         {
-            Polygon2D newP = new Polygon2D();
-            foreach (Node<Point2D> item in _head)
-                newP.Add(item.Value.Symmetry(center));
-            return newP;
+            Point2D[] vers = GetVertices();
+            for (int i = 0; i < vers.Length; i++)
+                vers[i] = vers[i].Symmetry(center);
+            return new Polygon2D(vers);
         }
 
         //TODO переделать логику
         private double AngleSum()
         {
             double sum = 0;
-            foreach (Node<Point2D> item in _head)
-                sum += new Vector2D(item.Value, item.Next.Value).AngleBetweenVector(new Vector2D(item.Next.Value, item.Next.Next.Value));
+            foreach (PolygonVertex item in _head)
+                sum += new Vector2D(item, item.Next).AngleBetweenVector(new Vector2D(item.Next, item.Next.Next));
 
-            //sum += Vector2D.AngleBetweenVector(new Vector2D(item.Value, item.Next.Value),
-            //                            new Vector2D(item.Next.Value, item.Next.Next.Value));
-
-            //sum += Point2D.AngleBetweenVector(Point2D.GetNormVector(item.Value, item.Next.Value),
-            //                                            Point2D.GetNormVector(item.Next.Value, item.Next.Next.Value));
             sum = Math.PI * QuantityVertices - sum;
             return sum;
         }
@@ -128,34 +143,82 @@ namespace Plane2D
 
         public override string Name => base.Name + " v" + QuantityVertices + " c" + Center;
         public override string ToString() => base.Name + " v" + QuantityVertices; //GetType().Name + " v" + QuantityVertices;
-        public string VerticesToString(string separator = " ") => string.Join(separator, _head);//string.Join(separator, Vertices as object[]);
+        public string VerticesToString(string separator = " ") => string.Join(separator, _head);
 
         public static Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps, Point origin)
         {
-            Polygon2D newP = new Polygon2D();
+            Point2D[] vers = new Point2D[ps.Count];
             for (int i = 0; i < ps.Count; i++)
-                newP.Add(Point2D.ToPoint2DFromCoordinateSystem(origin, ps[i]));
-            return newP;
+                vers[i] = Point2D.ToPoint2DFromCoordinateSystem(origin, ps[i]);
+            return new Polygon2D(vers);
         }
         public Polygon2D GetPolygonInCoordinateSystem(Point origin)
         {
-            Polygon2D newP = new Polygon2D();
-            foreach (Node<Point2D> item in _head)
-                newP.Add(item.Value.ToPointInCoordinateSystem(origin));
-            return newP;
+            Point2D[] vers = GetVertices();
+            for (int i = 0; i < vers.Length; i++)
+                vers[i] = vers[i].ToPointInCoordinateSystem(origin);
+            return new Polygon2D(vers);
         }
         public Point[] VerticesToPoint
         {
             get
             {
                 Point[] p = new Point[QuantityVertices];
-                Node<Point2D> currentNode = _head;
+                PolygonVertex currentNode = _head;
                 for (int i = 0; i < QuantityVertices; i++, currentNode = currentNode.Next)
-                    p[i] = currentNode.Value;
+                    p[i] = currentNode;
                 return p;
             }
         }
 
         public override void Draw(Graphics graph, Pen pen) => graph.DrawPolygon(pen, VerticesToPoint);
+
+
+        public class PolygonVertex : Point2D, IEnumerable<PolygonVertex>// : ICloneable
+        {
+            //PolygonProperty property;
+            public PolygonVertex(double x, double y) : this(new Point2D(x, y))
+            {
+            }
+            public PolygonVertex(Point2D p) : base(p.X, p.Y)
+            {
+                //property = new PolygonProperty(this);
+            }
+
+            public double Angle => Vector2D.AngleBetweenVector(Previous, this, Next);
+
+            public PolygonVertex Next { get; set; }
+            public PolygonVertex Previous { get; set; }
+
+            public IEnumerator GetEnumerator()
+            {
+                PolygonVertex currentNode = this;
+                do
+                {
+                    yield return currentNode;
+                    currentNode = currentNode.Next;
+                } while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
+            }
+
+            IEnumerator<PolygonVertex> IEnumerable<PolygonVertex>.GetEnumerator()
+            {
+                PolygonVertex currentNode = this;
+                do
+                {
+                    yield return currentNode;
+                    currentNode = currentNode.Next;
+                } while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
+            }
+
+            protected class PolygonProperty
+            {
+                public PolygonProperty(PolygonVertex pv)
+                {
+                    Angle = Vector2D.AngleBetweenVector(pv.Previous, pv, pv.Next);
+                }
+
+                public double Angle { get; private set; }
+            }
+        }
     }
 }

@@ -84,7 +84,8 @@ namespace Plane2D
         //TODO выкинуть из: класса и наследников?
         public Point ToPointInCoordinateSystem(Point origin) => new Point(origin.X + (int)X, origin.Y - (int)Y);
         //TODO выкинуть из: класса и наследников?
-        public static Point2D ToPoint2DFromCoordinateSystem(Point origin, Point p) => new Point2D(p.X - origin.X, origin.Y - p.Y);
+        public static Point2D ToPoint2DFromCoordinateSystem(Point origin, Point p) => 
+            new Point2D(p.X - origin.X, origin.Y - p.Y);
         #endregion
 
         public object Clone() => new Point2D(X, Y);

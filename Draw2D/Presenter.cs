@@ -46,6 +46,11 @@ namespace Draw2D
 
             polygons = new List<Polygon2D>();
             polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
+
+
+            //polygon2D[1].
+
+
             polygons.Add(polygon2D);
             polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
 
@@ -83,7 +88,6 @@ namespace Draw2D
                     mi[i] = new ToolStripMenuItem(polygons[i].Name, null, ChooseShape, i.ToString());
                 ((ToolStripMenuItem)((ToolStripMenuItem)_view.MenuS.Items["Tools"]).DropDownItems["Choose"]).DropDownItems.AddRange(mi);
             }
-
         }
 
         private void ChooseShape(object sender, EventArgs e)
@@ -95,6 +99,7 @@ namespace Draw2D
                     + "QuantityVertices: " + selectedPolygon2D.QuantityVertices + Environment.NewLine
                     + "Center: " + selectedPolygon2D.Center + Environment.NewLine
                     + "Perimeter: " + selectedPolygon2D.Perimeter;
+                // + Environment.NewLine + "Angle1: " + selectedPolygon2D.;
             }
 
             //string chPoly = ((ToolStripMenuItem)sender).Text;
@@ -103,7 +108,8 @@ namespace Draw2D
         private void _view_DoClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ClearPictureBox(bmp.Width, bmp.Height);
-            _view.Image = lastAngleFigureBmp;
+            bmp = lastAngleFigureBmp;
+            _view.Image = bmp;
             polygons.Clear();
         }
 
@@ -296,6 +302,13 @@ namespace Draw2D
         private void _view_DoDraw_Click(object sender, EventArgs e)
         {
             polygon2D = new Polygon2D(new Point2D(100, 100), new Point2D(200, 100), new Point2D(200, 200), new Point2D(100, 200));
+            polygons.Add(polygon2D);
+
+
+            // ОШИБКА!!!))) раскомментировать и перенести в метод Clear
+            //graph = Graphics.FromImage(bmp);
+
+
             polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
 
             _view.Image = bmp;

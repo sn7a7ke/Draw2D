@@ -37,6 +37,13 @@ namespace Plane2D
             return angle;
         }
 
+        public static double AngleBetweenVector(Point2D beforePoint, Point2D anglePoint, Point2D afterPoint)
+        {
+            Vector2D A = new Vector2D(anglePoint, beforePoint);
+            Vector2D B = new Vector2D(afterPoint, anglePoint);
+            return AngleBetweenVector(A, B);
+        }
+
         public override Point2D Shift(double dx, double dy) => new Vector2D(new Point2D(dx, dy));
         public override Point2D Rotate(double angle, Point2D center) => new Vector2D(base.Rotate(angle, center));
         public override Point2D Symmetry(Point2D center) => new Vector2D(base.Symmetry(center));
