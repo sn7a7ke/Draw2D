@@ -20,6 +20,8 @@ namespace Draw2D
 
         string OutputText { get; set; }
         Cursor SetCursorImage { set; }
+        string About { get; set; }
+
 
 
         // Mouse Event

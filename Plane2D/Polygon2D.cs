@@ -24,31 +24,15 @@ namespace Plane2D
                 return current;
             }
         }
-        private void Add(PolygonVertex node)
-        {
-            if (_head == null)
-            {
-                _head = node;
-                _head.Next = _head;
-                _head.Previous = _head;
-            }
-            else
-            {
-                _head.Previous.Next = node;
-                node.Previous = _head.Previous;
-                node.Next = _head;
-                _head.Previous = node;
-            }
-            QuantityVertices++;
-        }
-        private void Add(Point2D p) => Add(new PolygonVertex(p));
         public Polygon2D(params Point2D[] vertices)
         {
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
             if (vertices.Length < 3)
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
-            for (int i = 0; i < vertices.Length; i++)
-                Add(vertices[i]);
+            _head = new PolygonVertex(vertices[0]);
+            for (int i = 1; i < vertices.Length; i++)
+                _head.Add(vertices[i]);
+            QuantityVertices = _head.Count;
         }
 
         public Point2D[] GetVertices()
@@ -177,21 +161,68 @@ namespace Plane2D
         public class PolygonVertex : Point2D, IEnumerable<PolygonVertex>// : ICloneable
         {
             //PolygonProperty property;
+            public int Count { get; private set; } = 0;
+            private bool _isHead = true;
             public PolygonVertex(double x, double y) : this(new Point2D(x, y))
             {
             }
             public PolygonVertex(Point2D p) : base(p.X, p.Y)
             {
-                //property = new PolygonProperty(this);
+                Count = 1;
             }
 
-            public double Angle => Vector2D.AngleBetweenVector(Previous, this, Next);
+            //public PolygonVertex(Point2D[] ps) : base(p.X, p.Y)
+            //{
 
-            public PolygonVertex Next { get; set; }
-            public PolygonVertex Previous { get; set; }
+
+
+
+
+            //    Count = 1;
+            //}
+            public void Add(Point2D p)
+            {
+                if (!_isHead)
+                    throw new ArgumentException("You can add vertices only to the main vertex");
+                PolygonVertex pv = new PolygonVertex(p)
+                {
+                    _isHead = false
+                };
+
+                if (Next == null)
+                {
+                    Next = pv;
+                    Previous = pv;
+                    pv.Next = this;
+                    pv.Previous = this;
+                }
+                else
+                {
+                    Previous.Next = pv;
+                    pv.Previous = Previous;
+                    pv.Next = this;
+                    Previous = pv;
+                }
+                Count++;
+            }
+
+            public double Angle
+            {
+                get
+                {
+                    if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
+
+                    return Vector2D.AngleBetweenVector(Previous, this, Next);
+                }
+            }
+
+            public PolygonVertex Next { get; private set; }
+            public PolygonVertex Previous { get; private set; }
 
             public IEnumerator GetEnumerator()
             {
+                if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
+
                 PolygonVertex currentNode = this;
                 do
                 {
@@ -202,22 +233,14 @@ namespace Plane2D
 
             IEnumerator<PolygonVertex> IEnumerable<PolygonVertex>.GetEnumerator()
             {
+                if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
+
                 PolygonVertex currentNode = this;
                 do
                 {
                     yield return currentNode;
                     currentNode = currentNode.Next;
                 } while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
-            }
-
-            protected class PolygonProperty
-            {
-                public PolygonProperty(PolygonVertex pv)
-                {
-                    Angle = Vector2D.AngleBetweenVector(pv.Previous, pv, pv.Next);
-                }
-
-                public double Angle { get; private set; }
             }
         }
     }

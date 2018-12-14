@@ -30,6 +30,8 @@ namespace Draw2D
         public string OutputText { get { return Output.Text; } set { Output.Text = value; } }
         public Cursor SetCursorImage { set { pictureBox.Cursor = value; } }
 
+        public string About { get; set; }
+
         // Mouse Event
         public event EventHandler DoDraw_Click;
         public event EventHandler DoSelect_Click;
@@ -79,5 +81,9 @@ namespace Draw2D
             Application.Exit();            
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(About, "About");
+        }
     }
 }

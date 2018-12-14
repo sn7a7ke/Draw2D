@@ -74,6 +74,8 @@ namespace Draw2D
             _view.DoClearToolStripMenuItem_Click += _view_DoClearToolStripMenuItem_Click;
             _view.DoToolsToolStripMenuItem_Click += _view_DoToolsToolStripMenuItem_Click;
 
+            _view.About = "Draw2D 2018" + Environment.NewLine+ "© Sn7a7ke";
+
             //MessageBox.Show(polygon2D.Name);
             //MessageBox.Show(new Point2D(10, 10).Rotate(Math.PI / 2, new Point2D(20, 20)).ToString());
         }
