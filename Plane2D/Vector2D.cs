@@ -14,18 +14,19 @@ namespace Plane2D
         public Vector2D(Point2D point2D) : base(point2D.X, point2D.Y) { }
         public Vector2D(Point2D start, Point2D finish) : base(finish.X - start.X, finish.Y - start.Y) { }
 
-
         public Vector2D Add(Vector2D v) => new Vector2D(X + v.X, Y + v.Y);
         public Vector2D Sub(Vector2D v) => new Vector2D(X - v.X, Y - v.Y);
         public Vector2D MulByNumber(double num) => new Vector2D(X * num, Y * num);
         public double VectorProduct(Vector2D B) => VectorProduct(this, B);
         public double ScalarProduct(Vector2D B) => ScalarProduct(this, B);
         public double Length { get => Math.Sqrt(X * X + Y * Y); }
-        public double AngleBetweenVector(Vector2D B) => ScalarProduct(this, B);
+        public double AngleBetweenVector(Vector2D B) => AngleBetweenVector(this, B);
 
         public static double VectorProduct(Vector2D A, Vector2D B) => A.X * B.Y - A.Y * B.X;
         public static double ScalarProduct(Vector2D A, Vector2D B) => A.X * B.X + A.Y * B.Y;
         //public static double LengthVector(Vector2D A) => Math.Sqrt(A.X * A.X + A.Y * A.Y);
+        
+        // Если угол больше 180 градусов ??????????????????????????????????????
         public static double AngleBetweenVector(Vector2D A, Vector2D B)
         {
             double scalar = ScalarProduct(A, B);
@@ -39,7 +40,7 @@ namespace Plane2D
 
         public static double AngleBetweenVector(Point2D beforePoint, Point2D anglePoint, Point2D afterPoint)
         {
-            Vector2D A = new Vector2D(anglePoint, beforePoint);
+            Vector2D A = new Vector2D(beforePoint, anglePoint);
             Vector2D B = new Vector2D(afterPoint, anglePoint);
             return AngleBetweenVector(A, B);
         }

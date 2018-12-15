@@ -14,14 +14,16 @@ namespace Plane2D
         public Point2D(double x, double y) { X = x; Y = y; }
         private Point2D()        {        }
 
-        public double X { get; private set; }
-        public double Y { get; private set; }
+        public double X { get; protected set; }
+        public double Y { get; protected set; }
         public double Distance(Point2D point) => Distance(this, point);
         public static double Distance(Point2D A, Point2D B) => Math.Sqrt(Math.Pow(A.X - B.X, 2) + Math.Pow(A.Y - B.Y, 2));
 
         public virtual Point2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
         public virtual Point2D Rotate(double angle, Point2D center)
         {
+            if (angle == 0)
+                return this;
             double xx = (X - center.X) * Math.Cos(angle) - (Y - center.Y) * Math.Sin(angle) + center.X;
             double yy = (X - center.X) * Math.Sin(angle) + (Y - center.Y) * Math.Cos(angle) + center.Y;
             return new Point2D(xx, yy);

@@ -26,9 +26,9 @@ namespace Draw2D
         List<Point> points;
         int deltaDraw = 5;
         int deltaBmp = 100;
-        List<Polygon2D> polygons;
-        Polygon2D polygon2D;
-        Polygon2D selectedPolygon2D;
+        List<Polygon2D<PolygonVertex2D>> polygons;
+        Polygon2D<PolygonVertex2D> polygon2D;
+        Polygon2D<PolygonVertex2D> selectedPolygon2D;
         Point origin;
 
         public Presenter(IView view)
@@ -44,8 +44,8 @@ namespace Draw2D
             origin = new Point(0, 400);
             DrawCoordinateAxes(graph);
 
-            polygons = new List<Polygon2D>();
-            polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
+            polygons = new List<Polygon2D<PolygonVertex2D>>();
+            polygon2D = new Polygon2D<PolygonVertex2D>(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
 
 
             //polygon2D[1].
@@ -74,7 +74,7 @@ namespace Draw2D
             _view.DoClearToolStripMenuItem_Click += _view_DoClearToolStripMenuItem_Click;
             _view.DoToolsToolStripMenuItem_Click += _view_DoToolsToolStripMenuItem_Click;
 
-            _view.About = "Draw2D 2018" + Environment.NewLine+ "© Sn7a7ke";
+            _view.About = "Draw2D 2018" + Environment.NewLine + "© Sn7a7ke";
 
             //MessageBox.Show(polygon2D.Name);
             //MessageBox.Show(new Point2D(10, 10).Rotate(Math.PI / 2, new Point2D(20, 20)).ToString());
@@ -97,6 +97,8 @@ namespace Draw2D
             if (int.TryParse(((ToolStripMenuItem)sender).Name, out int nn))
             {
                 selectedPolygon2D = polygons[nn];
+                RefreshPictureBox();
+                
                 _view.OutputText = selectedPolygon2D.VerticesToString(Environment.NewLine) + Environment.NewLine
                     + "QuantityVertices: " + selectedPolygon2D.QuantityVertices + Environment.NewLine
                     + "Center: " + selectedPolygon2D.Center + Environment.NewLine
@@ -132,16 +134,25 @@ namespace Draw2D
                 RefreshPictureBox(bmp.Width + deltaBmp, bmp.Height + deltaBmp);
         }
 
+        private void RefreshPictureBox()
+        {
+            RefreshPictureBox(bmp.Width, bmp.Height);
+        }
         private void RefreshPictureBox(int width, int height)
         {
             bmp = new Bitmap(width, height);
             Graphics newGraph;
             newGraph = Graphics.FromImage(bmp);
-            DrawCoordinateAxes(newGraph);            
+            DrawCoordinateAxes(newGraph);
             //beforeFigureBmp = new Bitmap(bmp);
             //lastAngleFigureBmp = new Bitmap(bmp);
 
-            DrawShapes(newGraph, pen);            
+            DrawShapes(newGraph, pen);
+
+            float penWidth = pen.Width;
+            pen.Width *= 2;
+            selectedPolygon2D.GetPolygonInCoordinateSystem(origin).Draw(newGraph, pen);
+            pen.Width = penWidth;
 
             _view.OutputText = bmp.Width.ToString() + " " + bmp.Height.ToString();
 
@@ -150,6 +161,8 @@ namespace Draw2D
 
             newGraph = Graphics.FromImage(lastAngleFigureBmp);
             DrawPoints(newGraph, pen);
+
+            //_view.Image = bmp;
 
             _view.Image = lastAngleFigureBmp;
         }
@@ -200,7 +213,10 @@ namespace Draw2D
                     points.Add(mouseLocation);
                     //bmp.SetPixel(points[points.Count - 1].X, points[points.Count - 1].Y, color);
 
+                    // COMMENT
                     _view.Image = bmp;
+
+
                     lastAngleFigureBmp = new Bitmap(bmp);
 
                     _view.DoPictureBox_MouseMove += _view_DoPictureBox_MouseMove_Draw;
@@ -211,7 +227,7 @@ namespace Draw2D
                         RemoveLastVertex(2);
                     else
                     {
-                        polygon2D = Polygon2D.GetPolygonFromCoordinateSystem(points, origin);
+                        polygon2D = Polygon2D<PolygonVertex2D>.GetPolygonFromCoordinateSystem(points, origin);
                         polygons.Add(polygon2D);
 
                         _view.Image = lastAngleFigureBmp;
@@ -251,25 +267,30 @@ namespace Draw2D
                 polygons.Remove(selectedPolygon2D);
                 selectedPolygon2D = selectedPolygon2D.Shift(_view.DeltaX, _view.DeltaY);
                 polygons.Add(selectedPolygon2D);
-                RefreshPictureBox(bmp.Width, bmp.Height);
+
+                RefreshPictureBox();
+                //RefreshPictureBox(bmp.Width, bmp.Height);
+
                 //graph = Graphics.FromImage(bmp);
                 //selectedPolygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
-                _view.Image = bmp;
+                //_view.Image = bmp;
                 lastAngleFigureBmp = new Bitmap(bmp);
             }
         }
 
         private void _view_DoRotate_Click(object sender, EventArgs e)
         {
-            if (selectedPolygon2D != null)
+            if (selectedPolygon2D != null && _view.Angle != 0)
             {
                 polygons.Remove(selectedPolygon2D);
                 selectedPolygon2D = selectedPolygon2D.Rotate((double)_view.Angle,
                     new Point2D(_view.DeltaX, _view.DeltaY));
                 polygons.Add(selectedPolygon2D);
-                RefreshPictureBox(bmp.Width, bmp.Height);
 
-                _view.Image = bmp;
+                RefreshPictureBox();
+                //RefreshPictureBox(bmp.Width, bmp.Height);
+
+                //_view.Image = bmp;
                 lastAngleFigureBmp = new Bitmap(bmp);
             }
         }
@@ -281,8 +302,11 @@ namespace Draw2D
                 polygons.Remove(selectedPolygon2D);
                 selectedPolygon2D = selectedPolygon2D.Symmetry(new Point2D(_view.DeltaX, _view.DeltaY));
                 polygons.Add(selectedPolygon2D);
-                RefreshPictureBox(bmp.Width, bmp.Height);
-                _view.Image = bmp;
+
+                RefreshPictureBox();
+                //RefreshPictureBox(bmp.Width, bmp.Height);
+
+                //_view.Image = bmp;
                 lastAngleFigureBmp = new Bitmap(bmp);
             }
         }
@@ -292,18 +316,39 @@ namespace Draw2D
             if (polygon2D != null)
             {
                 selectedPolygon2D = polygon2D;
+
+                RefreshPictureBox();
+                //RefreshPictureBox(bmp.Width, bmp.Height);
+
                 //beforeSelectedFigureBmp = new Bitmap(beforeFigureBmp);
-                _view.OutputText = selectedPolygon2D.VerticesToString(Environment.NewLine) + Environment.NewLine
-                    + "QuantityVertices: " + selectedPolygon2D.QuantityVertices + Environment.NewLine
-                    + "Center: " + selectedPolygon2D.Center + Environment.NewLine
-                    + "Perimeter: " + selectedPolygon2D.Perimeter;
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < selectedPolygon2D.QuantityVertices; i++)
+                {
+                    sb.Append("Vertex " + i + ": (" + selectedPolygon2D[i].X+", "+ selectedPolygon2D[i].Y+")");
+                    sb.Append(Environment.NewLine);
+                }
+
+                for (int i = 0; i < selectedPolygon2D.QuantityVertices; i++)
+                {
+                    sb.Append("Angle " + i + ": " + selectedPolygon2D[i].AngleDegree);
+                    sb.Append(Environment.NewLine);
+                }
+                sb.Append("QuantityVertices: " + selectedPolygon2D.QuantityVertices);
+                sb.Append(Environment.NewLine);
+                sb.Append("Center: " + selectedPolygon2D.Center);
+                sb.Append(Environment.NewLine);
+                sb.Append("Perimeter: " + selectedPolygon2D.Perimeter);
+                sb.Append(Environment.NewLine);
+                sb.Append("Is convex: " + selectedPolygon2D.IsConvex);
+
+                _view.OutputText = sb.ToString();
                 polygon2D = null;
             }
         }
 
         private void _view_DoDraw_Click(object sender, EventArgs e)
         {
-            polygon2D = new Polygon2D(new Point2D(100, 100), new Point2D(200, 100), new Point2D(200, 200), new Point2D(100, 200));
+            polygon2D = new Polygon2D<PolygonVertex2D>(new Point2D(100, 100), new Point2D(200, 100), new Point2D(200, 200), new Point2D(100, 200));
             polygons.Add(polygon2D);
 
 
