@@ -20,14 +20,14 @@ namespace Plane2D
         public double VectorProduct(Vector2D B) => VectorProduct(this, B);
         public double ScalarProduct(Vector2D B) => ScalarProduct(this, B);
         public double Length { get => Math.Sqrt(X * X + Y * Y); }
-        public double AngleBetweenVector(Vector2D B) => AngleBetweenVector(this, B);
+        public double AngleBetweenVectors(Vector2D B) => AngleBetweenVectors(this, B);
 
         public static double VectorProduct(Vector2D A, Vector2D B) => A.X * B.Y - A.Y * B.X;
         public static double ScalarProduct(Vector2D A, Vector2D B) => A.X * B.X + A.Y * B.Y;
         //public static double LengthVector(Vector2D A) => Math.Sqrt(A.X * A.X + A.Y * A.Y);
         
         // Если угол больше 180 градусов ??????????????????????????????????????
-        public static double AngleBetweenVector(Vector2D A, Vector2D B)
+        public static double AngleBetweenVectors(Vector2D A, Vector2D B)
         {
             double scalar = ScalarProduct(A, B);
             double lenTwo = (A.Length * B.Length);
@@ -38,11 +38,11 @@ namespace Plane2D
             return angle;
         }
 
-        public static double AngleBetweenVector(Point2D beforePoint, Point2D anglePoint, Point2D afterPoint)
+        public static double AngleBetweenVectors(Point2D beforePoint, Point2D anglePoint, Point2D afterPoint)
         {
             Vector2D A = new Vector2D(beforePoint, anglePoint);
             Vector2D B = new Vector2D(afterPoint, anglePoint);
-            return AngleBetweenVector(A, B);
+            return AngleBetweenVectors(A, B);
         }
 
         public override Point2D Shift(double dx, double dy) => new Vector2D(new Point2D(dx, dy));

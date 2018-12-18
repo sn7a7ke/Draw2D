@@ -18,18 +18,17 @@ namespace Plane2D //2
         public PolygonVertex2D() : base(0, 0)
         {
         }
-
         protected PolygonVertex2D(Point2D p) : base(p.X, p.Y)
         {
             Count = 1;
             _isEmpty = false;
         }
-
         public PolygonVertex2D(Point2D[] ps) : base(ps[0].X, ps[0].Y)
         {
             Add(ps);
         }
-        private void Add(Point2D p)
+
+        protected void Add(Point2D p)
         {
             if (!_isEmpty || p == null)
                 throw new ArgumentException(nameof(p));
@@ -54,7 +53,6 @@ namespace Plane2D //2
             }
             Count++;
         }
-
         public void Add(Point2D[] ps)
         {
             if (!_isEmpty || ps == null || ps.Length < 3)
@@ -75,14 +73,14 @@ namespace Plane2D //2
             {
                 if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
 
-                return Vector2D.AngleBetweenVector(Previous, this, Next);
+                return Vector2D.AngleBetweenVectors(Previous, this, Next);
             }
         }
         public double AngleDegree
         {
             get
             {
-                return (Vector2D.AngleBetweenVector(Previous, this, Next) / Math.PI) * 180;
+                return (Vector2D.AngleBetweenVectors(Previous, this, Next) / Math.PI) * 180;
             }
         }
 
@@ -101,7 +99,6 @@ namespace Plane2D //2
                 currentNode = currentNode.Next;
             } while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
         }
-
         IEnumerator<PolygonVertex2D> IEnumerable<PolygonVertex2D>.GetEnumerator()
         {
             if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");

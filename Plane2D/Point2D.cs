@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Plane2D
 {
+    /// <summary>
+    /// Point defined by coordinates: (X, Y)
+    /// </summary>
     public class Point2D : ICloneable //: ITransformation
     {
         public const double epsilon = 0.0000001;
@@ -75,6 +78,16 @@ namespace Plane2D
             return (X == p.X && Y == p.Y);
         }
         public override int GetHashCode() => (int)X ^ (int)Y;
+
+        public static bool operator ==(Point2D obj1, Point2D obj2)
+        {
+            return Equals(obj1, obj2);
+        }
+        public static bool operator !=(Point2D obj1, Point2D obj2)
+        {
+            return !Equals(obj1, obj2);
+        }
+
         public override string ToString() => String.Format("({0},{1})", X, Y);
 
         #region transformation to System.Drawing

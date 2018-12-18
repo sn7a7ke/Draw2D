@@ -9,6 +9,10 @@ using Plane2D;
 
 namespace Plane2D //2
 {
+    /// <summary>
+    /// Polygon (n-gon; n>=3) defined by vertices (points): (X1, Y1) ... (Xn, Yn)
+    /// </summary>
+    /// <typeparam name="TVertex"></typeparam>
     public class Polygon2D<TVertex> : Shape2D
         where TVertex : PolygonVertex2D, new()
     {
@@ -34,8 +38,8 @@ namespace Plane2D //2
 
 
             _head = new TVertex();// vertices[0]);
-            //for (int i = 1; i < vertices.Length; i++)
-                _head.Add(vertices);
+                                  //for (int i = 1; i < vertices.Length; i++)
+            _head.Add(vertices);
             QuantityVertices = _head.Count;
         }
 
@@ -76,8 +80,15 @@ namespace Plane2D //2
         {
             get
             {
-                //==== КАК!?? ===
-                throw new NotImplementedException();
+                if (IsWithoutIntersect)
+                {
+                    double sum = 0;
+                    foreach (TVertex v in _head)
+                        sum += (v.X + v.Next.X) * (v.Y - v.Next.Y);
+                    return Math.Abs(sum) / 2;
+                }
+                else
+                    return -1;//==== КАК!?? ===                
             }
         }
 
@@ -88,7 +99,6 @@ namespace Plane2D //2
                 vers[i] = vers[i].Shift(dx, dy);
             return new Polygon2D<TVertex>(vers);
         }
-
         public Polygon2D<TVertex> Rotate(double angle, Point2D center)
         {
             if (angle == 0)
@@ -112,7 +122,7 @@ namespace Plane2D //2
         {
             double sum = 0;
             foreach (TVertex item in _head)
-                sum += new Vector2D(item, item.Next).AngleBetweenVector(new Vector2D(item.Next, item.Next.Next));
+                sum += new Vector2D(item, item.Next).AngleBetweenVectors(new Vector2D(item.Next, item.Next.Next));
 
             sum = Math.PI * QuantityVertices - sum;
             return sum;
@@ -130,6 +140,10 @@ namespace Plane2D //2
                     return false;
             }
         }
+
+        // НЕ РЕАЛИЗОВАНО!!!!!!
+        public virtual bool IsWithoutIntersect => true;
+
 
         public override string Name => base.Name + " v" + QuantityVertices + " c" + Center;
         public override string ToString() => base.Name + " v" + QuantityVertices; //GetType().Name + " v" + QuantityVertices;
