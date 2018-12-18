@@ -26,9 +26,9 @@ namespace Draw2D
         List<Point> points;
         int deltaDraw = 5;
         int deltaBmp = 100;
-        List<Polygon2D<PolygonVertex2D>> polygons;
-        Polygon2D<PolygonVertex2D> polygon2D;
-        Polygon2D<PolygonVertex2D> selectedPolygon2D;
+        List<Polygon2D> polygons;
+        Polygon2D polygon2D;
+        Polygon2D selectedPolygon2D;
         Point origin;
 
         public Presenter(IView view)
@@ -44,8 +44,8 @@ namespace Draw2D
             origin = new Point(0, 400);
             DrawCoordinateAxes(graph);
 
-            polygons = new List<Polygon2D<PolygonVertex2D>>();
-            polygon2D = new Polygon2D<PolygonVertex2D>(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
+            polygons = new List<Polygon2D>();
+            polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
 
             TriangleVertex2D tri = new TriangleVertex2D();
             
@@ -174,7 +174,7 @@ namespace Draw2D
                         RemoveLastVertex(2);
                     else
                     {
-                        polygon2D = Polygon2D<PolygonVertex2D>.GetPolygonFromCoordinateSystem(points, origin);
+                        polygon2D = Polygon2D.GetPolygonFromCoordinateSystem(points, origin);
                         polygons.Add(polygon2D);
 
                         _view.Image = lastAngleFigureBmp;
@@ -297,7 +297,7 @@ namespace Draw2D
 
         }
 
-        private void SelectPolygon(Polygon2D<PolygonVertex2D> p)
+        private void SelectPolygon(Polygon2D p)
         {
             if (p != null)
             {
@@ -334,7 +334,7 @@ namespace Draw2D
 
         private void _view_DoDraw_Click(object sender, EventArgs e)
         {
-            polygon2D = new Polygon2D<PolygonVertex2D>(new Point2D(100, 100), new Point2D(200, 100), new Point2D(200, 200), new Point2D(100, 200));
+            polygon2D = new Polygon2D(new Point2D(100, 100), new Point2D(200, 100), new Point2D(200, 200), new Point2D(100, 200));
             polygons.Add(polygon2D);
 
 
