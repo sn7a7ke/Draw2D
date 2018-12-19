@@ -21,6 +21,7 @@ namespace Plane2D
         public double Y { get; protected set; }
         public double Distance(Point2D point) => Distance(this, point);
         public static double Distance(Point2D A, Point2D B) => Math.Sqrt(Math.Pow(A.X - B.X, 2) + Math.Pow(A.Y - B.Y, 2));
+        public static Point2D Middle(Point2D A,Point2D B) => new Point2D((A.X + B.X) / 2, (A.Y + B.Y) / 2);
 
         public virtual Point2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
         public virtual Point2D Rotate(double angle, Point2D center)

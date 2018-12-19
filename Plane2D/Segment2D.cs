@@ -17,7 +17,7 @@ namespace Plane2D
             B = b ?? throw new ArgumentNullException(nameof(b));
         }
 
-        public Point2D Middle => new Point2D((A.X + B.X) / 2, (A.Y + B.Y) / 2);
+        public Point2D Middle => Point2D.Middle(A, B);
         public double Length => A.Distance(B);
 
         public static bool IsIntersectSegment(Segment2D AB, Segment2D CD)

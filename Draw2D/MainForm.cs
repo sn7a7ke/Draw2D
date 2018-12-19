@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Draw2D
 {
-    public partial class Form1 : Form, IView
+    public partial class MainForm : Form, IMainForm
     {
         #region IView
         public Image Image { get { return pictureBox.Image; } set { pictureBox.Image = value; } } //Bitmap
@@ -71,7 +71,7 @@ namespace Draw2D
 
         #endregion
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }

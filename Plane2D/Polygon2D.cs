@@ -13,7 +13,7 @@ namespace Plane2D //2
     /// Polygon (n-gon; n>=3) defined by vertices (points): (X1, Y1) ... (Xn, Yn)
     /// </summary>
     public class Polygon2D : Shape2D
-        //where PolygonVertex2D : PolygonVertex2D, new()
+    //where PolygonVertex2D : PolygonVertex2D, new()
     {
         protected PolygonVertex2D _head;
         public int QuantityVertices { get; private set; }
@@ -35,20 +35,23 @@ namespace Plane2D //2
             if (vertices.Length < 3)
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
 
-
-            _head = new PolygonVertex2D();// vertices[0]);
-                                  //for (int i = 1; i < vertices.Length; i++)
+            // ПЕРЕДЕЛАТЬ
+            _head = new PolygonVertex2D();
             _head.Add(vertices);
+
             QuantityVertices = _head.Count;
         }
 
-        public Point2D[] GetVertices()
+        public Point2D[] GetVertices
         {
-            // Array!?
-            List<Point2D> verticies = new List<Point2D>();
-            foreach (PolygonVertex2D item in _head)
-                verticies.Add(item);
-            return verticies.ToArray();
+            get
+            {
+                // Array!?
+                List<Point2D> verticies = new List<Point2D>();
+                foreach (PolygonVertex2D item in _head)
+                    verticies.Add(item);
+                return verticies.ToArray();
+            }
         }
 
         public Point2D Center
@@ -93,7 +96,7 @@ namespace Plane2D //2
 
         public Polygon2D Shift(double dx, double dy)
         {
-            Point2D[] vers = GetVertices();
+            Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
                 vers[i] = vers[i].Shift(dx, dy);
             return new Polygon2D(vers);
@@ -102,7 +105,7 @@ namespace Plane2D //2
         {
             if (angle == 0)
                 return this;
-            Point2D[] vers = GetVertices();
+            Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
                 vers[i] = vers[i].Rotate(angle, center);
             return new Polygon2D(vers);
@@ -110,11 +113,18 @@ namespace Plane2D //2
         public Polygon2D Rotate(double angle) => Rotate(angle, Center);
         public Polygon2D Symmetry(Point2D center)
         {
-            Point2D[] vers = GetVertices();
+            Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
                 vers[i] = vers[i].Symmetry(center);
             return new Polygon2D(vers);
         }
+
+        /// <summary>
+        /// Left Bottom Rectangle Vertex containing this Polygon
+        /// </summary>
+        public Point2D LeftBottomRectangleVertex => Point2D.Min(GetVertices);
+        public Point2D RightTopRectangleVertex => Point2D.Max(GetVertices);
+
 
         //TODO переделать логику
         private double AngleSum()
@@ -144,8 +154,8 @@ namespace Plane2D //2
         public virtual bool IsWithoutIntersect => true;
 
 
-        public override string Name => base.Name + " v" + QuantityVertices + " c" + Center;
-        public override string ToString() => base.Name + " v" + QuantityVertices; //GetType().Name + " v" + QuantityVertices;
+        public override string Name => base.Name + " v" + QuantityVertices + " c" + Center + " S" + Square;
+        public override string ToString() => base.Name + " v" + QuantityVertices + " S" + Square; //GetType().Name + " v" + QuantityVertices;
         public string VerticesToString(string separator = " ") => string.Join(separator, _head);
 
         public static Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps, Point origin)
@@ -157,7 +167,7 @@ namespace Plane2D //2
         }
         public Polygon2D GetPolygonInCoordinateSystem(Point origin)
         {
-            Point2D[] vers = GetVertices();
+            Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
                 vers[i] = vers[i].ToPointInCoordinateSystem(origin);
             return new Polygon2D(vers);

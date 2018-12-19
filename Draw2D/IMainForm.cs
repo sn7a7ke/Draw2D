@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Draw2D
 {
-    public interface IView
+    public interface IMainForm
     {
         Image Image { get; set; }
         //Graphics Graph { get; }
