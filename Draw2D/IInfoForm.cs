@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Draw2D
 {
@@ -7,7 +8,14 @@ namespace Draw2D
         int GetImageHeight { get; }
         int GetImageWidth { get; }
         Image Image { get; set; }
+
+        string LeftBottomText { get; set; }
+        string RightTopText { get; set; }
+
         string OutputText { get; set; }
-        string SetLabelMouseLocation { set; }
+        string SetMouseLocation { set; }
+
+
+        event EventHandler DoPictureBoxInfo_MouseMove;
     }
 }

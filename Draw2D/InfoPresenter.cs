@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 using Plane2D;
 
 namespace Draw2D
@@ -9,18 +11,19 @@ namespace Draw2D
     {
         private IInfoForm infoForm;
         private Polygon2D selectedPolygon2D;
+        private Polygon2D poly;
         private Point2D LeftBottomPoint;
         private Point2D RightTopPoint;
         private Point2D CenterPoint;
         private Point origin;
-        private Point2D NewLeftBottomPoint;
-        private Point2D NewRightTopPoint;
-        private Point2D NewCenterPoint;
+        //private Point2D NewLeftBottomPoint;
+        //private Point2D NewRightTopPoint;
+        //private Point2D NewCenterPoint;
         //private int width;
         //private int height;
         private int widthPoly;
         private int heightPoly;
-        private int[] scales = { 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000 };
+        private int[] scales = { 1, 2, 5, 10, 20, 50, 100};
         private int scale;
         private const int stepScale = 100;
 
@@ -56,42 +59,58 @@ namespace Draw2D
 
             util = new Utility(pen, origin);
             util.DrawCoordinateAxes(graph, infoForm.GetImageWidth, infoForm.GetImageHeight);
-            selectedPolygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
 
 
+            Point2D[] points = selectedPolygon2D.GetVertices;
+            List<Point2D> newPoints = new List<Point2D>();
+            Point2D current;
+            for (int i = 0; i < points.Length; i++)
+            {
+                current = new Point2D(GetNewCoorinateX(points[i].X), GetNewCoorinateY(points[i].Y));
+                newPoints.Add(current);
+            }
+            poly = new Polygon2D(newPoints.ToArray());
+            poly.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
 
             infoForm.Image = bmp;
+            infoForm.LeftBottomText = LeftBottomPoint.ToString();
+            infoForm.RightTopText = new Point2D(infoForm.GetImageWidth * 100 / scale + LeftBottomPoint.X, infoForm.GetImageHeight * 100 / scale + LeftBottomPoint.Y).ToString();
 
+
+            infoForm.OutputText = LeftBottomPoint.ToString() + " " + scale.ToString();
+
+            infoForm.DoPictureBoxInfo_MouseMove += InfoForm_DoPictureBoxInfo_MouseMove;
         }
-        private int GetScale()
+
+        private double GetNewCoorinateX(double k) => (k - LeftBottomPoint.X) * scale / 100;
+        private double GetNewCoorinateY(double k) => (k - LeftBottomPoint.Y) * scale / 100;
+
+        private void InfoForm_DoPictureBoxInfo_MouseMove(object sender, EventArgs e)
         {
-            // КОРЯВО
-            double scX = infoForm.GetImageWidth / widthPoly;
-            double scY = infoForm.GetImageHeight / heightPoly;
-            double sc = Math.Min(scX, scY) * stepScale;
+            MouseEventArgs em = (MouseEventArgs)e;
+            infoForm.SetMouseLocation = String.Format("{0}:{1}", ((origin.X + em.X * 100 / scale) + LeftBottomPoint.X), ((origin.Y - em.Y) * 100 / scale + LeftBottomPoint.Y));
+        }
+
+        private int GetScale()
+        {            
+            int scX = infoForm.GetImageWidth * stepScale / widthPoly;
+            int scY = infoForm.GetImageHeight * stepScale / heightPoly;
+            int sc = Math.Min(scX, scY);
+            if (sc > stepScale)
+                return sc;
             int num = 0;
             for (int i = 0; i < scales.Length; i++)
-                if (scales[i] > sc)
+                if (scales[i] >= sc)
                 {
                     num = i - 1;
                     break;
                 }
             if (num == 0)
-                num = scales.Length-1;
+                num = scales.Length - 1;
             if (num == -1)
-                num = 0;            
+                num = 0;
             return scales[num];
         }
-
-        // ДУБЛЬ
-        //private void DrawCoordinateAxes(Graphics graph)
-        //{
-        //    Pen _pen = new Pen(color) { CustomEndCap = new AdjustableArrowCap(5, 5, false) };
-        //    DrawLineInCoordinateSystem(graph, _pen, new Point(0, origin.Y - _view.GetImageHeight), new Point(0, origin.Y));
-        //    DrawLineInCoordinateSystem(graph, _pen, new Point(0, 0), new Point(_view.GetImageWidth - origin.X - deltaBmp, 0));
-        //}
-
-
 
         public void Dispose()
         {
@@ -100,19 +119,5 @@ namespace Draw2D
             //lastAngleFigureBmp.Dispose();
             //pen.Dispose();
         }
-
-        //enum Scale
-        //{
-        //    s100to1 = 1,
-        //    s50to1 = 2,
-        //    s20to1 = 5,
-        //    s10to1 = 10,
-        //    s5to1 = 20,
-        //    s2to1 = 50,
-        //    s1to1 = 100,
-        //    s1to2 = 200,
-        //    s1to5 = 500,
-        //    s1to10 = 1000
-        //}
     }
 }
