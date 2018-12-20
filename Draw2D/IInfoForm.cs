@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Draw2D
 {
@@ -14,8 +15,12 @@ namespace Draw2D
 
         string OutputText { get; set; }
         string SetMouseLocation { set; }
+        TreeView TreeViewInfo { get; set; }
+
 
 
         event EventHandler DoPictureBoxInfo_MouseMove;
+        event EventHandler DotVInfo_BeforeSelect;
+
     }
 }

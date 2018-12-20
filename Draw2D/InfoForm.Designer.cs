@@ -31,12 +31,13 @@
             this.pictureBoxInfo = new System.Windows.Forms.PictureBox();
             this.Output = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblMouseLocation = new System.Windows.Forms.ToolStripStatusLabel();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblLeftBottom = new System.Windows.Forms.Label();
             this.lblRightTop = new System.Windows.Forms.Label();
+            this.tVInfo = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInfo)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -72,6 +73,18 @@
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(27, 17);
+            this.toolStripStatusLabel1.Text = "X,Y:";
+            // 
+            // lblMouseLocation
+            // 
+            this.lblMouseLocation.Name = "lblMouseLocation";
+            this.lblMouseLocation.Size = new System.Drawing.Size(22, 17);
+            this.lblMouseLocation.Text = "0,0";
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -87,18 +100,6 @@
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(27, 17);
-            this.toolStripStatusLabel1.Text = "X,Y:";
-            // 
-            // lblMouseLocation
-            // 
-            this.lblMouseLocation.Name = "lblMouseLocation";
-            this.lblMouseLocation.Size = new System.Drawing.Size(22, 17);
-            this.lblMouseLocation.Text = "0,0";
             // 
             // lblLeftBottom
             // 
@@ -118,11 +119,20 @@
             this.lblRightTop.Text = ".";
             this.lblRightTop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // tVInfo
+            // 
+            this.tVInfo.Location = new System.Drawing.Point(499, 169);
+            this.tVInfo.Name = "tVInfo";
+            this.tVInfo.Size = new System.Drawing.Size(241, 206);
+            this.tVInfo.TabIndex = 13;
+            this.tVInfo.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.tVInfo_BeforeSelect);
+            // 
             // InfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 458);
+            this.Controls.Add(this.tVInfo);
             this.Controls.Add(this.lblRightTop);
             this.Controls.Add(this.lblLeftBottom);
             this.Controls.Add(this.statusStrip1);
@@ -158,5 +168,6 @@
         private System.Windows.Forms.ToolStripStatusLabel lblMouseLocation;
         private System.Windows.Forms.Label lblLeftBottom;
         private System.Windows.Forms.Label lblRightTop;
+        private System.Windows.Forms.TreeView tVInfo;
     }
 }

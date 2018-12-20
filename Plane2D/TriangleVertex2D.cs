@@ -11,7 +11,7 @@ namespace Plane2D
         public TriangleVertex2D()
         {
         }
-        public TriangleVertex2D(Point2D[] ps) : base(ps)
+        public TriangleVertex2D(params Point2D[] ps) : base(ps)
         {
         }
         protected TriangleVertex2D(Point2D p) : base(p)
@@ -74,11 +74,11 @@ namespace Plane2D
         //}
 
         // поднять в Triangle2D?!
-        public Point2D IntersectionAltitudes { get; }
-        public Point2D IntersectionMedians { get; }
-        public Point2D IntersectionBisectors { get; }
-        public double Circumradius { get; }
-        public double Inradius { get; }
+        //public Point2D IntersectionAltitudes { get; }
+        //public Point2D IntersectionMedians { get; }
+        //public Point2D IntersectionBisectors { get; }
+        //public double Circumradius { get; }
+        //public double Inradius { get; }
 
         //public Point2D Incenter
         //{

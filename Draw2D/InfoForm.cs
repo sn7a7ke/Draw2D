@@ -23,9 +23,12 @@ namespace Draw2D
 
         public string SetMouseLocation { set {  lblMouseLocation.Text = value; } }
         public string OutputText { get { return Output.Text; } set { Output.Text = value; } }
+        public TreeView TreeViewInfo { get { return tVInfo; } set { tVInfo = value; } }
+
 
         //PictureBox Event
         public event EventHandler DoPictureBoxInfo_MouseMove;
+        public event EventHandler DotVInfo_BeforeSelect;
 
 
         #endregion
@@ -34,6 +37,7 @@ namespace Draw2D
 
         #region Проброс событий
         private void pictureBoxInfo_MouseMove(object sender, MouseEventArgs e) => DoPictureBoxInfo_MouseMove?.Invoke(this, e);
+        private void tVInfo_BeforeSelect(object sender, TreeViewCancelEventArgs e) => DotVInfo_BeforeSelect?.Invoke(this, e);
 
 
 

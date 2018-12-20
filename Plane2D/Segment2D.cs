@@ -8,8 +8,8 @@ namespace Plane2D
 {
     public class Segment2D
     {
-        Point2D A;
-        Point2D B;
+        public Point2D A { get; private set; }
+        public Point2D B { get; private set; }
 
         public Segment2D(Point2D a, Point2D b)
         {
@@ -29,10 +29,12 @@ namespace Plane2D
             return IntersectLineABWithSegmentCD && IntersectLineCDWithSegmentAB;
         }
 
-        public static bool IsIntersectSegment2(Point2D A, Point2D B, Point2D C, Point2D D)
+        public static bool IsIntersectSegment(Point2D A, Point2D B, Point2D C, Point2D D)
         {
             return IsIntersectSegment(new Segment2D(A, B), new Segment2D(C, D));
         }
+
+        public override string ToString() => String.Format("[{0}-{1}], Length-{2}", A, B, Length);
 
         public static implicit operator Vector2D(Segment2D s) => new Vector2D(s.A, s.B);
     }

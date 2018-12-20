@@ -76,7 +76,7 @@ namespace Plane2D
         {
             if (!(obj is Point2D p))
                 return false;
-            return (X == p.X && Y == p.Y);
+            return (Math.Abs(X-p.X)<epsilon && Math.Abs(Y - p.Y) < epsilon);
         }
         public override int GetHashCode() => (int)X ^ (int)Y;
 

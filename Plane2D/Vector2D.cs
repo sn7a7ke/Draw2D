@@ -19,13 +19,13 @@ namespace Plane2D
         public Vector2D MulByNumber(double num) => new Vector2D(X * num, Y * num);
         public double VectorProduct(Vector2D B) => VectorProduct(this, B);
         public double ScalarProduct(Vector2D B) => ScalarProduct(this, B);
-        public double Length { get => Math.Sqrt(X * X + Y * Y); }
+        public double Length => Distance(new Point2D(0, 0), this);//{ get => Math.Sqrt(X * X + Y * Y); }
         public double AngleBetweenVectors(Vector2D B) => AngleBetweenVectors(this, B);
 
         public static double VectorProduct(Vector2D A, Vector2D B) => A.X * B.Y - A.Y * B.X;
         public static double ScalarProduct(Vector2D A, Vector2D B) => A.X * B.X + A.Y * B.Y;
         //public static double LengthVector(Vector2D A) => Math.Sqrt(A.X * A.X + A.Y * A.Y);
-        
+
         // Если угол больше 180 градусов ??????????????????????????????????????
         public static double AngleBetweenVectors(Vector2D A, Vector2D B)
         {
@@ -56,13 +56,16 @@ namespace Plane2D
             graph.DrawLine(pen, new Point(0, 0), this);
         }
 
-        public override bool Equals(object obj)
-        {
-            if (!(obj is Vector2D p))
-                return false;
-            return (X == p.X && Y == p.Y);
-        }
+        //public override bool Equals(object obj)
+        //{
+        //    if (!(obj is Vector2D p))
+        //        return false;
+        //    return (Math.Abs(X - p.X) < epsilon && Math.Abs(Y - p.Y) < epsilon);
+        //    //return (X == p.X && Y == p.Y);
+        //}
 
-        public override int GetHashCode() => base.GetHashCode();
+        //public override int GetHashCode() => base.GetHashCode();
+
+        public override string ToString() => String.Format("[{0}], Length-{1}", base.ToString(), Length);
     }
 }

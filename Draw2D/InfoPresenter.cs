@@ -34,23 +34,19 @@ namespace Draw2D
 
         Utility util;
 
-
-
         public InfoPresenter(IInfoForm infoForm, Polygon2D selectedPolygon2D)
         {
             this.infoForm = infoForm;
-            this.selectedPolygon2D = selectedPolygon2D;
+            this.selectedPolygon2D = selectedPolygon2D ?? throw new ArgumentNullException(nameof(selectedPolygon2D));
+
             LeftBottomPoint = selectedPolygon2D.LeftBottomRectangleVertex;
             RightTopPoint = selectedPolygon2D.RightTopRectangleVertex;
             CenterPoint = Point2D.Middle(LeftBottomPoint, RightTopPoint);
             widthPoly = (int)(RightTopPoint.X - LeftBottomPoint.X);
             heightPoly = (int)(RightTopPoint.Y - LeftBottomPoint.Y);
-            //width = infoForm.GetImageWidth;
-            //height = infoForm.GetImageHeight;
             scale = GetScale();
 
-            bmp = new Bitmap(infoForm.GetImageWidth, infoForm.GetImageHeight);
-            //_view.Image = new Bitmap(_view.GetImageWidth, _view.GetImageHeight);
+            bmp = new Bitmap(infoForm.GetImageWidth, infoForm.GetImageHeight);            
             graph = Graphics.FromImage(bmp); // _view.Graph;
             color = Color.DarkRed;
             pen = new Pen(color);
@@ -59,7 +55,6 @@ namespace Draw2D
 
             util = new Utility(pen, origin);
             util.DrawCoordinateAxes(graph, infoForm.GetImageWidth, infoForm.GetImageHeight);
-
 
             Point2D[] points = selectedPolygon2D.GetVertices;
             List<Point2D> newPoints = new List<Point2D>();
@@ -76,20 +71,32 @@ namespace Draw2D
             infoForm.LeftBottomText = LeftBottomPoint.ToString();
             infoForm.RightTopText = new Point2D(infoForm.GetImageWidth * 100 / scale + LeftBottomPoint.X, infoForm.GetImageHeight * 100 / scale + LeftBottomPoint.Y).ToString();
 
+            infoForm.OutputText = LeftBottomPoint.ToString() + " " + scale.ToString()+ Environment.NewLine;
+            if (selectedPolygon2D is Triangle2D tri)
+            {
+                infoForm.OutputText += new Line2D(tri.IntersectionAltitudes, tri.IntersectionBisectors).DistanceFromPointToLine(tri.IntersectionMedians);
 
-            infoForm.OutputText = LeftBottomPoint.ToString() + " " + scale.ToString();
+            }
+
+
 
             infoForm.DoPictureBoxInfo_MouseMove += InfoForm_DoPictureBoxInfo_MouseMove;
+            infoForm.DotVInfo_BeforeSelect += InfoForm_DotVInfo_BeforeSelect;
         }
 
-        private double GetNewCoorinateX(double k) => (k - LeftBottomPoint.X) * scale / 100;
-        private double GetNewCoorinateY(double k) => (k - LeftBottomPoint.Y) * scale / 100;
+        private void InfoForm_DotVInfo_BeforeSelect(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         private void InfoForm_DoPictureBoxInfo_MouseMove(object sender, EventArgs e)
         {
             MouseEventArgs em = (MouseEventArgs)e;
             infoForm.SetMouseLocation = String.Format("{0}:{1}", ((origin.X + em.X * 100 / scale) + LeftBottomPoint.X), ((origin.Y - em.Y) * 100 / scale + LeftBottomPoint.Y));
         }
+
+        private double GetNewCoorinateX(double k) => (k - LeftBottomPoint.X) * scale / 100;
+        private double GetNewCoorinateY(double k) => (k - LeftBottomPoint.Y) * scale / 100;
 
         private int GetScale()
         {            
@@ -110,6 +117,12 @@ namespace Draw2D
             if (num == -1)
                 num = 0;
             return scales[num];
+        }
+
+        private void SetTreeViewInfo()
+        {
+            infoForm.TreeViewInfo.Nodes.Clear();
+
         }
 
         public void Dispose()

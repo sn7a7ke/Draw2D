@@ -94,14 +94,14 @@ namespace Plane2D //2
             }
         }
 
-        public Polygon2D Shift(double dx, double dy)
+        public virtual Polygon2D Shift(double dx, double dy)
         {
             Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
                 vers[i] = vers[i].Shift(dx, dy);
             return new Polygon2D(vers);
         }
-        public Polygon2D Rotate(double angle, Point2D center)
+        public virtual Polygon2D Rotate(double angle, Point2D center)
         {
             if (angle == 0)
                 return this;
@@ -110,8 +110,8 @@ namespace Plane2D //2
                 vers[i] = vers[i].Rotate(angle, center);
             return new Polygon2D(vers);
         }
-        public Polygon2D Rotate(double angle) => Rotate(angle, Center);
-        public Polygon2D Symmetry(Point2D center)
+        public virtual Polygon2D Rotate(double angle) => Rotate(angle, Center);
+        public virtual Polygon2D Symmetry(Point2D center)
         {
             Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
@@ -154,8 +154,8 @@ namespace Plane2D //2
         public virtual bool IsWithoutIntersect => true;
 
 
-        public override string Name => base.Name + " v" + QuantityVertices + " c" + Center + " S" + Square;
-        public override string ToString() => base.Name + " v" + QuantityVertices + " S" + Square; //GetType().Name + " v" + QuantityVertices;
+        public override string Name => base.Name + " v" + QuantityVertices + " c" + Center + " S-" + Square;
+        public override string ToString() => base.Name + " v" + QuantityVertices + " S-" + Square; //GetType().Name + " v" + QuantityVertices;
         public string VerticesToString(string separator = " ") => string.Join(separator, _head);
 
         public static Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps, Point origin)
@@ -165,7 +165,7 @@ namespace Plane2D //2
                 vers[i] = Point2D.ToPoint2DFromCoordinateSystem(origin, ps[i]);
             return new Polygon2D(vers);
         }
-        public Polygon2D GetPolygonInCoordinateSystem(Point origin)
+        public virtual Polygon2D GetPolygonInCoordinateSystem(Point origin)
         {
             Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
