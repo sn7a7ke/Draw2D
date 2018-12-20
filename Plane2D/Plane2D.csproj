@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Line2D.cs" />
     <Compile Include="Point2D.cs" />
+    <Compile Include="Tests\Line2DTest.cs" />
     <Compile Include="Tests\Point2DTest.cs" />
     <Compile Include="Polygon2D.cs" />
     <Compile Include="PolygonVertex2D.cs" />

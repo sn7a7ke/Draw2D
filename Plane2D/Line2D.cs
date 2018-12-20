@@ -77,14 +77,7 @@ namespace Plane2D
 
         public double DistanceFromPointToLine(Point2D p) => Math.Abs(A * p.X + B * p.Y + C) / Math.Sqrt(A * A + B * B);
         public Vector2D GetNormal => new Vector2D(A, B);
-        public Line2D PerpendicularFromPoint(Point2D p)
-        {
-            if (A != 0)
-                return new Line2D(-A, B, A * p.X - B * p.Y);
-            else
-                return new Line2D(A, -B, B * p.Y - A * p.X);
-        }
-        public double PerpendicularFromPointLength(Point2D p) => Math.Abs(A * p.X + B * p.Y + C) / Math.Sqrt(A * A + B * B);
+        public Line2D PerpendicularFromPoint(Point2D p) => new Line2D(-B, A, B * p.X - A * p.Y);
         public Point2D PerpendicularFromPointToPointOnLine(Point2D p)
         {
             double zz = A * A + B * B;
@@ -103,8 +96,7 @@ namespace Plane2D
             xx = (B * l.C - C * l.B) / denominator;            
             return new Point2D(xx, yy);
         }
-        public double AngleBetweenLines(Line2D l) => Vector2D.AngleBetweenVectors(new Vector2D(A, B), new Vector2D(l.A, l.B));
-        
+        public double AngleBetweenLines(Line2D l) => Vector2D.AngleBetweenVectors(new Vector2D(A, B), new Vector2D(l.A, l.B));        
 
         public override string ToString() => string.Format($"{A} * x + {B} * y + {C} = 0");
         public override bool Equals(object obj)
@@ -113,7 +105,7 @@ namespace Plane2D
                 return false;
             // Детерминант матрицы 3х3 == 0 => строки взаимно зависимы
             double det = A * l.B - A * l.C - B * l.A + B * l.C + C * l.A - C * l.B;
-            if (det == 0)
+            if (Math.Abs(det) < Point2D.epsilon)
                 return true;
             return false;
         }

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace Plane2D
+namespace Plane2D.Tests
 {
     [TestFixture]
     class Point2DTest
@@ -17,7 +17,7 @@ namespace Plane2D
         }
 
         [Test]
-        public void Distance() => Assert.IsTrue((p1.Distance(p2) - Math.Sqrt(2 * 2 + 4 * 4)) < Point2D.epsilon);
+        public void Distance() => Assert.IsTrue(Math.Abs(p1.Distance(p2) - Math.Sqrt(2 * 2 + 4 * 4)) < Point2D.epsilon);
         [Test]
         public void Middle() => Assert.IsTrue(Point2D.Middle(p1, p2).Equals(new Point2D(3, 5)));
         [Test]
