@@ -65,6 +65,9 @@ namespace Plane2D
         //}
 
         //public override int GetHashCode() => base.GetHashCode();
+        public static Vector2D operator +(Vector2D v1, Vector2D v2) => v1.Add(v2);
+        public static Vector2D operator -(Vector2D v1, Vector2D v2) => v1.Sub(v2);
+        public static Vector2D operator *(Vector2D v1, double num) => v1.MulByNumber(num);
 
         public override string ToString() => String.Format("[{0}], Length-{1}", base.ToString(), Length);
     }

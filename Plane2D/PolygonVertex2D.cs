@@ -20,11 +20,15 @@ namespace Plane2D //2
         }
         protected PolygonVertex2D(Point2D p) : base(p.X, p.Y)
         {
+            //if (p == null) throw new ArgumentNullException(nameof(p));
+
             Count = 1;
             _isEmpty = false;
         }
         public PolygonVertex2D(Point2D[] ps) : base(ps[0].X, ps[0].Y)
-        {
+        {            
+            if (ps.Length < 3)
+                throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
             Add(ps);
         }
 

@@ -127,7 +127,7 @@ namespace Plane2D //2
 
 
         //TODO переделать логику
-        private double AngleSum()
+        protected double AngleSum()
         {
             double sum = 0;
             foreach (PolygonVertex2D item in _head)

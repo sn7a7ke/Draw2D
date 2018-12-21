@@ -31,6 +31,12 @@ namespace Plane2D
             B = p1.X - p2.X;
             C = p1.Y * p2.X - p1.X * p2.Y;
         }
+        public Line2D(Vector2D vNormal, Point2D pVia)
+        {
+            A = vNormal.X;
+            B = vNormal.Y;
+            C = -A * pVia.X - B * pVia.Y;
+        }
 
         public double A { get; private set; }
         public double B { get; private set; }
@@ -93,10 +99,10 @@ namespace Plane2D
             double yy;
             double denominator = A * l.B - B * l.A;
             yy = (C * l.A - A * l.C) / denominator;
-            xx = (B * l.C - C * l.B) / denominator;            
+            xx = (B * l.C - C * l.B) / denominator;
             return new Point2D(xx, yy);
         }
-        public double AngleBetweenLines(Line2D l) => Vector2D.AngleBetweenVectors(new Vector2D(A, B), new Vector2D(l.A, l.B));        
+        public double AngleBetweenLines(Line2D l) => Vector2D.AngleBetweenVectors(new Vector2D(A, B), new Vector2D(l.A, l.B));
 
         public override string ToString() => string.Format($"{A} * x + {B} * y + {C} = 0");
         public override bool Equals(object obj)

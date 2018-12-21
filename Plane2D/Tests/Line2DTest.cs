@@ -57,7 +57,7 @@ namespace Plane2D.Tests
         public void Intersect2()
         {
             Assert.IsNull(l1.Intersect(l1));
-        }        
+        }
 
 
         [Test]
@@ -70,5 +70,17 @@ namespace Plane2D.Tests
         {
             Assert.IsFalse(l1.Equals(new Line2D(4, 2, -6)));
         }
+
+        [Test]
+        public void Ctor()
+        {
+            Assert.IsTrue(l1.Equals(new Line2D(new Point2D(2, 0), new Point2D(0, 4))));
+        }
+        [Test]
+        public void Ctor2()
+        {
+            Assert.IsTrue(l1.Equals(new Line2D(new Vector2D(2, 1), new Point2D(1, 2))));
+        }
+
     }
 }
