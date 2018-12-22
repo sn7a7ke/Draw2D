@@ -14,12 +14,17 @@ namespace Plane2D
 
         public Triangle2D(Point2D A, Point2D B, Point2D C) : base(new TriangleVertex2D(A, B, C))
         {
-            if (!(_head is TriangleVertex2D head))
-                throw new ArgumentOutOfRangeException(nameof(_head));
-            A = head;
-            B = head.Next;
-            C = head.Next.Next;
+            
+            this.A = (TriangleVertex2D)_head;
+            this.B = (TriangleVertex2D)_head.Next;
+            this.C = (TriangleVertex2D)_head.Next.Next;
+            //if (!(_head is TriangleVertex2D head))
+            //    throw new ArgumentOutOfRangeException(nameof(_head));
+            //A = head;
+            //B = (TriangleVertex2D)head.Next;
+            //C = (TriangleVertex2D)head.Next.Next;
         }
+
 
         public Point2D IntersectionAltitudes => new Line2D(A.Altitude.A, A.Altitude.B).Intersect(new Line2D(B.Altitude.A, B.Altitude.B));
         public Point2D IntersectionMedians => new Line2D(A.Median.A, A.Median.B).Intersect(new Line2D(B.Median.A, B.Median.B));

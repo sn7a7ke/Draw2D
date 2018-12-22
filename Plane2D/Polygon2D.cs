@@ -35,10 +35,26 @@ namespace Plane2D //2
             if (vertices.Length < 3)
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
 
-            // ПЕРЕДЕЛАТЬ
+
             _head = new PolygonVertex2D();
             _head.Add(vertices);
 
+            QuantityVertices = _head.Count;
+
+
+
+            // ПЕРЕДЕЛАТЬ
+            //_head = new PolygonVertex2D();
+            //_head.Add(vertices);
+            //QuantityVertices = _head.Count;
+        }
+        protected Polygon2D(PolygonVertex2D head)
+        {
+            if (head == null) throw new ArgumentNullException(nameof(head));
+            if (head.Count < 3)
+                throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
+
+            _head = head;
             QuantityVertices = _head.Count;
         }
 

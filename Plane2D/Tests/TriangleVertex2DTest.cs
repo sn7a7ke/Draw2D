@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Threading.Tasks;
 
 namespace Plane2D.Tests
 {
@@ -74,5 +73,21 @@ namespace Plane2D.Tests
             tv1 = new TriangleVertex2D(new Point2D[] { p4, p2, p3 });
             Assert.IsTrue(tv1.Bisector.B == new Point2D(4, 3));
         }
+        [Test]
+        public void MiddleLineLength()
+        {
+            Assert.IsTrue(Math.Abs(tv1.MiddleLine.Length - 2) < Point2D.epsilon);
+        }
+        [Test]
+        public void MiddleLineB()
+        {
+            Assert.IsTrue(tv1.MiddleLine.B == new Point2D(2.5, 5));
+        }
+        [Test]
+        public void MiddleLineA()
+        {
+            Assert.IsTrue(tv1.MiddleLine.A == new Point2D(2.5, 3));
+        }
+
     }
 }

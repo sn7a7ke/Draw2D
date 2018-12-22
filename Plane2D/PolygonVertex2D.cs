@@ -12,7 +12,11 @@ namespace Plane2D //2
 {
     public class PolygonVertex2D : Point2D, IEnumerable<PolygonVertex2D>
     {
-        public int Count { get; private set; } = 0;
+
+        public PolygonVertex2D Next { get; internal set; } // ПОЧЕМУ нельзя protected???
+        public PolygonVertex2D Previous { get; internal set; }
+
+        public int Count { get; protected set; } = 0;
         protected bool _isEmpty = true;
 
         public PolygonVertex2D() : base(0, 0)
@@ -32,7 +36,7 @@ namespace Plane2D //2
             Add(ps);
         }
 
-        protected void Add(Point2D p)
+        protected virtual void Add(Point2D p)
         {
             if (!_isEmpty || p == null)
                 throw new ArgumentException(nameof(p));
@@ -88,9 +92,6 @@ namespace Plane2D //2
             }
         }
 
-
-        public PolygonVertex2D Next { get; private set; }
-        public PolygonVertex2D Previous { get; private set; }
 
         public IEnumerator GetEnumerator()
         {

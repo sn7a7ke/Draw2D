@@ -62,6 +62,7 @@
     <Compile Include="Tests\Polygon2DTest.cs" />
     <Compile Include="Tests\PolygonVertex2DTest.cs" />
     <Compile Include="Tests\Segment2DTest.cs" />
+    <Compile Include="Tests\Triangle2DTest.cs" />
     <Compile Include="Tests\TriangleVertex2DTest.cs" />
     <Compile Include="Tests\Vector2DTest.cs" />
     <Compile Include="Triangle2D.cs" />

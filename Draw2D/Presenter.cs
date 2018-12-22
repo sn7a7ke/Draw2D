@@ -330,7 +330,7 @@ namespace Draw2D
             beforeFigureBmp = new Bitmap(bmp);
             lastAngleFigureBmp = new Bitmap(bmp);
             newGraph = Graphics.FromImage(lastAngleFigureBmp);
-            util.DrawPoints(graph, points);
+            util.DrawPoints(newGraph, points);
             _view.Image = lastAngleFigureBmp;
         }
         private bool RemoveLastVertex(int qty = 1)
