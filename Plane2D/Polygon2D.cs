@@ -12,7 +12,7 @@ namespace Plane2D //2
     /// <summary>
     /// Polygon (n-gon; n>=3) defined by vertices (points): (X1, Y1) ... (Xn, Yn)
     /// </summary>
-    public class Polygon2D : Shape2D
+    public class Polygon2D : IShape2D
     //where PolygonVertex2D : PolygonVertex2D, new()
     {
         protected PolygonVertex2D _head;
@@ -34,14 +34,12 @@ namespace Plane2D //2
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
             if (vertices.Length < 3)
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
-
-
-            _head = new PolygonVertex2D();
-            _head.Add(vertices);
+            
+            _head = new PolygonVertex2D(vertices);
+            //_head = new PolygonVertex2D();
+            //_head.Add(vertices);
 
             QuantityVertices = _head.Count;
-
-
 
             // ПЕРЕДЕЛАТЬ
             //_head = new PolygonVertex2D();
@@ -84,7 +82,7 @@ namespace Plane2D //2
                 return new Point2D(xx / QuantityVertices, yy / QuantityVertices);
             }
         }
-        public override double Perimeter
+        public double Perimeter
         {
             get
             {
@@ -94,7 +92,7 @@ namespace Plane2D //2
                 return perim;
             }
         }
-        public override double Square
+        public double Square
         {
             get
             {
@@ -119,7 +117,7 @@ namespace Plane2D //2
         }
         public virtual Polygon2D Rotate(double angle, Point2D center)
         {
-            if (angle == 0)
+            if (angle.IsZero())//(angle == 0)
                 return this;
             Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
@@ -153,13 +151,13 @@ namespace Plane2D //2
             return sum;
         }
         public static double AngleSumForConvex(int n) => n < 3 ? 0 : (n - 2) * Math.PI;
-        public override bool IsConvex
+        public bool IsConvex
         {
             get
             {
                 if (QuantityVertices < 4)
                     return true;
-                if (Math.Abs(AngleSum() - AngleSumForConvex(QuantityVertices)) < Point2D.epsilon)
+                if (AngleSum().Equal(AngleSumForConvex(QuantityVertices)))//(Math.Abs(AngleSum() - AngleSumForConvex(QuantityVertices)) < Point2D.epsilon)
                     return true;
                 else
                     return false;
@@ -170,8 +168,8 @@ namespace Plane2D //2
         public virtual bool IsWithoutIntersect => true;
 
 
-        public override string Name => base.Name + " v" + QuantityVertices + " c" + Center + " S-" + Square;
-        public override string ToString() => base.Name + " v" + QuantityVertices + " S-" + Square; //GetType().Name + " v" + QuantityVertices;
+        public string Name => ToString() + " S-" + Square;
+        public override string ToString() => GetType().Name + " v" + QuantityVertices + " c" + Center; //GetType().Name + " v" + QuantityVertices;
         public string VerticesToString(string separator = " ") => string.Join(separator, _head);
 
         public static Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps, Point origin)
@@ -200,6 +198,6 @@ namespace Plane2D //2
             }
         }
 
-        public override void Draw(Graphics graph, Pen pen) => graph.DrawPolygon(pen, VerticesToPoint);
+        //public void Draw(Graphics graph, Pen pen) => graph.DrawPolygon(pen, VerticesToPoint);
     }
 }

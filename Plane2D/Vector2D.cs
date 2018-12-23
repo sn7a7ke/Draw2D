@@ -32,7 +32,7 @@ namespace Plane2D
             double scalar = ScalarProduct(A, B);
             double lenTwo = (A.Length * B.Length);
             //double lenTwo = (LengthVector(A) * LengthVector(B));
-            if (Math.Abs(Math.Abs(scalar) - lenTwo) < epsilon)
+            if (Math.Abs(scalar).Equal(lenTwo)) //(Math.Abs(Math.Abs(scalar) - lenTwo) < epsilon)
                 lenTwo = scalar;
             double angle = Math.Acos(scalar / lenTwo);
             return angle;
@@ -49,12 +49,12 @@ namespace Plane2D
         public override Point2D Rotate(double angle, Point2D center) => new Vector2D(base.Rotate(angle, center));
         public override Point2D Symmetry(Point2D center) => new Vector2D(base.Symmetry(center));
 
-        public override void Draw(Graphics graph, Pen pen)
-        {
-            //pen.CustomEndCap = new AdjustableArrowCap(5, 5, false);
-            // pen СТРЕЛОЧКА!!!
-            graph.DrawLine(pen, new Point(0, 0), this);
-        }
+        //public override void Draw(Graphics graph, Pen pen)
+        //{
+        //    //pen.CustomEndCap = new AdjustableArrowCap(5, 5, false);
+        //    // pen СТРЕЛОЧКА!!!
+        //    graph.DrawLine(pen, new Point(0, 0), this);
+        //}
 
         //public override bool Equals(object obj)
         //{

@@ -9,11 +9,12 @@ namespace Plane2D
     /// <summary>
     /// Line defined by the equation: A * x + B * y + C = 0;
     /// </summary>
-    public class Line2D
+    public class Line2D : IFunction2D
     {
         public Line2D(double A, double B, double C)
         {
-            if (A == 0 && B == 0)
+            //if (A == 0 && B == 0)
+            if (A.IsZero() && B.IsZero())
                 throw new ArgumentOutOfRangeException("A and B should not be zero at the same time");
             this.A = A;
             this.B = B;
@@ -42,7 +43,7 @@ namespace Plane2D
         public double B { get; private set; }
         public double C { get; private set; }
 
-        public bool IsLineInKB => B != 0;
+        public bool IsLineInKB => !B.IsZero();//B != 0;
         /// <summary>
         /// y = k * x + b; where k - Kk, b - Kb
         /// </summary>
@@ -74,15 +75,79 @@ namespace Plane2D
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public double FFromX(double x) => (-A * x - C) / B;
-        public bool IsParallel(Line2D l) => A * l.B - B * l.A == 0;
-        public bool IsParallelAxisX() => A == 0;
-        public bool IsParallelAxisY() => B == 0;
-        public bool IsPerpendicular(Line2D l) => A * l.A + B * l.B == 0;
-        public bool IsOnLine(Point2D p) => A * p.X + B * p.Y + C == 0;
+
+        public bool IsParallel(Line2D l) => (A * l.B - B * l.A).IsZero();//A * l.B - B * l.A == 0;
+        public bool IsParallelAxisX() => A.IsZero();//A == 0;
+        public bool IsParallelAxisY() => B.IsZero();//B == 0;
+        public bool IsPerpendicular(Line2D l) => (A * l.A + B * l.B).IsZero();//A * l.A + B * l.B == 0;
+        public bool IsOnLine(Point2D p) => (A * p.X + B * p.Y + C).IsZero();//A * p.X + B * p.Y + C == 0;
 
         public double DistanceFromPointToLine(Point2D p) => Math.Abs(A * p.X + B * p.Y + C) / Math.Sqrt(A * A + B * B);
         public Vector2D GetNormal => new Vector2D(A, B);
+
+        #region IFunction
+        public double MaxX
+        {
+            get
+            {
+                if (B.IsZero()) //(B == 0)
+                    return -C / A;
+                else
+                    return double.PositiveInfinity;
+            }
+        }
+
+        public double MaxY
+        {
+            get
+            {
+                if (A.IsZero()) //(A == 0)
+                    return (double)Kb;
+                else
+                    return double.PositiveInfinity;
+            }
+        }
+
+        public double MinX
+        {
+            get
+            {
+                if (B.IsZero()) //(B == 0)
+                    return -C / A;
+                else
+                    return double.NegativeInfinity;
+            }
+        }
+
+        public double MinY
+        {
+            get
+            {
+                if (A.IsZero()) //(A == 0)
+                    return (double)Kb;
+                else
+                    return double.NegativeInfinity;
+            }
+        }
+
+        public List<double> FuncYFromX(double x)
+        {
+            if (B.IsZero()) //(B == 0)
+                return null;
+            else
+                return new List<double>() { (-A * x - C) / B };
+        }
+
+        public List<double> InverseFuncXFromY(double y)
+        {
+            if (A.IsZero()) //(A == 0)
+                return null;
+            else
+                return new List<double>() { (-B * y - C) / A };
+
+        }
+        #endregion
+
         public Line2D PerpendicularFromPoint(Point2D p) => new Line2D(-B, A, B * p.X - A * p.Y);
         public Point2D PerpendicularFromPointToPointOnLine(Point2D p)
         {
@@ -91,15 +156,15 @@ namespace Plane2D
             double yy = (A * (-B * p.X + A * p.Y) - B * C) / zz;
             return new Point2D(xx, yy);
         }
-        public Point2D Intersect(Line2D l)
+        public Point2D Intersect(Line2D line)
         {
-            if (IsParallel(l))
+            if (IsParallel(line))
                 return null;
             double xx;
             double yy;
-            double denominator = A * l.B - B * l.A;
-            yy = (C * l.A - A * l.C) / denominator;
-            xx = (B * l.C - C * l.B) / denominator;
+            double denominator = A * line.B - B * line.A;
+            yy = (C * line.A - A * line.C) / denominator;
+            xx = (B * line.C - C * line.B) / denominator;
             return new Point2D(xx, yy);
         }
         public double AngleBetweenLines(Line2D l) => Vector2D.AngleBetweenVectors(new Vector2D(A, B), new Vector2D(l.A, l.B));
@@ -111,11 +176,11 @@ namespace Plane2D
                 return false;
             // Детерминант матрицы 3х3 == 0 => строки взаимно зависимы
             double det = A * l.B - A * l.C - B * l.A + B * l.C + C * l.A - C * l.B;
-            if (Math.Abs(det) < Point2D.epsilon)
+            if (det.IsZero())//(Math.Abs(det) < Point2D.epsilon)
                 return true;
             return false;
         }
-        public override int GetHashCode() => (A != 0) ? (int)(B / A * 101 + C / A) : (int)(A / B * 101 + C / B);
+        public override int GetHashCode() => (A.IsZero()) ? (int)(A / B * 101 + C / B) : (int)(B / A * 101 + C / A); //(A != 0) ? (int)(B / A * 101 + C / A) : (int)(A / B * 101 + C / B);
 
         public static bool operator ==(Line2D obj1, Line2D obj2) => obj1.Equals(obj2);
         public static bool operator !=(Line2D obj1, Line2D obj2) => !obj1.Equals(obj2);

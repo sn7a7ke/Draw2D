@@ -8,9 +8,9 @@ namespace Plane2D
 {
     public class TriangleVertex2D : PolygonVertex2D
     {
-        public TriangleVertex2D()
-        {
-        }
+        //public TriangleVertex2D()
+        //{
+        //}
         public TriangleVertex2D(params Point2D[] ps) : base(ps)
         {
             if (ps.Length != 3)
@@ -19,31 +19,42 @@ namespace Plane2D
         protected TriangleVertex2D(Point2D p) : base(p)
         {
         }
-        protected override void Add(Point2D p)
+
+        protected override PolygonVertex2D CreateVertex(Point2D p)
         {
-            if (!_isEmpty || p == null)
-                throw new ArgumentException(nameof(p));
-            TriangleVertex2D pv = new TriangleVertex2D(p)
+            PolygonVertex2D pv = new TriangleVertex2D(p)
             {
                 _isEmpty = false
             };
-
-            if (Next == null)
-            {
-                Next = pv;
-                Previous = pv;
-                pv.Next = this;
-                pv.Previous = this;
-            }
-            else
-            {
-                Previous.Next = pv;
-                pv.Previous = Previous;
-                pv.Next = this;
-                Previous = pv;
-            }
-            Count++;
+            return pv;
         }
+
+
+        //protected override void Add(Point2D p)
+        //{
+        //    if (!_isEmpty || p == null)
+        //        throw new ArgumentException(nameof(p));
+        //    TriangleVertex2D pv = new TriangleVertex2D(p)
+        //    {
+        //        _isEmpty = false
+        //    };
+
+        //    if (Next == null)
+        //    {
+        //        Next = pv;
+        //        Previous = pv;
+        //        pv.Next = this;
+        //        pv.Previous = this;
+        //    }
+        //    else
+        //    {
+        //        Previous.Next = pv;
+        //        pv.Previous = Previous;
+        //        pv.Next = this;
+        //        Previous = pv;
+        //    }
+        //    Count++;
+        //}
 
 
         public Segment2D OppositeSide => new Segment2D(Next, Previous);

@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Plane2D
 {
+    // Добавить
+    // тип: остро, прямо, тупо; равнобедр, равностор
+    // подобие
+
     public class Triangle2D : Polygon2D
     {
         public TriangleVertex2D A { get; private set; }

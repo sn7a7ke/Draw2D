@@ -65,7 +65,10 @@ namespace Draw2D
                 newPoints.Add(current);
             }
             poly = new Polygon2D(newPoints.ToArray());
-            poly.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
+
+
+            graph.DrawPolygon(pen, poly.GetPolygonInCoordinateSystem(origin).VerticesToPoint);
+            //poly.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
 
             infoForm.Image = bmp;
             infoForm.LeftBottomText = LeftBottomPoint.ToString();

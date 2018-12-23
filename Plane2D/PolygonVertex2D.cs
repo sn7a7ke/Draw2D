@@ -19,13 +19,12 @@ namespace Plane2D //2
         public int Count { get; protected set; } = 0;
         protected bool _isEmpty = true;
 
-        public PolygonVertex2D() : base(0, 0)
-        {
-        }
+        //public PolygonVertex2D() : base(0, 0)
+        //{
+        //}
         protected PolygonVertex2D(Point2D p) : base(p.X, p.Y)
         {
             //if (p == null) throw new ArgumentNullException(nameof(p));
-
             Count = 1;
             _isEmpty = false;
         }
@@ -35,15 +34,27 @@ namespace Plane2D //2
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
             Add(ps);
         }
-
-        protected virtual void Add(Point2D p)
+        protected virtual PolygonVertex2D CreateVertex(Point2D p)
         {
-            if (!_isEmpty || p == null)
-                throw new ArgumentException(nameof(p));
             PolygonVertex2D pv = new PolygonVertex2D(p)
             {
                 _isEmpty = false
             };
+            return pv;
+        }
+
+        protected void Add(Point2D p)
+        {
+            if (!_isEmpty || p == null)
+                throw new ArgumentException(nameof(p));
+
+
+            PolygonVertex2D pv = CreateVertex(p);
+            //PolygonVertex2D pv = new PolygonVertex2D(p)
+            //{
+            //    _isEmpty = false
+            //};
+
 
             if (Next == null)
             {

@@ -49,7 +49,13 @@ namespace Draw2D
             //polygon2D[1].
 
             polygons.Add(polygon2D);
-            polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
+
+
+            graph.DrawPolygon(pen, polygon2D.GetPolygonInCoordinateSystem(origin).VerticesToPoint);
+            //polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
+
+
+
             points = new List<Point>();
             _view.Image = bmp;
 
@@ -323,7 +329,12 @@ namespace Draw2D
             {
                 float penWidth = pen.Width;
                 pen.Width *= 2;
-                selectedPolygon2D.GetPolygonInCoordinateSystem(origin).Draw(newGraph, pen);
+
+
+                newGraph.DrawPolygon(pen, selectedPolygon2D.GetPolygonInCoordinateSystem(origin).VerticesToPoint);
+                //selectedPolygon2D.GetPolygonInCoordinateSystem(origin).Draw(newGraph, pen);
+
+
                 pen.Width = penWidth;
             }
             _view.OutputText = bmp.Width.ToString() + " " + bmp.Height.ToString();

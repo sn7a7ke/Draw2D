@@ -18,6 +18,75 @@ namespace Plane2D.Tests
 
         [Test]
         public void Distance() => Assert.IsTrue(Math.Abs(p1.Distance(p2) - Math.Sqrt(2 * 2 + 4 * 4)) < Point2D.epsilon);
+
+
+        [Test]
+        public void DistanceToRectangle_Exception()
+        {
+            Point2D p0 = new Point2D(2, 4.5);
+            Assert.Throws<ArgumentOutOfRangeException>(() => p0.DistanceToRectangle(p2, p1));
+        }
+        [Test]
+        public void DistanceToRectangle_On()
+        {
+            Point2D p0 = new Point2D(2, 4.5);
+            Assert.IsTrue(p0.DistanceToRectangle(p1, p2) == 0);
+        }
+        [Test]
+        public void DistanceToRectangle_Inside()
+        {
+            Point2D p0 = new Point2D(3.5, 4.5);
+            Assert.IsTrue(p0.DistanceToRectangle(p1, p2) == -1);
+        }
+        [Test]
+        public void DistanceToRectangle_Outside1()
+        {
+            Point2D p0 = new Point2D(2.5, 8);
+            Assert.IsTrue(Math.Abs(p0.DistanceToRectangle(p1, p2) - 1) < Point2D.epsilon);
+        }
+        [Test]
+        public void DistanceToRectangle_Outside2()
+        {
+            Point2D p0 = new Point2D(8, 10);
+            Assert.IsTrue(Math.Abs(p0.DistanceToRectangle(p1, p2) - 5) < Point2D.epsilon);
+        }
+        [Test]
+        public void DistanceToRectangle_Outside3()
+        {
+            Point2D p0 = new Point2D(6, 5);
+            Assert.IsTrue(Math.Abs(p0.DistanceToRectangle(p1, p2) - 2) < Point2D.epsilon);
+        }
+        [Test]
+        public void DistanceToRectangle_Outside4()
+        {
+            Point2D p0 = new Point2D(8, 0);
+            Assert.IsTrue(Math.Abs(p0.DistanceToRectangle(p1, p2) - 5) < Point2D.epsilon);
+        }
+        [Test]
+        public void DistanceToRectangle_Outside5()
+        {
+            Point2D p0 = new Point2D(3, 2);
+            Assert.IsTrue(Math.Abs(p0.DistanceToRectangle(p1, p2) - 1) < Point2D.epsilon);
+        }
+        [Test]
+        public void DistanceToRectangle_Outside6()
+        {
+            Point2D p0 = new Point2D(-2, 0);
+            Assert.IsTrue(Math.Abs(p0.DistanceToRectangle(p1, p2) - 5) < Point2D.epsilon);
+        }
+        [Test]
+        public void DistanceToRectangle_Outside7()
+        {
+            Point2D p0 = new Point2D(-3, 4);
+            Assert.IsTrue(Math.Abs(p0.DistanceToRectangle(p1, p2) - 5) < Point2D.epsilon);
+        }
+        [Test]
+        public void DistanceToRectangle_Outside8()
+        {
+            Point2D p0 = new Point2D(-1, 11);
+            Assert.IsTrue(Math.Abs(p0.DistanceToRectangle(p1, p2) - 5) < Point2D.epsilon);
+        }
+
         [Test]
         public void Middle() => Assert.IsTrue(Point2D.Middle(p1, p2).Equals(new Point2D(3, 5)));
         [Test]
@@ -55,7 +124,7 @@ namespace Plane2D.Tests
         public void OperatorEquals()
         {
             Point2D p2 = new Point2D(2, 3);
-            Assert.IsTrue(p1==p2);
+            Assert.IsTrue(p1 == p2);
         }
         [Test]
         public void OperatorNotEquals() => Assert.IsTrue(p1 != p2);

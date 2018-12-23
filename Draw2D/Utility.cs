@@ -39,7 +39,8 @@ namespace Draw2D
         public void DrawShapes(Graphics graph, List<Polygon2D> polygons)
         {
             for (int i = 0; i < polygons.Count; i++)
-                polygons[i].GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
+                graph.DrawPolygon(pen, polygons[i].GetPolygonInCoordinateSystem(origin).VerticesToPoint);
+            //polygons[i].GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
         }
         public void DrawPoints(Graphics graph, List<Point> points)
         {
