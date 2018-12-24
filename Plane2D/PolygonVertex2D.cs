@@ -75,7 +75,7 @@ namespace Plane2D //2
         public void Add(Point2D[] ps)
         {
             if (!_isEmpty || ps == null || ps.Length < 3)
-                return;  //throw new ArgumentException("You can add vertices only to the main vertex");
+                throw new ArgumentOutOfRangeException("You can add vertices only to the main vertex");
 
             X = ps[0].X;
             Y = ps[0].Y;
@@ -90,8 +90,7 @@ namespace Plane2D //2
         {
             get
             {
-                if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
-
+                //if (Next == Previous) throw new ArgumentOutOfRangeException("Polygon must have at least three vertices");
                 return Vector2D.AngleBetweenVectors(Previous, this, Next);
             }
         }

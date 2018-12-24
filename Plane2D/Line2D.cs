@@ -47,7 +47,7 @@ namespace Plane2D
         /// <summary>
         /// y = k * x + b; where k - Kk, b - Kb
         /// </summary>
-        public double? Kk //=> IsLineInKB ? (-A / B) : null;//ОШИБКА!
+        public double? Kk 
         {
             get
             {
@@ -70,11 +70,6 @@ namespace Plane2D
                     return null;
             }
         }
-        /// <summary>
-        /// function value: y = f(x)
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
 
         public bool IsParallel(Line2D l) => (A * l.B - B * l.A).IsZero();//A * l.B - B * l.A == 0;
         public bool IsParallelAxisX() => A.IsZero();//A == 0;
@@ -130,6 +125,11 @@ namespace Plane2D
             }
         }
 
+        /// <summary>
+        /// function value: y = f(x)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public List<double> FuncYFromX(double x)
         {
             if (B.IsZero()) //(B == 0)

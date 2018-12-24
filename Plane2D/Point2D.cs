@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plane2D
 {
@@ -124,31 +120,58 @@ namespace Plane2D
         {
             return (LeftBottom.X < X && X < RightTop.X) && (LeftBottom.Y < Y && Y < RightTop.Y);
         }
-        public PointPosition WhatQuarter
+
+        public static PointPosition WhatQuarter(Point2D p)
         {
-            get
+            if (Math.Abs(p.X) < epsilon)
+                return PointPosition.onAxisY;
+            if (Math.Abs(p.Y) < epsilon)
+                return PointPosition.onAxisX;
+            if (p.X > 0)
             {
-                if (Math.Abs(X) < epsilon)
-                    return PointPosition.onAxisY;
-                if (Math.Abs(Y) < epsilon)
-                    return PointPosition.onAxisX;
-                if (X > 0)
-                {
-                    if (Y > 0)
-                        return PointPosition.firstQuarter;
-                    else
-                        return PointPosition.fourthQuarter;
-                }
+                if (p.Y > 0)
+                    return PointPosition.firstQuarter;
                 else
-                {
-                    if (Y > 0)
-                        return PointPosition.secondQuarter;
-                    else
-                        return PointPosition.thirdQuarter;
-                }
+                    return PointPosition.fourthQuarter;
             }
+            else
+            {
+                if (p.Y > 0)
+                    return PointPosition.secondQuarter;
+                else
+                    return PointPosition.thirdQuarter;
+            }
+
+
         }
 
+        public PointPosition WhatQuarter() => WhatQuarter(this);
+
+        public PointPosition WhatQuarterRelatively(Point2D p) => (this - p).WhatQuarter();
+
+        //{
+        //    get
+        //    {
+        //        if (Math.Abs(X) < epsilon)
+        //            return PointPosition.onAxisY;
+        //        if (Math.Abs(Y) < epsilon)
+        //            return PointPosition.onAxisX;
+        //        if (X > 0)
+        //        {
+        //            if (Y > 0)
+        //                return PointPosition.firstQuarter;
+        //            else
+        //                return PointPosition.fourthQuarter;
+        //        }
+        //        else
+        //        {
+        //            if (Y > 0)
+        //                return PointPosition.secondQuarter;
+        //            else
+        //                return PointPosition.thirdQuarter;
+        //        }
+        //    }
+        //}
 
 
         public override bool Equals(object obj)
@@ -160,16 +183,16 @@ namespace Plane2D
         }
         public override int GetHashCode() => (int)X ^ (int)Y;
 
-        public static bool operator ==(Point2D obj1, Point2D obj2)
-        {
-            return Equals(obj1, obj2);
-        }
-        public static bool operator !=(Point2D obj1, Point2D obj2)
-        {
-            return !Equals(obj1, obj2);
-        }
 
         public override string ToString() => String.Format("({0},{1})", X, Y);
+
+        public static bool operator ==(Point2D obj1, Point2D obj2) => Equals(obj1, obj2);
+        public static bool operator !=(Point2D obj1, Point2D obj2) => !Equals(obj1, obj2);
+        public static Point2D operator +(Point2D p1, Point2D p2) => new Point2D(p1.X + p2.X, p1.Y + p2.Y);
+        public static Point2D operator -(Point2D p1, Point2D p2) => new Point2D(p1.X - p2.X, p1.Y - p2.Y);
+        public static Point2D operator +(Point2D p1, double number) => p1.Shift(number, number);
+        public static Point2D operator -(Point2D p1, double number) => p1.Shift(-number, -number);
+
 
         #region transformation to System.Drawing
         public static implicit operator PointF(Point2D p) => new PointF((float)p.X, (float)p.Y);
@@ -183,6 +206,8 @@ namespace Plane2D
         public static Point2D ToPoint2DFromCoordinateSystem(Point origin, Point p) =>
             new Point2D(p.X - origin.X, origin.Y - p.Y);
         #endregion
+
+
 
         public object Clone() => new Point2D(X, Y);
 

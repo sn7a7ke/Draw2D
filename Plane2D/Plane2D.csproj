@@ -52,9 +52,11 @@
   <ItemGroup>
     <Compile Include="Circle2D.cs" />
     <Compile Include="ExtendedDouble.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IFunction.cs" />
     <Compile Include="Line2D.cs" />
     <Compile Include="Point2D.cs" />
+    <Compile Include="Tests\Circle2DTest.cs" />
     <Compile Include="Tests\Line2DTest.cs" />
     <Compile Include="Tests\Point2DTest.cs" />
     <Compile Include="Polygon2D.cs" />

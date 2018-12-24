@@ -11,6 +11,8 @@ namespace Plane2D
     {
         public Circle2D(double xCenter, double yCenter, double radius) : base(xCenter, yCenter)
         {
+            if (radius.LessOrEqual(0.0))
+                throw new ArgumentOutOfRangeException("Radius must be more than 0");
             Radius = radius;
         }
         public Circle2D(Point2D Center, double radius) : this(Center.X, Center.Y, radius)
@@ -31,7 +33,7 @@ namespace Plane2D
 
         public List<double> FuncYFromX(double x)
         {
-            if (X.Less(MinX) || X.More(MaxX))
+            if (x.Less(MinX) || x.More(MaxX))
                 return null;
             List<double> answer = new List<double>();
             answer.Add(Y + Root(x - X));
@@ -40,7 +42,7 @@ namespace Plane2D
         }
         public List<double> InverseFuncXFromY(double y)
         {
-            if (X.Less(MinY) || X.More(MaxY))
+            if (y.Less(MinY) || y.More(MaxY))
                 return null;
             List<double> answer = new List<double>();
             answer.Add(X + Root(y - Y));
@@ -100,13 +102,23 @@ namespace Plane2D
             return new Point2D(xx, yy);
         }
 
-        //public Line2D GetTangent(Point2D p)
-        //{
-        //    if (IsOnTheCircle(p) != 0)
-        //        return null; // or exception?
-        //    if (Root()
-        //}
+        public Line2D GetTangent(Point2D p)
+        {
+            if (IsOnTheCircle(p) != 0)
+                return null; // or exception?
+            int signX = Math.Sign(p.X - X);
+            int signY = Math.Sign(p.Y - Y);
 
+            if (p.WhatQuarterRelatively(this) == PointPosition.onAxisX)
+                return new Line2D(1, 0, -(X + Radius * signX));
+            if (p.WhatQuarterRelatively(this) == PointPosition.onAxisY)
+                return new Line2D(0, 1, -(Y + Radius * signY));
+            double k = (X - p.X) * signX / Root(X - p.X);
+            double b = p.Y - k * p.X;
+            return new Line2D(k, b);
+        }
+
+        #region override Base
 
         public override Point2D Shift(double dx, double dy) => new Circle2D(base.Shift(dx, dy), Radius);
 
@@ -115,6 +127,8 @@ namespace Plane2D
         public override Point2D Symmetry(Point2D center) => new Circle2D(base.Symmetry(center), Radius);
 
         public override string ToString() => GetType().Name + " r" + Radius + " c" + Center;
+
+        #endregion
 
     }
 }

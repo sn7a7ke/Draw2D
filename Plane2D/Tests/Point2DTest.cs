@@ -88,6 +88,28 @@ namespace Plane2D.Tests
         }
 
         [Test]
+        public void WhatQuarter_OnX() => Assert.IsTrue(Point2D.WhatQuarter(new Point2D(7, 0)).Equals(Point2D.PointPosition.onAxisX));
+        [Test]
+        public void WhatQuarter_OnY() => Assert.IsTrue(Point2D.WhatQuarter(new Point2D(0, 7)).Equals(Point2D.PointPosition.onAxisY));
+        [Test]
+        public void WhatQuarter_1() => Assert.IsTrue(Point2D.WhatQuarter(new Point2D(3, 7)).Equals(Point2D.PointPosition.firstQuarter));
+        [Test]
+        public void WhatQuarter_2() => Assert.IsTrue(Point2D.WhatQuarter(new Point2D(-3, 7)).Equals(Point2D.PointPosition.secondQuarter));
+        [Test]
+        public void WhatQuarter_3() => Assert.IsTrue(Point2D.WhatQuarter(new Point2D(-3, -7)).Equals(Point2D.PointPosition.thirdQuarter));
+        [Test]
+        public void WhatQuarter_4() => Assert.IsTrue(Point2D.WhatQuarter(new Point2D(3, -7)).Equals(Point2D.PointPosition.fourthQuarter));
+
+
+        [Test]
+        public void WhatQuarterRelatively_OnY() => Assert.IsTrue(p1.WhatQuarterRelatively(new Point2D(2, 7)).Equals(Point2D.PointPosition.onAxisY));
+        [Test]
+        public void WhatQuarterRelatively_1() => Assert.IsTrue(p1.WhatQuarterRelatively(new Point2D(1, 1.7)).Equals(Point2D.PointPosition.firstQuarter));
+
+
+
+
+        [Test]
         public void Middle() => Assert.IsTrue(Point2D.Middle(p1, p2).Equals(new Point2D(3, 5)));
         [Test]
         public void Shift() => Assert.IsTrue(p1.Shift(2, 4).Equals(p2));
@@ -107,6 +129,22 @@ namespace Plane2D.Tests
             Point2D p3 = new Point2D(1, 15);
             Assert.IsTrue(Point2D.Max(p1, p2, p3).Equals(new Point2D(4, 15)));
         }
+
+
+        [Test]
+        public void OperatorPlus() => Assert.IsTrue((p1 + p2).Equals(new Point2D(6, 10)));
+        [Test]
+        public void OperatorMinus() => Assert.IsTrue((p1 - p2).Equals(new Point2D(-2, -4)));
+        [Test]
+        public void OperatorPlusNumber() => Assert.IsTrue((p1 + 3).Equals(new Point2D(5, 6)));
+        [Test]
+        public void OperatorMinusNumber() => Assert.IsTrue((p1 - 3).Equals(new Point2D(-1, 0)));
+
+
+
+
+
+
         [Test]
         public void CloneGood() => Assert.IsTrue(p1.Clone().Equals(p1));
         [Test]
