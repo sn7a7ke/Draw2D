@@ -51,9 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Circle2D.cs" />
-    <Compile Include="ExtendedDouble.cs" />
+    <Compile Include="DoubleComparer.cs" />
+    <Compile Include="DoubleExtended.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IFunction.cs" />
+    <Compile Include="IFunction2D.cs" />
+    <Compile Include="IMoveable2D.cs" />
     <Compile Include="Line2D.cs" />
     <Compile Include="Point2D.cs" />
     <Compile Include="Tests\Circle2DTest.cs" />

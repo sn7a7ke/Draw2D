@@ -47,22 +47,26 @@ namespace Plane2D
             }
         }
 
-        public override Polygon2D Shift(double dx, double dy)
+        #region IShape2D
+        public override IMoveable2D Shift(double dx, double dy)
         {
-            Point2D[] ps = base.Shift(dx, dy).GetVertices;
+            Point2D[] ps = ((Polygon2D)base.Shift(dx, dy)).GetVertices;
             return new Triangle2D(ps[0], ps[1], ps[2]);
         }
-        public override Polygon2D Rotate(double angle, Point2D center)
+        public override IMoveable2D Rotate(double angle, Point2D center)
         {
-            Point2D[] ps = base.Rotate(angle, center).GetVertices;
+            Point2D[] ps = ((Polygon2D)base.Rotate(angle, center)).GetVertices;
             return new Triangle2D(ps[0], ps[1], ps[2]);
         }
-        public override Polygon2D Rotate(double angle) => this.Rotate(angle, Center);
-        public override Polygon2D Symmetry(Point2D center)
+        public override IMoveable2D Rotate(double angle) => Rotate(angle, Center);
+        public override IMoveable2D Symmetry(Point2D center)
         {
-            Point2D[] ps = base.Symmetry(center).GetVertices;
+            Point2D[] ps = ((Polygon2D)base.Symmetry(center)).GetVertices;
             return new Triangle2D(ps[0], ps[1], ps[2]);
         }
+
+        #endregion        
+        
         //public override Polygon2D GetPolygonInCoordinateSystem(Point origin)
         //{
         //    Point2D[] vers = GetVertices;

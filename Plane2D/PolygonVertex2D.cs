@@ -103,6 +103,7 @@ namespace Plane2D //2
         }
 
 
+        #region IEnumerable
         public IEnumerator GetEnumerator()
         {
             if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
@@ -125,5 +126,6 @@ namespace Plane2D //2
                 currentNode = currentNode.Next;
             } while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
         }
+        #endregion
     }
 }

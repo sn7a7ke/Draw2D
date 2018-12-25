@@ -6,7 +6,7 @@ namespace Plane2D
     /// <summary>
     /// Point defined by coordinates: (X, Y)
     /// </summary>
-    public class Point2D : ICloneable //: ITransformation
+    public class Point2D : IMoveable2D, ICloneable //: ITransformation
     {
         public const double epsilon = 0.0000001;
 
@@ -15,12 +15,23 @@ namespace Plane2D
 
         public double X { get; protected set; }
         public double Y { get; protected set; }
+
         public double Distance(Point2D point) => Distance(this, point);
         public static double Distance(Point2D A, Point2D B) => Math.Sqrt(Math.Pow(A.X - B.X, 2) + Math.Pow(A.Y - B.Y, 2));
         public static Point2D Middle(Point2D A, Point2D B) => new Point2D((A.X + B.X) / 2, (A.Y + B.Y) / 2);
 
-        public virtual Point2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
-        public virtual Point2D Rotate(double angle, Point2D center)
+
+        #region IMoveable2D
+        //public string Name => throw new NotImplementedException();
+        //public bool IsConvex => true;
+        //public Point2D Center => this;
+        //public double Perimeter => 0;
+        //public double Square => 0;
+        //public Point2D LeftBottomRectangleVertex => this;
+        //public Point2D RightTopRectangleVertex => this;
+
+        public virtual IMoveable2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
+        public virtual IMoveable2D Rotate(double angle, Point2D center)
         {
             if (Math.Abs(angle) < epsilon)
                 return this;
@@ -28,7 +39,11 @@ namespace Plane2D
             double yy = (X - center.X) * Math.Sin(angle) + (Y - center.Y) * Math.Cos(angle) + center.Y;
             return new Point2D(xx, yy);
         }
-        public virtual Point2D Symmetry(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
+        public virtual IMoveable2D Rotate(double angle) => this;
+        public virtual IMoveable2D Symmetry(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
+        #endregion
+
+
 
         /// <summary>
         /// lower left corner of the circum rectangle
@@ -190,8 +205,8 @@ namespace Plane2D
         public static bool operator !=(Point2D obj1, Point2D obj2) => !Equals(obj1, obj2);
         public static Point2D operator +(Point2D p1, Point2D p2) => new Point2D(p1.X + p2.X, p1.Y + p2.Y);
         public static Point2D operator -(Point2D p1, Point2D p2) => new Point2D(p1.X - p2.X, p1.Y - p2.Y);
-        public static Point2D operator +(Point2D p1, double number) => p1.Shift(number, number);
-        public static Point2D operator -(Point2D p1, double number) => p1.Shift(-number, -number);
+        public static Point2D operator +(Point2D p1, double number) => (Point2D)p1.Shift(number, number);
+        public static Point2D operator -(Point2D p1, double number) => (Point2D)p1.Shift(-number, -number);
 
 
         #region transformation to System.Drawing

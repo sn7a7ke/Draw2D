@@ -80,6 +80,7 @@ namespace Plane2D
         public double DistanceFromPointToLine(Point2D p) => Math.Abs(A * p.X + B * p.Y + C) / Math.Sqrt(A * A + B * B);
         public Vector2D GetNormal => new Vector2D(A, B);
 
+
         #region IFunction
         public double MaxX
         {
@@ -146,7 +147,15 @@ namespace Plane2D
                 return new List<double>() { (-B * y - C) / A };
 
         }
+        public Line2D GetTangent(Point2D p)
+        {
+            if (FuncYFromX(p.X).Contains(p.Y, new DoubleComparer()))
+                return this;
+            return null;
+        }
+
         #endregion
+
 
         public Line2D PerpendicularFromPoint(Point2D p) => new Line2D(-B, A, B * p.X - A * p.Y);
         public Point2D PerpendicularFromPointToPointOnLine(Point2D p)

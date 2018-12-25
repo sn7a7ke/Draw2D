@@ -26,6 +26,18 @@ namespace Plane2D.Tests
         {
             Assert.IsTrue(Math.Abs(l1.DistanceFromPointToLine(new Point2D(6, 2)) - Math.Sqrt(20)) < Point2D.epsilon);
         }
+
+        [Test]
+        public void GetTangent()
+        {
+            Assert.IsTrue(l1.GetTangent(new Point2D(2, 0)).Equals(l1));
+        }
+        [Test]
+        public void GetTangent_Null()
+        {
+            Assert.IsNull(l1.GetTangent(new Point2D(4, 0)));
+        }
+
         [Test]
         public void PerpendicularFromPoint()
         {
@@ -58,7 +70,6 @@ namespace Plane2D.Tests
         {
             Assert.IsNull(l1.Intersect(l1));
         }
-
 
         [Test]
         public void EqualsGood()

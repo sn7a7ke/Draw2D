@@ -16,19 +16,6 @@ namespace Plane2D //2
     //where PolygonVertex2D : PolygonVertex2D, new()
     {
         protected PolygonVertex2D _head;
-        public int QuantityVertices { get; private set; }
-        public PolygonVertex2D this[int index]
-        {
-            get
-            {
-                if (index < 0 || index >= QuantityVertices)
-                    throw new ArgumentOutOfRangeException(nameof(index));
-                PolygonVertex2D current = _head;
-                for (int i = 0; i < index; i++, current = current.Next)
-                    ;
-                return current;
-            }
-        }
         public Polygon2D(params Point2D[] vertices)
         {
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
@@ -56,6 +43,19 @@ namespace Plane2D //2
             QuantityVertices = _head.Count;
         }
 
+        public int QuantityVertices { get; private set; }
+        public PolygonVertex2D this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= QuantityVertices)
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                PolygonVertex2D current = _head;
+                for (int i = 0; i < index; i++, current = current.Next)
+                    ;
+                return current;
+            }
+        }
         public Point2D[] GetVertices
         {
             get
@@ -68,6 +68,21 @@ namespace Plane2D //2
             }
         }
 
+
+        #region IShape
+        public string Name => ToString() + " S-" + Square;
+        public bool IsConvex
+        {
+            get
+            {
+                if (QuantityVertices < 4)
+                    return true;
+                if (AngleSum().Equal(AngleSumForConvex(QuantityVertices)))//(Math.Abs(AngleSum() - AngleSumForConvex(QuantityVertices)) < Point2D.epsilon)
+                    return true;
+                else
+                    return false;
+            }
+        }
         public Point2D Center
         {
             get
@@ -107,37 +122,37 @@ namespace Plane2D //2
                     return -1;//==== КАК!?? ===                
             }
         }
-
-        public virtual Polygon2D Shift(double dx, double dy)
-        {
-            Point2D[] vers = GetVertices;
-            for (int i = 0; i < vers.Length; i++)
-                vers[i] = vers[i].Shift(dx, dy);
-            return new Polygon2D(vers);
-        }
-        public virtual Polygon2D Rotate(double angle, Point2D center)
-        {
-            if (angle.IsZero())//(angle == 0)
-                return this;
-            Point2D[] vers = GetVertices;
-            for (int i = 0; i < vers.Length; i++)
-                vers[i] = vers[i].Rotate(angle, center);
-            return new Polygon2D(vers);
-        }
-        public virtual Polygon2D Rotate(double angle) => Rotate(angle, Center);
-        public virtual Polygon2D Symmetry(Point2D center)
-        {
-            Point2D[] vers = GetVertices;
-            for (int i = 0; i < vers.Length; i++)
-                vers[i] = vers[i].Symmetry(center);
-            return new Polygon2D(vers);
-        }
-
         /// <summary>
         /// Left Bottom Rectangle Vertex containing this Polygon
         /// </summary>
         public Point2D LeftBottomRectangleVertex => Point2D.Min(GetVertices);
         public Point2D RightTopRectangleVertex => Point2D.Max(GetVertices);
+
+        public virtual IMoveable2D Shift(double dx, double dy)
+        {
+            Point2D[] vers = GetVertices;
+            for (int i = 0; i < vers.Length; i++)
+                vers[i] = (Point2D)vers[i].Shift(dx, dy);
+            return new Polygon2D(vers);
+        }
+        public virtual IMoveable2D Rotate(double angle, Point2D center)
+        {
+            if (angle.IsZero())//(angle == 0)
+                return this;
+            Point2D[] vers = GetVertices;
+            for (int i = 0; i < vers.Length; i++)
+                vers[i] = (Point2D)vers[i].Rotate(angle, center);
+            return new Polygon2D(vers);
+        }
+        public virtual IMoveable2D Rotate(double angle) => Rotate(angle, Center);
+        public virtual IMoveable2D Symmetry(Point2D center)
+        {
+            Point2D[] vers = GetVertices;
+            for (int i = 0; i < vers.Length; i++)
+                vers[i] = (Point2D)vers[i].Symmetry(center);
+            return new Polygon2D(vers);
+        }
+        #endregion
 
 
         //TODO переделать логику
@@ -151,24 +166,11 @@ namespace Plane2D //2
             return sum;
         }
         public static double AngleSumForConvex(int n) => n < 3 ? 0 : (n - 2) * Math.PI;
-        public bool IsConvex
-        {
-            get
-            {
-                if (QuantityVertices < 4)
-                    return true;
-                if (AngleSum().Equal(AngleSumForConvex(QuantityVertices)))//(Math.Abs(AngleSum() - AngleSumForConvex(QuantityVertices)) < Point2D.epsilon)
-                    return true;
-                else
-                    return false;
-            }
-        }
 
         // НЕ РЕАЛИЗОВАНО!!!!!!
         public virtual bool IsWithoutIntersect => true;
 
 
-        public string Name => ToString() + " S-" + Square;
         public override string ToString() => GetType().Name + " v" + QuantityVertices + " c" + Center; //GetType().Name + " v" + QuantityVertices;
         public string VerticesToString(string separator = " ") => string.Join(separator, _head);
 
@@ -197,7 +199,5 @@ namespace Plane2D //2
                 return p;
             }
         }
-
-        //public void Draw(Graphics graph, Pen pen) => graph.DrawPolygon(pen, VerticesToPoint);
     }
 }

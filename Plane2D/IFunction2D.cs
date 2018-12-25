@@ -12,6 +12,8 @@ namespace Plane2D
         double MinY { get; }
         List<double> FuncYFromX(double x);
         List<double> InverseFuncXFromY(double y);
+        Line2D GetTangent(Point2D p);
+
         //List<double> Intersection(IFunction func);
     }
 }

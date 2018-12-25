@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plane2D
 {
-    // создать интерфейс функция
+    // окружность по трем точкам
     public class Circle2D : Point2D, IFunction2D, IShape2D
     {
         public Circle2D(double xCenter, double yCenter, double radius) : base(xCenter, yCenter)
@@ -49,6 +49,22 @@ namespace Plane2D
             answer.Add(X - Root(y - Y));
             return answer;
         }
+        public Line2D GetTangent(Point2D p)
+        {
+            if (IsOnTheCircle(p) != 0)
+                return null; // or exception?
+            int signX = Math.Sign(p.X - X);
+            int signY = Math.Sign(p.Y - Y);
+
+            if (p.WhatQuarterRelatively(this) == PointPosition.onAxisX)
+                return new Line2D(1, 0, -(X + Radius * signX));
+            if (p.WhatQuarterRelatively(this) == PointPosition.onAxisY)
+                return new Line2D(0, 1, -(Y + Radius * signY));
+            double k = (X - p.X) * signX / Root(X - p.X);
+            double b = p.Y - k * p.X;
+            return new Line2D(k, b);
+        }
+
         private double Root(double coordinate)
         {
             return Math.Sqrt(UnderRoot(coordinate));
@@ -78,6 +94,7 @@ namespace Plane2D
 
         #endregion
 
+
         /// <summary>
         /// Distance to closest point on circle
         /// </summary>
@@ -102,29 +119,13 @@ namespace Plane2D
             return new Point2D(xx, yy);
         }
 
-        public Line2D GetTangent(Point2D p)
-        {
-            if (IsOnTheCircle(p) != 0)
-                return null; // or exception?
-            int signX = Math.Sign(p.X - X);
-            int signY = Math.Sign(p.Y - Y);
-
-            if (p.WhatQuarterRelatively(this) == PointPosition.onAxisX)
-                return new Line2D(1, 0, -(X + Radius * signX));
-            if (p.WhatQuarterRelatively(this) == PointPosition.onAxisY)
-                return new Line2D(0, 1, -(Y + Radius * signY));
-            double k = (X - p.X) * signX / Root(X - p.X);
-            double b = p.Y - k * p.X;
-            return new Line2D(k, b);
-        }
 
         #region override Base
 
-        public override Point2D Shift(double dx, double dy) => new Circle2D(base.Shift(dx, dy), Radius);
-
-        public override Point2D Rotate(double angle, Point2D center) => new Circle2D(base.Rotate(angle, center), Radius);
-
-        public override Point2D Symmetry(Point2D center) => new Circle2D(base.Symmetry(center), Radius);
+        public override IMoveable2D Shift(double dx, double dy) => new Circle2D((Point2D)Shift(dx, dy), Radius);
+        public override IMoveable2D Rotate(double angle, Point2D center) => new Circle2D((Point2D)Rotate(angle, center), Radius);
+        public override IMoveable2D Rotate(double angle) => this;
+        public override IMoveable2D Symmetry(Point2D center) => new Circle2D((Point2D)Symmetry(center), Radius);
 
         public override string ToString() => GetType().Name + " r" + Radius + " c" + Center;
 
