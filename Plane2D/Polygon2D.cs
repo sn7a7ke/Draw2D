@@ -13,7 +13,6 @@ namespace Plane2D //2
     /// Polygon (n-gon; n>=3) defined by vertices (points): (X1, Y1) ... (Xn, Yn)
     /// </summary>
     public class Polygon2D : IShape2D
-    //where PolygonVertex2D : PolygonVertex2D, new()
     {
         protected PolygonVertex2D _head;
         public Polygon2D(params Point2D[] vertices)
@@ -23,15 +22,7 @@ namespace Plane2D //2
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
             
             _head = new PolygonVertex2D(vertices);
-            //_head = new PolygonVertex2D();
-            //_head.Add(vertices);
-
             QuantityVertices = _head.Count;
-
-            // ПЕРЕДЕЛАТЬ
-            //_head = new PolygonVertex2D();
-            //_head.Add(vertices);
-            //QuantityVertices = _head.Count;
         }
         protected Polygon2D(PolygonVertex2D head)
         {
@@ -56,6 +47,21 @@ namespace Plane2D //2
                 return current;
             }
         }
+        public PolygonVertex2D this[Point2D point]
+        {
+            get
+            {
+                if (point == null)
+                    return null;
+                PolygonVertex2D current = _head;
+                for (int i = 0; i < QuantityVertices; i++, current = current.Next)
+                    if (point==current)
+                        return current;
+                return null;
+            }
+        }
+        public Segment2D this[int vertex1, int vertex2] => new Segment2D(this[vertex1], this[vertex2]);
+
         public Point2D[] GetVertices
         {
             get
@@ -70,8 +76,8 @@ namespace Plane2D //2
 
 
         #region IShape
-        public string Name => ToString() + " S-" + Square;
-        public bool IsConvex
+        public virtual string Name => ToString() + " S-" + Square;
+        public virtual bool IsConvex
         {
             get
             {
@@ -83,7 +89,7 @@ namespace Plane2D //2
                     return false;
             }
         }
-        public Point2D Center
+        public virtual Point2D Center
         {
             get
             {
@@ -97,7 +103,7 @@ namespace Plane2D //2
                 return new Point2D(xx / QuantityVertices, yy / QuantityVertices);
             }
         }
-        public double Perimeter
+        public virtual double Perimeter
         {
             get
             {
@@ -107,7 +113,7 @@ namespace Plane2D //2
                 return perim;
             }
         }
-        public double Square
+        public virtual double Square
         {
             get
             {
@@ -125,8 +131,8 @@ namespace Plane2D //2
         /// <summary>
         /// Left Bottom Rectangle Vertex containing this Polygon
         /// </summary>
-        public Point2D LeftBottomRectangleVertex => Point2D.Min(GetVertices);
-        public Point2D RightTopRectangleVertex => Point2D.Max(GetVertices);
+        public virtual Point2D LeftBottomRectangleVertex => Point2D.Min(GetVertices);
+        public virtual Point2D RightTopRectangleVertex => Point2D.Max(GetVertices);
 
         public virtual IMoveable2D Shift(double dx, double dy)
         {
@@ -167,13 +173,17 @@ namespace Plane2D //2
         }
         public static double AngleSumForConvex(int n) => n < 3 ? 0 : (n - 2) * Math.PI;
 
-        // НЕ РЕАЛИЗОВАНО!!!!!!
+        
+        // === НЕ РЕАЛИЗОВАНО!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ===
         public virtual bool IsWithoutIntersect => true;
+        // =========================================================
 
 
         public override string ToString() => GetType().Name + " v" + QuantityVertices + " c" + Center; //GetType().Name + " v" + QuantityVertices;
         public string VerticesToString(string separator = " ") => string.Join(separator, _head);
 
+
+        #region System.Drawing
         public static Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps, Point origin)
         {
             Point2D[] vers = new Point2D[ps.Count];
@@ -199,5 +209,6 @@ namespace Plane2D //2
                 return p;
             }
         }
+        #endregion
     }
 }

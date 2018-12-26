@@ -36,6 +36,20 @@ namespace Plane2D
 
         public override string ToString() => String.Format("[{0}-{1}], Length-{2}", A, B, Length);
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Segment2D s))
+                return false;
+            bool AEgualsA = A.X.Equal(s.A.X) && A.Y.Equal(s.A.Y) && B.X.Equal(s.B.X) && B.Y.Equal(s.B.Y);
+            bool AEgualsB = A.X.Equal(s.B.X) && A.Y.Equal(s.B.Y) && B.X.Equal(s.A.X) && B.Y.Equal(s.A.Y);
+            return AEgualsA || AEgualsB;
+        }
+
+        public override int GetHashCode() => (int)A.X ^ (int)A.Y ^ (int)B.X ^ (int)B.Y;
+        public static bool operator ==(Segment2D obj1, Segment2D obj2) => Equals(obj1, obj2);
+        public static bool operator !=(Segment2D obj1, Segment2D obj2) => !Equals(obj1, obj2);
+
+
         public static implicit operator Vector2D(Segment2D s) => new Vector2D(s.A, s.B);
     }
 }

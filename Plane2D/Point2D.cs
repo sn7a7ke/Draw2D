@@ -22,14 +22,6 @@ namespace Plane2D
 
 
         #region IMoveable2D
-        //public string Name => throw new NotImplementedException();
-        //public bool IsConvex => true;
-        //public Point2D Center => this;
-        //public double Perimeter => 0;
-        //public double Square => 0;
-        //public Point2D LeftBottomRectangleVertex => this;
-        //public Point2D RightTopRectangleVertex => this;
-
         public virtual IMoveable2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
         public virtual IMoveable2D Rotate(double angle, Point2D center)
         {
@@ -42,7 +34,6 @@ namespace Plane2D
         public virtual IMoveable2D Rotate(double angle) => this;
         public virtual IMoveable2D Symmetry(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
         #endregion
-
 
 
         /// <summary>
@@ -62,6 +53,7 @@ namespace Plane2D
             }
             return p;
         }
+
         /// <summary>
         /// upper right corner of the circum rectangle
         /// </summary>
@@ -79,9 +71,6 @@ namespace Plane2D
             }
             return p;
         }
-
-
-        //public virtual void Draw(Graphics graph, Pen pen) => graph.DrawLine(pen, this, this);
 
         /// <summary>
         /// Distance to closest point on rectangle
@@ -109,9 +98,6 @@ namespace Plane2D
         /// <summary>
         /// closest coordinate
         /// </summary>
-        /// <param name="coordinate"></param>
-        /// <param name="min"></param>
-        /// <param name="max"></param>
         /// <returns>min: if coordinate less than min, 0: if coordinate between min and max, max: if coordinate more than max</returns>
         private double IntoRectangle(double coordinate, double min, double max)
         {
@@ -156,38 +142,11 @@ namespace Plane2D
                 else
                     return PointPosition.thirdQuarter;
             }
-
-
         }
 
         public PointPosition WhatQuarter() => WhatQuarter(this);
 
         public PointPosition WhatQuarterRelatively(Point2D p) => (this - p).WhatQuarter();
-
-        //{
-        //    get
-        //    {
-        //        if (Math.Abs(X) < epsilon)
-        //            return PointPosition.onAxisY;
-        //        if (Math.Abs(Y) < epsilon)
-        //            return PointPosition.onAxisX;
-        //        if (X > 0)
-        //        {
-        //            if (Y > 0)
-        //                return PointPosition.firstQuarter;
-        //            else
-        //                return PointPosition.fourthQuarter;
-        //        }
-        //        else
-        //        {
-        //            if (Y > 0)
-        //                return PointPosition.secondQuarter;
-        //            else
-        //                return PointPosition.thirdQuarter;
-        //        }
-        //    }
-        //}
-
 
         public override bool Equals(object obj)
         {
@@ -197,8 +156,6 @@ namespace Plane2D
             //return (Math.Abs(X - p.X) < epsilon && Math.Abs(Y - p.Y) < epsilon);
         }
         public override int GetHashCode() => (int)X ^ (int)Y;
-
-
         public override string ToString() => String.Format("({0},{1})", X, Y);
 
         public static bool operator ==(Point2D obj1, Point2D obj2) => Equals(obj1, obj2);
@@ -209,7 +166,7 @@ namespace Plane2D
         public static Point2D operator -(Point2D p1, double number) => (Point2D)p1.Shift(-number, -number);
 
 
-        #region transformation to System.Drawing
+        #region System.Drawing
         public static implicit operator PointF(Point2D p) => new PointF((float)p.X, (float)p.Y);
         public static implicit operator Point2D(PointF p) => new Point2D(p.X, p.Y);
         public static implicit operator Point(Point2D p) => new Point((int)p.X, (int)p.Y);

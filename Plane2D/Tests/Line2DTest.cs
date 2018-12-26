@@ -56,9 +56,16 @@ namespace Plane2D.Tests
             Assert.IsTrue(l1.PerpendicularFromPoint(new Point2D(1, 4)).Equals(new Line2D(1, 0, -1)));
         }
         [Test]
+        public void PerpendicularFromPoint_PointOnLine()
+        {
+            Line2D l1 = new Line2D(0, 1, -2);
+            Assert.IsTrue(l1.PerpendicularFromPoint(new Point2D(0, 2)).Equals(l2));
+        }
+
+        [Test]
         public void PerpendicularFromPointToPointOnLine()
         {
-            Assert.IsTrue(l1.PerpendicularFromPointToPointOnLine(new Point2D(6, 2)).Equals(new Point2D(2, 0)));
+            Assert.IsTrue(l1.IntersectPerpendicularFromPointWithLine(new Point2D(6, 2)).Equals(new Point2D(2, 0)));
         }
         [Test]
         public void Intersect()

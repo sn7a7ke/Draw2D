@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plane2D
 {
-    // окружность по трем точкам
+    // не надо наследовать от точки?
     public class Circle2D : Point2D, IFunction2D, IShape2D
     {
         public Circle2D(double xCenter, double yCenter, double radius) : base(xCenter, yCenter)
@@ -18,19 +18,42 @@ namespace Plane2D
         public Circle2D(Point2D Center, double radius) : this(Center.X, Center.Y, radius)
         {
         }
+        public static Circle2D GetCircle(Point2D p1, Point2D p2, Point2D p3)
+        {
+            Line2D l1 = new Line2D(p1, p2);
+            Point2D mp1 = Point2D.Middle(p1, p2);
+            Line2D l2;
+            Point2D mp2;
+            if (l1.IsOnLine(p3))
+                return null;
+            if (p1.X == p2.X)
+            {
+                l1 = new Line2D(p1, p3);
+                mp1 = Point2D.Middle(p1, p3);
+                l2 = new Line2D(p2, p3);
+                mp2 = Point2D.Middle(p2, p3);
+            }
+            else if (p2.X == p3.X)
+            {
+                l2 = new Line2D(p1, p3);
+                mp2 = Point2D.Middle(p1, p3);
+            }
+            else
+            {
+                l2 = new Line2D(p2, p3);
+                mp2 = Point2D.Middle(p2, p3);
+            }
+            Point2D center = l1.PerpendicularFromPoint(mp1).Intersect(l2.PerpendicularFromPoint(mp2));
+            return new Circle2D(center, center.Distance(p1));
+        }
         public double Radius { get; private set; }
 
 
         #region IFunction
-
         public double MaxX => X + Radius;
-
         public double MaxY => Y + Radius;
-
         public double MinX => X - Radius;
-
         public double MinY => Y - Radius;
-
         public List<double> FuncYFromX(double x)
         {
             if (x.Less(MinX) || x.More(MaxX))
@@ -64,7 +87,6 @@ namespace Plane2D
             double b = p.Y - k * p.X;
             return new Line2D(k, b);
         }
-
         private double Root(double coordinate)
         {
             return Math.Sqrt(UnderRoot(coordinate));
@@ -73,25 +95,17 @@ namespace Plane2D
         {
             return Radius * Radius - coordinate * coordinate;
         }
-
         #endregion
 
 
         #region IShape
-
         public Point2D LeftBottomRectangleVertex => new Point2D(MinX, MinY);
         public Point2D RightTopRectangleVertex => new Point2D(MaxX, MaxY);
-
         public string Name => ToString() + " S-" + Square;
-
         public bool IsConvex => true;
-
         public double Square => Math.PI * Radius * Radius;
-
         public double Perimeter => 2 * Math.PI * Radius;
-
         public Point2D Center => this;
-
         #endregion
 
 
@@ -121,15 +135,11 @@ namespace Plane2D
 
 
         #region override Base
-
         public override IMoveable2D Shift(double dx, double dy) => new Circle2D((Point2D)Shift(dx, dy), Radius);
         public override IMoveable2D Rotate(double angle, Point2D center) => new Circle2D((Point2D)Rotate(angle, center), Radius);
         public override IMoveable2D Rotate(double angle) => this;
         public override IMoveable2D Symmetry(Point2D center) => new Circle2D((Point2D)Symmetry(center), Radius);
-
-        public override string ToString() => GetType().Name + " r" + Radius + " c" + Center;
-
+        public override string ToString() => GetType().Name + " r" + Radius;// + " c" + Center;
         #endregion
-
     }
 }
