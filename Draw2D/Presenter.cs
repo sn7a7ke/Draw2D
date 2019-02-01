@@ -270,6 +270,9 @@ namespace Draw2D
                 return;
             }
 
+            //Test
+
+
             InfoForm infoForm = new InfoForm();
             InfoPresenter infoPresenter = new InfoPresenter(infoForm, selectedPolygon2D);
             infoForm.Show();
@@ -278,7 +281,7 @@ namespace Draw2D
             //polygons.Add(polygon2D);
             //// ОШИБКА!!!))) раскомментировать и перенести в метод Clear
             ////graph = Graphics.FromImage(bmp);
-            //polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
+            //polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen); 
             //_view.Image = bmp;
             //_view.OutputText = polygon2D.VerticesToString(Environment.NewLine);
         }
