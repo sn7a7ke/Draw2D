@@ -101,7 +101,7 @@ namespace Plane2D
         #region IShape
         public Point2D LeftBottomRectangleVertex => new Point2D(MinX, MinY);
         public Point2D RightTopRectangleVertex => new Point2D(MaxX, MaxY);
-        public string Name => ToString() + " S-" + Square;
+        public string Summary => ToString() + " S-" + Square;
         public bool IsConvex => true;
         public double Square => Math.PI * Radius * Radius;
         public double Perimeter => 2 * Math.PI * Radius;

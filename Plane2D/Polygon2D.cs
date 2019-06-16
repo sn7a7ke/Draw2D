@@ -20,7 +20,7 @@ namespace Plane2D //2
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
             if (vertices.Length < 3)
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
-            
+
             _head = new PolygonVertex2D(vertices);
             QuantityVertices = _head.Count;
         }
@@ -55,7 +55,7 @@ namespace Plane2D //2
                     return null;
                 PolygonVertex2D current = _head;
                 for (int i = 0; i < QuantityVertices; i++, current = current.Next)
-                    if (point==current)
+                    if (point == current)
                         return current;
                 return null;
             }
@@ -76,7 +76,18 @@ namespace Plane2D //2
 
 
         #region IShape
-        public virtual string Name => ToString() + " S-" + Square;
+        public virtual string Summary
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder(ToString() + Environment.NewLine);
+                sb.Append("IsConvex: " + IsConvex + Environment.NewLine);
+                sb.Append($"Perimeter: {Perimeter,10:#,###.00}" + Environment.NewLine);
+                sb.Append($"Square:   {Square,10:#,###.00}" + Environment.NewLine);
+                return sb.ToString();
+            }
+        }
+
         public virtual bool IsConvex
         {
             get
@@ -173,7 +184,7 @@ namespace Plane2D //2
         }
         public static double AngleSumForConvex(int n) => n < 3 ? 0 : (n - 2) * Math.PI;
 
-        
+
         // === НЕ РЕАЛИЗОВАНО!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ===
         public virtual bool IsWithoutIntersect => true;
         // =========================================================

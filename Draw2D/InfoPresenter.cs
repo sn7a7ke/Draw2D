@@ -74,7 +74,8 @@ namespace Draw2D
             infoForm.LeftBottomText = LeftBottomPoint.ToString();
             infoForm.RightTopText = new Point2D(infoForm.GetImageWidth * 100 / scale + LeftBottomPoint.X, infoForm.GetImageHeight * 100 / scale + LeftBottomPoint.Y).ToString();
 
-            infoForm.OutputText = LeftBottomPoint.ToString() + " " + scale.ToString()+ Environment.NewLine;
+            infoForm.OutputText = selectedPolygon2D.Summary + scale.ToString();
+            //infoForm.OutputText = LeftBottomPoint.ToString() + " " + scale.ToString()+ Environment.NewLine;
             if (selectedPolygon2D is Triangle2D tri)
             {
                 infoForm.OutputText += new Line2D(tri.IntersectionAltitudes, tri.IntersectionBisectors).DistanceFromPointToLine(tri.IntersectionMedians);

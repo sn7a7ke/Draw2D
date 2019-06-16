@@ -58,6 +58,9 @@
             this.nUD_DeltaY = new System.Windows.Forms.NumericUpDown();
             this.nUD_DeltaX = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tSBPolygon = new System.Windows.Forms.ToolStripButton();
+            this.tSBCircle = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -65,6 +68,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nUD_Angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_DeltaY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_DeltaX)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -75,7 +79,7 @@
             this.pictureBox.BackColor = System.Drawing.Color.White;
             this.pictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.BackgroundImage")));
             this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pictureBox.Location = new System.Drawing.Point(3, 30);
+            this.pictureBox.Location = new System.Drawing.Point(3, 56);
             this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox.MinimumSize = new System.Drawing.Size(601, 401);
             this.pictureBox.Name = "pictureBox";
@@ -174,7 +178,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 436);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 460);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 3;
@@ -187,7 +191,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(706, 410);
+            this.button1.Location = new System.Drawing.Point(706, 434);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
@@ -199,7 +203,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(0, 444);
+            this.label1.Location = new System.Drawing.Point(0, 468);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(27, 13);
             this.label1.TabIndex = 5;
@@ -209,7 +213,7 @@
             // 
             this.labelMouseLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelMouseLocation.AutoSize = true;
-            this.labelMouseLocation.Location = new System.Drawing.Point(24, 444);
+            this.labelMouseLocation.Location = new System.Drawing.Point(24, 468);
             this.labelMouseLocation.Name = "labelMouseLocation";
             this.labelMouseLocation.Size = new System.Drawing.Size(22, 13);
             this.labelMouseLocation.TabIndex = 6;
@@ -219,7 +223,7 @@
             // 
             this.Output.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Output.AutoSize = true;
-            this.Output.Location = new System.Drawing.Point(610, 28);
+            this.Output.Location = new System.Drawing.Point(610, 55);
             this.Output.Name = "Output";
             this.Output.Size = new System.Drawing.Size(10, 13);
             this.Output.TabIndex = 7;
@@ -228,7 +232,7 @@
             // SelectPoly
             // 
             this.SelectPoly.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SelectPoly.Location = new System.Drawing.Point(625, 409);
+            this.SelectPoly.Location = new System.Drawing.Point(625, 433);
             this.SelectPoly.Name = "SelectPoly";
             this.SelectPoly.Size = new System.Drawing.Size(75, 23);
             this.SelectPoly.TabIndex = 8;
@@ -248,7 +252,7 @@
             this.panel1.Controls.Add(this.nUD_DeltaY);
             this.panel1.Controls.Add(this.nUD_DeltaX);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(606, 243);
+            this.panel1.Location = new System.Drawing.Point(606, 267);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(174, 162);
             this.panel1.TabIndex = 9;
@@ -361,11 +365,45 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "X,Y:";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tSBPolygon,
+            this.tSBCircle});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(784, 25);
+            this.toolStrip1.TabIndex = 10;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tSBPolygon
+            // 
+            this.tSBPolygon.Checked = true;
+            this.tSBPolygon.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tSBPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tSBPolygon.Image = ((System.Drawing.Image)(resources.GetObject("tSBPolygon.Image")));
+            this.tSBPolygon.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tSBPolygon.Name = "tSBPolygon";
+            this.tSBPolygon.Size = new System.Drawing.Size(23, 22);
+            this.tSBPolygon.Text = "Polygon";
+            this.tSBPolygon.Click += new System.EventHandler(this.tSBPolygon_Click);
+            // 
+            // tSBCircle
+            // 
+            this.tSBCircle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tSBCircle.Image = ((System.Drawing.Image)(resources.GetObject("tSBCircle.Image")));
+            this.tSBCircle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tSBCircle.Name = "tSBCircle";
+            this.tSBCircle.Size = new System.Drawing.Size(23, 22);
+            this.tSBCircle.Text = "Circle";
+            this.tSBCircle.Click += new System.EventHandler(this.tSBCircle_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 458);
+            this.ClientSize = new System.Drawing.Size(784, 482);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.SelectPoly);
             this.Controls.Add(this.Output);
@@ -376,7 +414,7 @@
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(800, 496);
+            this.MinimumSize = new System.Drawing.Size(800, 520);
             this.Name = "MainForm";
             this.Text = "Draw2D";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
@@ -389,6 +427,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nUD_Angle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_DeltaY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_DeltaX)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -424,6 +464,9 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton tSBPolygon;
+        private System.Windows.Forms.ToolStripButton tSBCircle;
     }
 }
 

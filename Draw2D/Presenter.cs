@@ -93,7 +93,7 @@ namespace Draw2D
             {
                 ToolStripMenuItem[] mi = new ToolStripMenuItem[polygons.Count];
                 for (int i = 0; i < polygons.Count; i++)
-                    mi[i] = new ToolStripMenuItem(polygons[i].Name, null, ChooseShape, i.ToString());
+                    mi[i] = new ToolStripMenuItem(polygons[i].ToString(), null, ChooseShape, i.ToString());
                 ((ToolStripMenuItem)((ToolStripMenuItem)_view.MenuS.Items["Tools"]).DropDownItems["Choose"]).DropDownItems.AddRange(mi);
             }
         }
@@ -243,7 +243,7 @@ namespace Draw2D
             {
                 selectedPolygon2D = p;
                 RefreshPictureBox();
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder(selectedPolygon2D.ToString() + Environment.NewLine);
                 for (int i = 0; i < selectedPolygon2D.QuantityVertices; i++)
                 {
                     sb.Append("Vertex " + i + ": (" + selectedPolygon2D[i].X + ", " + selectedPolygon2D[i].Y + ")" + Environment.NewLine);
