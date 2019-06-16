@@ -30,18 +30,20 @@ namespace Draw2D
         private Polygon2D selectedPolygon2D;
         private Point origin;
 
+        const int minimumQuantityOfVertices = 3;
+
         private Utility util;
 
         public Presenter(IMainForm view)
         {
             _view = view;
-            bmp = new Bitmap(_view.GetImageWidth, _view.GetImageHeight);            
+            bmp = new Bitmap(_view.GetImageWidth, _view.GetImageHeight);
             graph = Graphics.FromImage(bmp); // _view.Graph;
             color = Color.DarkRed;
             pen = new Pen(color);
             origin = new Point(0, 400);
             util = new Utility(pen, origin);
-            util.DrawCoordinateAxes(graph,_view.GetImageWidth,_view.GetImageHeight);
+            util.DrawCoordinateAxes(graph, _view.GetImageWidth, _view.GetImageHeight);
 
             polygons = new List<Polygon2D>();
             polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
@@ -163,8 +165,8 @@ namespace Draw2D
                 }
                 else if (Point2D.Distance(mouseLocation, points[0]) <= deltaDraw)
                 {
-                    if (points.Count < 3)
-                        RemoveLastVertex(2);
+                    if (points.Count < minimumQuantityOfVertices)
+                        RemoveLastVertex(minimumQuantityOfVertices - 1);
                     else
                     {
                         polygon2D = Polygon2D.GetPolygonFromCoordinateSystem(points, origin);
@@ -180,7 +182,7 @@ namespace Draw2D
                     _view.SetCursorImage = Cursors.Cross;
                     _view.DoPictureBox_MouseMove -= _view_DoPictureBox_MouseMove_Draw;
 
-                    GC.Collect(0, GCCollectionMode.Forced);
+                    GC.Collect(0, GCCollectionMode.Forced); // === а надо ли??
                 }
                 else
                 {
@@ -251,29 +253,25 @@ namespace Draw2D
                 }
 
                 for (int i = 0; i < selectedPolygon2D.QuantityVertices; i++)
-                {
                     sb.Append("Angle " + i + ": " + selectedPolygon2D[i].AngleDegree + Environment.NewLine);
-                    //sb.Append(Environment.NewLine);
-                }
                 sb.Append("QuantityVertices: " + selectedPolygon2D.QuantityVertices + Environment.NewLine);
-                //sb.Append(Environment.NewLine);
                 sb.Append("Center: " + selectedPolygon2D.Center + Environment.NewLine);
-                //sb.Append(Environment.NewLine);
                 sb.Append("Perimeter: " + selectedPolygon2D.Perimeter + Environment.NewLine);
-                //sb.Append(Environment.NewLine);
                 sb.Append("Is convex: " + selectedPolygon2D.IsConvex);
                 _view.OutputText = sb.ToString();
             }
-
         }
 
         private void _view_DoInfo_Click(object sender, EventArgs e)
         {
-            if (selectedPolygon2D==null)
+            if (selectedPolygon2D == null)
             {
                 MessageBox.Show("Please, You must select polygon");
                 return;
             }
+
+            //Test
+
 
             InfoForm infoForm = new InfoForm();
             InfoPresenter infoPresenter = new InfoPresenter(infoForm, selectedPolygon2D);
@@ -283,7 +281,7 @@ namespace Draw2D
             //polygons.Add(polygon2D);
             //// ОШИБКА!!!))) раскомментировать и перенести в метод Clear
             ////graph = Graphics.FromImage(bmp);
-            //polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
+            //polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen); 
             //_view.Image = bmp;
             //_view.OutputText = polygon2D.VerticesToString(Environment.NewLine);
         }
@@ -312,7 +310,7 @@ namespace Draw2D
                     + "Center: " + selectedPolygon2D.Center + Environment.NewLine
                     + "Perimeter: " + selectedPolygon2D.Perimeter;
                 // + Environment.NewLine + "Angle1: " + selectedPolygon2D.;
-            }            
+            }
         }
         #endregion
 
@@ -325,7 +323,7 @@ namespace Draw2D
             newGraph = Graphics.FromImage(bmp);
             util.DrawCoordinateAxes(newGraph, _view.GetImageWidth, _view.GetImageHeight);
             util.DrawShapes(newGraph, polygons);
-            if (selectedPolygon2D!=null)
+            if (selectedPolygon2D != null)
             {
                 float penWidth = pen.Width;
                 pen.Width *= 2;

@@ -86,17 +86,17 @@ namespace Draw2D
             MessageBox.Show(About, "About");
         }
 
-        private void tSBPolygon_Click(object sender, EventArgs e)
-        {
-            tSBPolygon.Checked = true;
-            tSBCircle.Checked = false;
+        //private void tSBPolygon_Click(object sender, EventArgs e)
+        //{
+        //    tSBPolygon.Checked = true;
+        //    tSBCircle.Checked = false;
 
-        }
+        //}
 
-        private void tSBCircle_Click(object sender, EventArgs e)
-        {
-            tSBCircle.Checked = true;
-            tSBPolygon.Checked = false;
-        }
+        //private void tSBCircle_Click(object sender, EventArgs e)
+        //{
+        //    tSBCircle.Checked = true;
+        //    tSBPolygon.Checked = false;
+        //}
     }
 }
