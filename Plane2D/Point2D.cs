@@ -8,7 +8,7 @@ namespace Plane2D
     /// </summary>
     public class Point2D : IMoveable2D, ICloneable, IPoint2D //: ITransformation
     {
-        public const double epsilon = 0.0000001;
+        private static readonly double epsilon = DoubleExtended.Epsilon; //0.0000001;
 
         public Point2D(double x, double y) { X = x; Y = y; }
         private Point2D() { }

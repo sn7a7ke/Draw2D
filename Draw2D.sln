@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Draw2D", "Draw2D\Draw2D.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plane2D", "Plane2D\Plane2D.csproj", "{B31DACF1-3741-4098-ABE2-38CA15BFB58D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plane2D.Tests", "Plane2D.Tests\Plane2D.Tests.csproj", "{6A80A5AA-35BD-4962-A234-2172729D2A1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B31DACF1-3741-4098-ABE2-38CA15BFB58D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B31DACF1-3741-4098-ABE2-38CA15BFB58D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B31DACF1-3741-4098-ABE2-38CA15BFB58D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A80A5AA-35BD-4962-A234-2172729D2A1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A80A5AA-35BD-4962-A234-2172729D2A1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A80A5AA-35BD-4962-A234-2172729D2A1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A80A5AA-35BD-4962-A234-2172729D2A1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

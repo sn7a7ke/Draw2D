@@ -4,7 +4,7 @@ namespace Plane2D
 {
     public static class DoubleExtended
     {
-        public const double epsilon = 0.0000001;
+        private const double epsilon = 0.0000001;
         public static double Epsilon { get; set; } = epsilon;
         public static bool Equal(this double d1, double d2) => Math.Abs(d1 - d2) < Epsilon;
         public static bool IsZero(this double d1) => Equal(d1, 0.0);

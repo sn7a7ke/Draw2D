@@ -20,7 +20,7 @@ namespace Plane2D
         public Point2D Middle => Point2D.Middle(A, B);
         public double Length => A.Distance(B);
 
-        public static bool IsIntersectSegment(Segment2D AB, Segment2D CD)
+        public static bool IsIntersectSegmentABAndCD(Segment2D AB, Segment2D CD)
         {
             Vector2D vAB = AB;
             bool IntersectLineABWithSegmentCD = Math.Sign(vAB.VectorProduct(new Vector2D(AB.A, CD.A)) * vAB.VectorProduct(new Vector2D(AB.A, CD.B))) < 0;
@@ -29,9 +29,9 @@ namespace Plane2D
             return IntersectLineABWithSegmentCD && IntersectLineCDWithSegmentAB;
         }
 
-        public static bool IsIntersectSegment(Point2D A, Point2D B, Point2D C, Point2D D)
+        public static bool IsIntersectSegmentABAndCD(Point2D A, Point2D B, Point2D C, Point2D D)
         {
-            return IsIntersectSegment(new Segment2D(A, B), new Segment2D(C, D));
+            return IsIntersectSegmentABAndCD(new Segment2D(A, B), new Segment2D(C, D));
         }
 
         public override string ToString() => String.Format("[{0}-{1}], Length-{2}", A, B, Length);
