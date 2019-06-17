@@ -138,7 +138,7 @@ namespace Plane2D
         public override IMoveable2D Shift(double dx, double dy) => new Circle2D((Point2D)Shift(dx, dy), Radius);
         public override IMoveable2D Rotate(double angle, Point2D center) => new Circle2D((Point2D)Rotate(angle, center), Radius);
         public override IMoveable2D Rotate(double angle) => this;
-        public override IMoveable2D Symmetry(Point2D center) => new Circle2D((Point2D)Symmetry(center), Radius);
+        public override IMoveable2D SymmetryAboutPoint(Point2D center) => new Circle2D((Point2D)SymmetryAboutPoint(center), Radius);
         public override string ToString() => GetType().Name + " r" + Radius;// + " c" + Center;
         #endregion
     }

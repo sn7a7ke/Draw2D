@@ -81,7 +81,7 @@ namespace Plane2D
         public Vector2D GetNormal => new Vector2D(A, B);
 
 
-        #region IFunction
+        #region IFunction2D
         public double MaxX
         {
             get
@@ -130,7 +130,7 @@ namespace Plane2D
         /// function value: y = f(x)
         /// </summary>
         /// <param name="x"></param>
-        /// <returns></returns>
+        /// <returns>y</returns>
         public List<double> FuncYFromX(double x)
         {
             if (B.IsZero()) //(B == 0)

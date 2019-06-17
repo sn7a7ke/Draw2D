@@ -47,15 +47,11 @@ namespace Draw2D
 
             polygons = new List<Polygon2D>();
             polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
-            //TriangleVertex2D tri = new TriangleVertex2D();            
-            //polygon2D[1].
 
             polygons.Add(polygon2D);
 
 
             graph.DrawPolygon(pen, polygon2D.GetPolygonInCoordinateSystem(origin).VerticesToPoint);
-            //polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
-
 
 
             points = new List<Point>();
@@ -76,7 +72,7 @@ namespace Draw2D
 
             _view.DoClearToolStripMenuItem_Click += _view_DoClearToolStripMenuItem_Click;
             _view.DoToolsToolStripMenuItem_Click += _view_DoToolsToolStripMenuItem_Click;
-            _view.About = "Draw2D 2018" + Environment.NewLine + "© Sn7a7ke";
+            _view.About = "Draw2D 2018-2019" + Environment.NewLine + "© Sn7a7ke";
 
             //Line2D l1 = new Line2D(1, 2, 3);
             //Line2D l2 = new Line2D(2, 4, 6);
@@ -226,7 +222,7 @@ namespace Draw2D
             if (selectedPolygon2D != null)
             {
                 polygons.Remove(selectedPolygon2D);
-                selectedPolygon2D = (Polygon2D)selectedPolygon2D.Symmetry(new Point2D(_view.DeltaX, _view.DeltaY));
+                selectedPolygon2D = (Polygon2D)selectedPolygon2D.SymmetryAboutPoint(new Point2D(_view.DeltaX, _view.DeltaY));
                 polygons.Add(selectedPolygon2D);
                 RefreshPictureBox();
                 lastAngleFigureBmp = new Bitmap(bmp);

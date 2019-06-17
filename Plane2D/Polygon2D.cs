@@ -47,15 +47,15 @@ namespace Plane2D //2
                 return current;
             }
         }
-        public PolygonVertex2D this[Point2D point]
+        public PolygonVertex2D this[Point2D point2D]
         {
             get
             {
-                if (point == null)
+                if (point2D == null)
                     return null;
                 PolygonVertex2D current = _head;
                 for (int i = 0; i < QuantityVertices; i++, current = current.Next)
-                    if (point == current)
+                    if (point2D == current)
                         return current;
                 return null;
             }
@@ -162,11 +162,11 @@ namespace Plane2D //2
             return new Polygon2D(vers);
         }
         public virtual IMoveable2D Rotate(double angle) => Rotate(angle, Center);
-        public virtual IMoveable2D Symmetry(Point2D center)
+        public virtual IMoveable2D SymmetryAboutPoint(Point2D center)
         {
             Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
-                vers[i] = (Point2D)vers[i].Symmetry(center);
+                vers[i] = (Point2D)vers[i].SymmetryAboutPoint(center);
             return new Polygon2D(vers);
         }
         #endregion
@@ -195,13 +195,6 @@ namespace Plane2D //2
 
 
         #region System.Drawing
-        public static Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps, Point origin)
-        {
-            Point2D[] vers = new Point2D[ps.Count];
-            for (int i = 0; i < ps.Count; i++)
-                vers[i] = Point2D.ToPoint2DFromCoordinateSystem(origin, ps[i]);
-            return new Polygon2D(vers);
-        }
         public virtual Polygon2D GetPolygonInCoordinateSystem(Point origin)
         {
             Point2D[] vers = GetVertices;
@@ -209,6 +202,14 @@ namespace Plane2D //2
                 vers[i] = vers[i].ToPointInCoordinateSystem(origin);
             return new Polygon2D(vers);
         }
+        public static Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps, Point origin)
+        {
+            Point2D[] vers = new Point2D[ps.Count];
+            for (int i = 0; i < ps.Count; i++)
+                vers[i] = Point2D.ToPoint2DFromCoordinateSystem(origin, ps[i]);
+            return new Polygon2D(vers);
+        }
+
         public Point[] VerticesToPoint
         {
             get

@@ -32,8 +32,8 @@ namespace Plane2D
             {
                 Line2D l1 = new Line2D(A.Bisector.A, A.Bisector.B);
                 Line2D l2 = new Line2D(B.Bisector.A, B.Bisector.B);
-                Point2D interPoint = l1.Intersect(l2);
-                return interPoint;
+                Point2D interPoint2D = l1.Intersect(l2);
+                return interPoint2D;
                 //return new Line2D(A.Bisector.A, A.Bisector.B).Intersect(new Line2D(B.Bisector.A, B.Bisector.B));
             }
         }
@@ -67,9 +67,9 @@ namespace Plane2D
             return new Triangle2D(ps[0], ps[1], ps[2]);
         }
         public override IMoveable2D Rotate(double angle) => Rotate(angle, Center);
-        public override IMoveable2D Symmetry(Point2D center)
+        public override IMoveable2D SymmetryAboutPoint(Point2D center)
         {
-            Point2D[] ps = ((Polygon2D)base.Symmetry(center)).GetVertices;
+            Point2D[] ps = ((Polygon2D)base.SymmetryAboutPoint(center)).GetVertices;
             return new Triangle2D(ps[0], ps[1], ps[2]);
         }
 

@@ -116,7 +116,7 @@ namespace Plane2D.Tests
         [Test]
         public void Rotate() => Assert.IsTrue(p1.Rotate(Math.PI / 2, p2).Equals(new Point2D(8, 5)));
         [Test]
-        public void Symmetry() => Assert.IsTrue(p1.Symmetry(p2).Equals(new Point2D(6, 11)));
+        public void Symmetry() => Assert.IsTrue(p1.SymmetryAboutPoint(p2).Equals(new Point2D(6, 11)));
         [Test]
         public void Min()
         {

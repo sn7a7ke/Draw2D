@@ -72,7 +72,7 @@ namespace Plane2D //2
             }
             Count++;
         }
-        public void Add(Point2D[] ps)
+        protected void Add(Point2D[] ps)
         {
             if (!_isEmpty || ps == null || ps.Length < 3)
                 throw new ArgumentOutOfRangeException("You can add vertices only to the main vertex");
@@ -117,14 +117,15 @@ namespace Plane2D //2
         }
         IEnumerator<PolygonVertex2D> IEnumerable<PolygonVertex2D>.GetEnumerator()
         {
-            if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
+            return (IEnumerator<PolygonVertex2D>)GetEnumerator();
+            //if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
 
-            PolygonVertex2D currentNode = this;
-            do
-            {
-                yield return currentNode;
-                currentNode = currentNode.Next;
-            } while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
+            //PolygonVertex2D currentNode = this;
+            //do
+            //{
+            //    yield return currentNode;
+            //    currentNode = currentNode.Next;
+            //} while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
         }
         #endregion
     }

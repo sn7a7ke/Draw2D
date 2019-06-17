@@ -6,7 +6,7 @@ namespace Plane2D
     /// <summary>
     /// Point defined by coordinates: (X, Y)
     /// </summary>
-    public class Point2D : IMoveable2D, ICloneable //: ITransformation
+    public class Point2D : IMoveable2D, ICloneable, IPoint2D //: ITransformation
     {
         public const double epsilon = 0.0000001;
 
@@ -32,7 +32,7 @@ namespace Plane2D
             return new Point2D(xx, yy);
         }
         public virtual IMoveable2D Rotate(double angle) => this;
-        public virtual IMoveable2D Symmetry(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
+        public virtual IMoveable2D SymmetryAboutPoint(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
         #endregion
 
 
@@ -167,14 +167,14 @@ namespace Plane2D
 
 
         #region System.Drawing
+        //TODO выкинуть из: класса и наследников?
         public static implicit operator PointF(Point2D p) => new PointF((float)p.X, (float)p.Y);
         public static implicit operator Point2D(PointF p) => new Point2D(p.X, p.Y);
         public static implicit operator Point(Point2D p) => new Point((int)p.X, (int)p.Y);
         public static implicit operator Point2D(Point p) => new Point2D(p.X, p.Y);
-
-        //TODO выкинуть из: класса и наследников?
-        public Point ToPointInCoordinateSystem(Point origin) => new Point(origin.X + (int)X, origin.Y - (int)Y);
-        //TODO выкинуть из: класса и наследников?
+        
+        public Point ToPointInCoordinateSystem(Point origin) => 
+            new Point(origin.X + (int)X, origin.Y - (int)Y);
         public static Point2D ToPoint2DFromCoordinateSystem(Point origin, Point p) =>
             new Point2D(p.X - origin.X, origin.Y - p.Y);
         #endregion
