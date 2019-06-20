@@ -12,10 +12,6 @@ namespace Plane2D
         double DistanceToRectangle(Point2D LeftBottom, Point2D RightTop);
         bool Equals(object obj);
         int GetHashCode();
-        //IMoveable2D Rotate(double angle);
-        //IMoveable2D Rotate(double angle, Point2D center);
-        //IMoveable2D Shift(double dx, double dy);
-        //IMoveable2D SymmetryAboutPoint(Point2D center);
         Point ToPointInCoordinateSystem(Point origin);
         string ToString();
         Point2D.PointPosition WhatQuarter();

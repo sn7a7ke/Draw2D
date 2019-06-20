@@ -11,10 +11,10 @@ namespace Plane2D
         public Point2D A { get; private set; }
         public Point2D B { get; private set; }
 
-        public Segment2D(Point2D a, Point2D b)
+        public Segment2D(Point2D pointA, Point2D pointB)
         {
-            A = a ?? throw new ArgumentNullException(nameof(a));
-            B = b ?? throw new ArgumentNullException(nameof(b));
+            A = pointA ?? throw new ArgumentNullException(nameof(pointA));
+            B = pointB ?? throw new ArgumentNullException(nameof(pointB));
         }
 
         public Point2D Middle => Point2D.Middle(A, B);
@@ -29,20 +29,21 @@ namespace Plane2D
             return IntersectLineABWithSegmentCD && IntersectLineCDWithSegmentAB;
         }
 
-        public static bool IsIntersectSegmentABAndCD(Point2D A, Point2D B, Point2D C, Point2D D)
-        {
-            return IsIntersectSegmentABAndCD(new Segment2D(A, B), new Segment2D(C, D));
-        }
-
         public override string ToString() => String.Format("[{0}-{1}], Length-{2}", A, B, Length);
 
         public override bool Equals(object obj)
-        {
-            if (!(obj is Segment2D s))
+        {            
+            if (obj == null || !(obj is Segment2D))
                 return false;
-            bool AEgualsA = A.X.Equal(s.A.X) && A.Y.Equal(s.A.Y) && B.X.Equal(s.B.X) && B.Y.Equal(s.B.Y);
-            bool AEgualsB = A.X.Equal(s.B.X) && A.Y.Equal(s.B.Y) && B.X.Equal(s.A.X) && B.Y.Equal(s.A.Y);
-            return AEgualsA || AEgualsB;
+            return this.Equals(obj as Segment2D);
+        }
+        public bool Equals(Segment2D otherSegment)
+        {
+            if (otherSegment == null)
+                return false;
+            bool AEqualsA = A.X.Equal(otherSegment.A.X) && A.Y.Equal(otherSegment.A.Y) && B.X.Equal(otherSegment.B.X) && B.Y.Equal(otherSegment.B.Y);
+            bool AEqualsB = A.X.Equal(otherSegment.B.X) && A.Y.Equal(otherSegment.B.Y) && B.X.Equal(otherSegment.A.X) && B.Y.Equal(otherSegment.A.Y);
+            return AEqualsA || AEqualsB;
         }
 
         public override int GetHashCode() => (int)A.X ^ (int)A.Y ^ (int)B.X ^ (int)B.Y;

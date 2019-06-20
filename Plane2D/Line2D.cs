@@ -181,17 +181,21 @@ namespace Plane2D
         public override string ToString() => string.Format($"{A} * x + {B} * y + {C} = 0");
         public override bool Equals(object obj)
         {
-            if (!(obj is Line2D l))
+            if (obj == null || !(obj is Line2D))
+                return false;
+            return this.Equals(obj as Line2D);
+        }
+        public bool Equals(Line2D otherLine)
+        {
+            if (otherLine == null)
                 return false;
             // Детерминант матрицы 3х3 == 0 => строки взаимно зависимы
-            double det = A * l.B - A * l.C - B * l.A + B * l.C + C * l.A - C * l.B;
-            if (det.IsZero())
-                return true;
-            return false;
+            double det = A * otherLine.B - A * otherLine.C - B * otherLine.A + B * otherLine.C + C * otherLine.A - C * otherLine.B;
+            return det.IsZero();
         }
         public override int GetHashCode() => (A.IsZero()) ? (int)(A / B * 101 + C / B) : (int)(B / A * 101 + C / A); //(A != 0) ? (int)(B / A * 101 + C / A) : (int)(A / B * 101 + C / B);
 
-        public static bool operator ==(Line2D obj1, Line2D obj2) => obj1.Equals(obj2);
+        public static bool operator ==(Line2D obj1, Line2D obj2) => Equals(obj1, obj2); // obj1.Equals(obj2);
         public static bool operator !=(Line2D obj1, Line2D obj2) => !obj1.Equals(obj2);
     }
 }

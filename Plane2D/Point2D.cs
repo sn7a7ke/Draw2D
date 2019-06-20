@@ -147,11 +147,18 @@ namespace Plane2D
         public PointPosition WhatQuarterRelatively(Point2D p) => (this - p).WhatQuarter();
 
         public override bool Equals(object obj)
-        {
-            if (!(obj is Point2D p))
+        {            
+            if (obj == null || !(obj is Point2D))
                 return false;
-            return X.Equal(p.X) && Y.Equal(p.Y);
+            return this.Equals(obj as Point2D);
         }
+        public bool Equals(Point2D otherPoint)
+        {
+            if (otherPoint == null)
+                return false;
+            return X.Equal(otherPoint.X) && Y.Equal(otherPoint.Y);
+        }
+
         public override int GetHashCode() => (int)X ^ (int)Y;
         public override string ToString() => String.Format("({0},{1})", X, Y);
 
