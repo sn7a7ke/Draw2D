@@ -118,7 +118,6 @@ namespace Plane2D
         {
             double temp = Math.Pow(p.X - X, 2) + Math.Pow(p.Y - Y, 2) - Radius * Radius;
 
-            //if (Math.Abs(temp) < epsilon)
             if (temp.IsZero())
                 return 0;
             if (temp < 0)

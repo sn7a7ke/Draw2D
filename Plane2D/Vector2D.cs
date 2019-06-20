@@ -31,8 +31,7 @@ namespace Plane2D
         {
             double scalar = ScalarProduct(A, B);
             double lenTwo = (A.Length * B.Length);
-            //double lenTwo = (LengthVector(A) * LengthVector(B));
-            if (Math.Abs(scalar).Equal(lenTwo)) //(Math.Abs(Math.Abs(scalar) - lenTwo) < epsilon)
+            if (Math.Abs(scalar).Equal(lenTwo)) 
                 lenTwo = scalar;
             double angle = Math.Acos(scalar / lenTwo);
             return angle;
@@ -49,23 +48,7 @@ namespace Plane2D
         public override IMoveable2D Rotate(double angle, Point2D center) => new Vector2D((Point2D)new Point2D(X, Y).Rotate(angle, center));
         public override IMoveable2D Rotate(double angle) => new Vector2D((Point2D)new Point2D(X, Y).Rotate(angle, new Point2D(0,0)));
         public override IMoveable2D SymmetryAboutPoint(Point2D center) => new Vector2D((Point2D)new Point2D(X, Y).SymmetryAboutPoint(center));
-
-        //public override void Draw(Graphics graph, Pen pen)
-        //{
-        //    //pen.CustomEndCap = new AdjustableArrowCap(5, 5, false);
-        //    // pen СТРЕЛОЧКА!!!
-        //    graph.DrawLine(pen, new Point(0, 0), this);
-        //}
-
-        //public override bool Equals(object obj)
-        //{
-        //    if (!(obj is Vector2D p))
-        //        return false;
-        //    return (Math.Abs(X - p.X) < epsilon && Math.Abs(Y - p.Y) < epsilon);
-        //    //return (X == p.X && Y == p.Y);
-        //}
-
-        //public override int GetHashCode() => base.GetHashCode();
+ 
         public static Vector2D operator +(Vector2D v1, Vector2D v2) => v1.Add(v2);
         public static Vector2D operator -(Vector2D v1, Vector2D v2) => v1.Sub(v2);
         public static Vector2D operator *(Vector2D v1, double num) => v1.MulByNumber(num);

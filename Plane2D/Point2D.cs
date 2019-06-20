@@ -8,8 +8,6 @@ namespace Plane2D
     /// </summary>
     public class Point2D : IMoveable2D, ICloneable, IPoint2D //: ITransformation
     {
-        private static readonly double epsilon = DoubleExtended.Epsilon; //0.0000001;
-
         public Point2D(double x, double y) { X = x; Y = y; }
         private Point2D() { }
 
@@ -25,7 +23,7 @@ namespace Plane2D
         public virtual IMoveable2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
         public virtual IMoveable2D Rotate(double angle, Point2D center)
         {
-            if (Math.Abs(angle) < epsilon)
+            if (Math.Abs(angle).IsZero()) 
                 return this;
             double xx = (X - center.X) * Math.Cos(angle) - (Y - center.Y) * Math.Sin(angle) + center.X;
             double yy = (X - center.X) * Math.Sin(angle) + (Y - center.Y) * Math.Cos(angle) + center.Y;
@@ -101,20 +99,20 @@ namespace Plane2D
         /// <returns>min: if coordinate less than min, 0: if coordinate between min and max, max: if coordinate more than max</returns>
         private double IntoRectangle(double coordinate, double min, double max)
         {
-            if (min - coordinate > epsilon)
+            if (coordinate.Less(min))
                 return min;
-            if (coordinate - max > epsilon)
+            if (coordinate.More(max))
                 return max;
             else
-                return 0;
+                return 0;            
         }
         private bool OnRectangle(Point2D LeftBottom, Point2D RightTop)
         {
-            return ((Math.Abs(X - LeftBottom.X) < epsilon ||
-                    Math.Abs(X - RightTop.X) < epsilon) &&
+            return ((Math.Abs(X - LeftBottom.X).IsZero() ||
+                    Math.Abs(X - RightTop.X).IsZero()) &&
                     IntoRectangle(Y, LeftBottom.Y, RightTop.Y) == 0) ||
-                    ((Math.Abs(Y - LeftBottom.Y) < epsilon ||
-                    Math.Abs(Y - RightTop.Y) < epsilon) &&
+                    ((Math.Abs(Y - LeftBottom.Y).IsZero() ||
+                    Math.Abs(Y - RightTop.Y).IsZero()) &&
                     IntoRectangle(X, LeftBottom.X, RightTop.X) == 0);
         }
         private bool IntoRectangle(Point2D LeftBottom, Point2D RightTop)
@@ -124,9 +122,9 @@ namespace Plane2D
 
         public static PointPosition WhatQuarter(Point2D p)
         {
-            if (Math.Abs(p.X) < epsilon)
+            if (Math.Abs(p.X).IsZero()) 
                 return PointPosition.onAxisY;
-            if (Math.Abs(p.Y) < epsilon)
+            if (Math.Abs(p.Y).IsZero()) 
                 return PointPosition.onAxisX;
             if (p.X > 0)
             {
@@ -153,7 +151,6 @@ namespace Plane2D
             if (!(obj is Point2D p))
                 return false;
             return X.Equal(p.X) && Y.Equal(p.Y);
-            //return (Math.Abs(X - p.X) < epsilon && Math.Abs(Y - p.Y) < epsilon);
         }
         public override int GetHashCode() => (int)X ^ (int)Y;
         public override string ToString() => String.Format("({0},{1})", X, Y);

@@ -94,7 +94,7 @@ namespace Plane2D //2
             {
                 if (QuantityVertices < 4)
                     return true;
-                if (AngleSum().Equal(AngleSumForConvex(QuantityVertices)))//(Math.Abs(AngleSum() - AngleSumForConvex(QuantityVertices)) < Point2D.epsilon)
+                if (AngleSum().Equal(AngleSumForConvex(QuantityVertices)))
                     return true;
                 else
                     return false;

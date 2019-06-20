@@ -185,7 +185,7 @@ namespace Plane2D
                 return false;
             // Детерминант матрицы 3х3 == 0 => строки взаимно зависимы
             double det = A * l.B - A * l.C - B * l.A + B * l.C + C * l.A - C * l.B;
-            if (det.IsZero())//(Math.Abs(det) < Point2D.epsilon)
+            if (det.IsZero())
                 return true;
             return false;
         }
