@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Plane2D
 {
+    /// <summary>
+    /// Vector with center (0,0)
+    /// </summary>
     public class Vector2D : Point2D
     {
         public Vector2D(double x, double y) : base(x, y) { }
@@ -24,7 +27,6 @@ namespace Plane2D
 
         public static double VectorProduct(Vector2D A, Vector2D B) => A.X * B.Y - A.Y * B.X;
         public static double ScalarProduct(Vector2D A, Vector2D B) => A.X * B.X + A.Y * B.Y;
-        //public static double LengthVector(Vector2D A) => Math.Sqrt(A.X * A.X + A.Y * A.Y);
 
         // Если угол больше 180 градусов ??????????????????????????????????????
         public static double AngleBetweenVectors(Vector2D A, Vector2D B)
@@ -45,8 +47,8 @@ namespace Plane2D
         }
 
         public override IMoveable2D Shift(double dx, double dy) => new Vector2D((Point2D)new Point2D(X,Y).Shift(dx, dy));
-        public override IMoveable2D Rotate(double angle, Point2D center) => new Vector2D((Point2D)new Point2D(X, Y).Rotate(angle, center));
-        public override IMoveable2D Rotate(double angle) => new Vector2D((Point2D)new Point2D(X, Y).Rotate(angle, new Point2D(0,0)));
+        public override IMoveable2D RotateAroundThePoint(double angle, Point2D center) => new Vector2D((Point2D)new Point2D(X, Y).RotateAroundThePoint(angle, center));
+        public override IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => new Vector2D((Point2D)new Point2D(X, Y).RotateAroundThePoint(angle, new Point2D(0,0)));
         public override IMoveable2D SymmetryAboutPoint(Point2D center) => new Vector2D((Point2D)new Point2D(X, Y).SymmetryAboutPoint(center));
  
         public static Vector2D operator +(Vector2D v1, Vector2D v2) => v1.Add(v2);

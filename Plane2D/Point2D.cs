@@ -21,7 +21,7 @@ namespace Plane2D
 
         #region IMoveable2D
         public virtual IMoveable2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
-        public virtual IMoveable2D Rotate(double angle, Point2D center)
+        public virtual IMoveable2D RotateAroundThePoint(double angle, Point2D center)
         {
             if (Math.Abs(angle).IsZero()) 
                 return this;
@@ -29,7 +29,7 @@ namespace Plane2D
             double yy = (X - center.X) * Math.Sin(angle) + (Y - center.Y) * Math.Cos(angle) + center.Y;
             return new Point2D(xx, yy);
         }
-        public virtual IMoveable2D Rotate(double angle) => this;
+        public virtual IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => this;
         public virtual IMoveable2D SymmetryAboutPoint(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
         #endregion
 

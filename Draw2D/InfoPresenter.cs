@@ -14,13 +14,7 @@ namespace Draw2D
         private Polygon2D poly;
         private Point2D LeftBottomPoint;
         private Point2D RightTopPoint;
-        private Point2D CenterPoint;
         private Point origin;
-        //private Point2D NewLeftBottomPoint;
-        //private Point2D NewRightTopPoint;
-        //private Point2D NewCenterPoint;
-        //private int width;
-        //private int height;
         private int widthPoly;
         private int heightPoly;
         private int[] scales = { 1, 2, 5, 10, 20, 50, 100};
@@ -39,9 +33,8 @@ namespace Draw2D
             this.infoForm = infoForm;
             this.selectedPolygon2D = selectedPolygon2D ?? throw new ArgumentNullException(nameof(selectedPolygon2D));
 
-            LeftBottomPoint = selectedPolygon2D.LeftBottomRectangleVertex;
-            RightTopPoint = selectedPolygon2D.RightTopRectangleVertex;
-            CenterPoint = Point2D.Middle(LeftBottomPoint, RightTopPoint);
+            LeftBottomPoint = new Point2D(selectedPolygon2D.MinX, selectedPolygon2D.MinY);
+            RightTopPoint = new Point2D(selectedPolygon2D.MaxX, selectedPolygon2D.MaxY);
             widthPoly = (int)(RightTopPoint.X - LeftBottomPoint.X);
             heightPoly = (int)(RightTopPoint.Y - LeftBottomPoint.Y);
             scale = GetScale();

@@ -99,8 +99,6 @@ namespace Plane2D
 
 
         #region IShape
-        public Point2D LeftBottomRectangleVertex => new Point2D(MinX, MinY);
-        public Point2D RightTopRectangleVertex => new Point2D(MaxX, MaxY);
         public string Summary => ToString() + " S-" + Square;
         public bool IsConvex => true;
         public double Square => Math.PI * Radius * Radius;
@@ -135,8 +133,8 @@ namespace Plane2D
 
         #region override Base
         public override IMoveable2D Shift(double dx, double dy) => new Circle2D((Point2D)Shift(dx, dy), Radius);
-        public override IMoveable2D Rotate(double angle, Point2D center) => new Circle2D((Point2D)Rotate(angle, center), Radius);
-        public override IMoveable2D Rotate(double angle) => this;
+        public override IMoveable2D RotateAroundThePoint(double angle, Point2D center) => new Circle2D((Point2D)RotateAroundThePoint(angle, center), Radius);
+        public override IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => this;
         public override IMoveable2D SymmetryAboutPoint(Point2D center) => new Circle2D((Point2D)SymmetryAboutPoint(center), Radius);
         public override string ToString() => GetType().Name + " r" + Radius;// + " c" + Center;
         #endregion

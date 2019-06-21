@@ -22,21 +22,12 @@ namespace Plane2D
         }
         public Line2D(double k, double b) : this(1, -k, -b)
         {
-            //A = 1;
-            //B = -k;
-            //C = -b;
         }
         public Line2D(Point2D p1, Point2D p2) : this(p2.Y - p1.Y, p1.X - p2.X, p1.Y * p2.X - p1.X * p2.Y)
         {
-            //A = p2.Y - p1.Y;
-            //B = p1.X - p2.X;
-            //C = p1.Y * p2.X - p1.X * p2.Y;
         }
         public Line2D(Vector2D vNormal, Point2D pVia) : this(vNormal.X, vNormal.Y, -vNormal.X * pVia.X - vNormal.Y * pVia.Y)
         {
-            //A = vNormal.X;
-            //B = vNormal.Y;
-            //C = -A * pVia.X - B * pVia.Y;
         }
 
         public double A { get; private set; }

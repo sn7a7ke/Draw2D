@@ -57,6 +57,7 @@
     <Compile Include="IFunction2D.cs" />
     <Compile Include="IMoveable2D.cs" />
     <Compile Include="IPoint2D.cs" />
+    <Compile Include="IScope.cs" />
     <Compile Include="Line2D.cs" />
     <Compile Include="Point2D.cs" />
     <Compile Include="Polygon2D.cs" />

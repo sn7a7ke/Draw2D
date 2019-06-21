@@ -209,7 +209,7 @@ namespace Draw2D
             if (selectedPolygon2D != null && _view.Angle != 0)
             {
                 polygons.Remove(selectedPolygon2D);
-                selectedPolygon2D = (Polygon2D)selectedPolygon2D.Rotate((double)_view.Angle,
+                selectedPolygon2D = (Polygon2D)selectedPolygon2D.RotateAroundThePoint((double)_view.Angle,
                     new Point2D(_view.DeltaX, _view.DeltaY));
                 polygons.Add(selectedPolygon2D);
                 RefreshPictureBox();

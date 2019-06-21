@@ -34,7 +34,6 @@ namespace Plane2D
                 Line2D l2 = new Line2D(B.Bisector.A, B.Bisector.B);
                 Point2D interPoint2D = l1.Intersect(l2);
                 return interPoint2D;
-                //return new Line2D(A.Bisector.A, A.Bisector.B).Intersect(new Line2D(B.Bisector.A, B.Bisector.B));
             }
         }
 
@@ -61,12 +60,12 @@ namespace Plane2D
             Point2D[] ps = ((Polygon2D)base.Shift(dx, dy)).GetVertices;
             return new Triangle2D(ps[0], ps[1], ps[2]);
         }
-        public override IMoveable2D Rotate(double angle, Point2D center)
+        public override IMoveable2D RotateAroundThePoint(double angle, Point2D center)
         {
-            Point2D[] ps = ((Polygon2D)base.Rotate(angle, center)).GetVertices;
+            Point2D[] ps = ((Polygon2D)base.RotateAroundThePoint(angle, center)).GetVertices;
             return new Triangle2D(ps[0], ps[1], ps[2]);
         }
-        public override IMoveable2D Rotate(double angle) => Rotate(angle, Center);
+        public override IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => RotateAroundThePoint(angle, Center);
         public override IMoveable2D SymmetryAboutPoint(Point2D center)
         {
             Point2D[] ps = ((Polygon2D)base.SymmetryAboutPoint(center)).GetVertices;

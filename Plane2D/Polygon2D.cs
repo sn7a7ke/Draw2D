@@ -139,11 +139,11 @@ namespace Plane2D //2
                     return -1;//==== КАК!?? ===                
             }
         }
-        /// <summary>
-        /// Left Bottom Rectangle Vertex containing this Polygon
-        /// </summary>
-        public virtual Point2D LeftBottomRectangleVertex => Point2D.Min(GetVertices);
-        public virtual Point2D RightTopRectangleVertex => Point2D.Max(GetVertices);
+
+        public double MaxX => Point2D.Max(GetVertices).X;
+        public double MaxY => Point2D.Max(GetVertices).Y;
+        public double MinX => Point2D.Min(GetVertices).X;
+        public double MinY => Point2D.Min(GetVertices).Y;
 
         public virtual IMoveable2D Shift(double dx, double dy)
         {
@@ -152,16 +152,16 @@ namespace Plane2D //2
                 vers[i] = (Point2D)vers[i].Shift(dx, dy);
             return new Polygon2D(vers);
         }
-        public virtual IMoveable2D Rotate(double angle, Point2D center)
+        public virtual IMoveable2D RotateAroundThePoint(double angle, Point2D center)
         {
             if (angle.IsZero())//(angle == 0)
                 return this;
             Point2D[] vers = GetVertices;
             for (int i = 0; i < vers.Length; i++)
-                vers[i] = (Point2D)vers[i].Rotate(angle, center);
+                vers[i] = (Point2D)vers[i].RotateAroundThePoint(angle, center);
             return new Polygon2D(vers);
         }
-        public virtual IMoveable2D Rotate(double angle) => Rotate(angle, Center);
+        public virtual IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => RotateAroundThePoint(angle, Center);
         public virtual IMoveable2D SymmetryAboutPoint(Point2D center)
         {
             Point2D[] vers = GetVertices;
