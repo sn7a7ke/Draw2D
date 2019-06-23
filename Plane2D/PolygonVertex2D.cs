@@ -117,15 +117,15 @@ namespace Plane2D //2
         }
         IEnumerator<PolygonVertex2D> IEnumerable<PolygonVertex2D>.GetEnumerator()
         {
-            return (IEnumerator<PolygonVertex2D>)GetEnumerator();
-            //if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
+            //return (IEnumerator<PolygonVertex2D>)GetEnumerator();
+            if (Next == Previous) throw new ArgumentException("Polygon must have at least three vertices");
 
-            //PolygonVertex2D currentNode = this;
-            //do
-            //{
-            //    yield return currentNode;
-            //    currentNode = currentNode.Next;
-            //} while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
+            PolygonVertex2D currentNode = this;
+            do
+            {
+                yield return currentNode;
+                currentNode = currentNode.Next;
+            } while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
         }
         #endregion
     }
