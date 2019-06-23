@@ -48,7 +48,7 @@ namespace Plane2D
 
         public override IMoveable2D Shift(double dx, double dy) => new Vector2D((Point2D)new Point2D(X,Y).Shift(dx, dy));
         public override IMoveable2D RotateAroundThePoint(double angle, Point2D center) => new Vector2D((Point2D)new Point2D(X, Y).RotateAroundThePoint(angle, center));
-        public override IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => new Vector2D((Point2D)new Point2D(X, Y).RotateAroundThePoint(angle, new Point2D(0,0)));
+        public override IMoveable2D RotateAroundTheCenterOfShape(double angle) => new Vector2D((Point2D)new Point2D(X, Y).RotateAroundThePoint(angle, new Point2D(0,0)));
         public override IMoveable2D SymmetryAboutPoint(Point2D center) => new Vector2D((Point2D)new Point2D(X, Y).SymmetryAboutPoint(center));
  
         public static Vector2D operator +(Vector2D v1, Vector2D v2) => v1.Add(v2);

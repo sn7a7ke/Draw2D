@@ -46,7 +46,9 @@ namespace Plane2D.Tests
             Point2D p2 = new Point2D(1, 5);
             Point2D p3 = new Point2D(4, 1);
             Point2D center = new Point2D(2.5, 3);
-            Assert.IsTrue(Circle2D.GetCircle(p1, p2, p3) == new Circle2D(center, 2.5));
+            var cir1 = Circle2D.GetCircle(p1, p2, p3);
+            var cir2 = new Circle2D(center, 2.5);
+            Assert.IsTrue( cir1 == cir2);
         }
         [Test]
         public void GetCircle_Vertical23()
@@ -73,7 +75,8 @@ namespace Plane2D.Tests
         public void FuncYFromX()
         {
             List<double> ps = circle.FuncYFromX(2);
-            Assert.IsTrue(ps.Count == 2 && (ps[0] * ps[1]).Equal(-7));
+            Assert.IsTrue(ps.Count == 2);
+            Assert.IsTrue((ps[0] * ps[1]).Equal(-7));
         }
         [Test]
         public void FuncYFromX_null()
@@ -85,7 +88,8 @@ namespace Plane2D.Tests
         public void InverseFuncXFromY()
         {
             List<double> ps = circle.InverseFuncXFromY(3);
-            Assert.IsTrue(ps.Count == 2 && (ps[0] * ps[1]).Equal(-12));
+            Assert.IsTrue(ps.Count == 2);
+            Assert.IsTrue((ps[0] * ps[1]).Equal(-12));
         }
         [Test]
         public void InverseFuncXFromY_null()
@@ -131,7 +135,7 @@ namespace Plane2D.Tests
         [Test]
         public void GetTangent()
         {
-            Assert.IsTrue(circle.GetTangent(circle.GetPoint(Math.PI / 4)) == new Line2D(circle.GetPoint(Math.PI / 4), circle).PerpendicularFromPoint(circle.GetPoint(Math.PI / 4)));
+            Assert.IsTrue(circle.GetTangent(circle.GetPoint(Math.PI / 4)) == new Line2D(circle.GetPoint(Math.PI / 4), circle.Center).PerpendicularFromPoint(circle.GetPoint(Math.PI / 4)));
         }
         [Test]
         public void GetTangent_Out()
@@ -159,5 +163,11 @@ namespace Plane2D.Tests
         {
             Assert.IsTrue(circle.GetTangent(new Point2D(2, -1)) == new Line2D(0, 1, 1));
         }
+
+        //[Test]
+        //public void Shift()
+        //{
+        //    Assert.IsTrue((Circle2D)circle.Shift(1,1) == new Circle2D((Point2D)p1.Shift(1,1), radius));
+        //}
     }
 }

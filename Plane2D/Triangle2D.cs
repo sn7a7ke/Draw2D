@@ -65,7 +65,7 @@ namespace Plane2D
             Point2D[] ps = ((Polygon2D)base.RotateAroundThePoint(angle, center)).GetVertices;
             return new Triangle2D(ps[0], ps[1], ps[2]);
         }
-        public override IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => RotateAroundThePoint(angle, Center);
+        public override IMoveable2D RotateAroundTheCenterOfShape(double angle) => RotateAroundThePoint(angle, Center);
         public override IMoveable2D SymmetryAboutPoint(Point2D center)
         {
             Point2D[] ps = ((Polygon2D)base.SymmetryAboutPoint(center)).GetVertices;

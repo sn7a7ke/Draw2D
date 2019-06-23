@@ -3,7 +3,7 @@
   <Class Name="Plane2D.Circle2D" Collapsed="true">
     <Position X="2.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>MAGoIQAwAQSAgCgUAAAAAEAAEAAAAAAAAABgAAAIAAA=</HashCode>
+      <HashCode>MAGoIQAwAQSAACgUAAAAEEAAAAAAAAAAAAAgAAAIAAA=</HashCode>
       <FileName>Circle2D.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -19,12 +19,12 @@
   <Class Name="Plane2D.DoubleExtended" Collapsed="true">
     <Position X="11.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAAgAAAABAAAIAQAAAAQAAAAAAAACE=</HashCode>
+      <HashCode>AAAAAAAAAIAAAAAAgAAAAAAAAIAQAAAAQAAAAAAAACE=</HashCode>
       <FileName>DoubleExtended.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Plane2D.Line2D" Collapsed="true">
-    <Position X="9.75" Y="1.5" Width="1.5" />
+    <Position X="2.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>MAAABQAwAACQAAAUhAAGAEAAABIAAKACABAAoAEAAiA=</HashCode>
       <FileName>Line2D.cs</FileName>
@@ -37,7 +37,7 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAiAAAAABAAAAgE2AEEABAAEABAAIBABgASAAAAYnA=</HashCode>
+      <HashCode>AAAiIAAAABAAAAgE2AEEEAAAAABAAIBABgASAAAAYnA=</HashCode>
       <FileName>Point2D.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -45,7 +45,7 @@
   <Class Name="Plane2D.Polygon2D" Collapsed="true">
     <Position X="0.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACgAAEAAQAAgQgECCAQIEAAEAAAAAAAIAFgAAAJIAA=</HashCode>
+      <HashCode>MACgIAEwAQAAAQgECCAQMEAAAAAAAAAAIAEgAAAJIAA=</HashCode>
       <FileName>Polygon2D.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -61,14 +61,14 @@
   <Class Name="Plane2D.Segment2D" Collapsed="true">
     <Position X="9.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEgAAAIADAAAAAAIAAAAAQIAEAAiA=</HashCode>
+      <HashCode>AABAAAAAAAAAAAAEgAAAIABAAAAAAIAAAAAQIAEAAiA=</HashCode>
       <FileName>Segment2D.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Plane2D.Triangle2D" Collapsed="true">
     <Position X="0.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAgABCAAAAAACgAgAAAAAAEEAAAAAIAAAAAoAEABAA=</HashCode>
+      <HashCode>AgAgIBCAAAAAACgAgAAAEAAEAAAAAAIAAAAAoAEABAA=</HashCode>
       <FileName>Triangle2D.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -82,29 +82,36 @@
   <Class Name="Plane2D.Vector2D" Collapsed="true">
     <Position X="7" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIgAAAAAAAAgAgEYAEAAEBAEAAAAAAAAAAAAAQAAAU=</HashCode>
+      <HashCode>AAIgIAAAAAAAgAgEYAEAEEBAAAAAAAAAAAAAAAQAAAU=</HashCode>
       <FileName>Vector2D.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Plane2D.IShape2D" Collapsed="true">
-    <Position X="0.5" Y="1.25" Width="1.5" />
+    <Position X="1.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAAAAQAAgAAAAAAAAEAAAAAAAAAAAABgAAAIAAA=</HashCode>
+      <HashCode>AACAAAAAAQAAAAAAAAAAAEAAAAAAAAAAAAAgAAAIAAA=</HashCode>
       <FileName>IShape2D.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Plane2D.IMoveable2D" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAAAAAAAAgAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAgIAAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IMoveable2D.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Plane2D.IFunction2D" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAACAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IFunction2D.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plane2D.IScope" Collapsed="true">
     <Position X="2.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>MAAAAQAwAACAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IFunction2D.cs</FileName>
+      <HashCode>MAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IScope.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

@@ -187,6 +187,6 @@ namespace Plane2D
         public override int GetHashCode() => (A.IsZero()) ? (int)(A / B * 101 + C / B) : (int)(B / A * 101 + C / A); //(A != 0) ? (int)(B / A * 101 + C / A) : (int)(A / B * 101 + C / B);
 
         public static bool operator ==(Line2D obj1, Line2D obj2) => Equals(obj1, obj2); // obj1.Equals(obj2);
-        public static bool operator !=(Line2D obj1, Line2D obj2) => !obj1.Equals(obj2);
+        public static bool operator !=(Line2D obj1, Line2D obj2) => !Equals(obj1, obj2);
     }
 }
