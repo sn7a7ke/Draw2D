@@ -41,15 +41,14 @@ namespace Plane2D
         {
             if (otherSegment == null)
                 return false;
-            bool AEqualsA = A.X.Equal(otherSegment.A.X) && A.Y.Equal(otherSegment.A.Y) && B.X.Equal(otherSegment.B.X) && B.Y.Equal(otherSegment.B.Y);
-            bool AEqualsB = A.X.Equal(otherSegment.B.X) && A.Y.Equal(otherSegment.B.Y) && B.X.Equal(otherSegment.A.X) && B.Y.Equal(otherSegment.A.Y);
-            return AEqualsA || AEqualsB;
+            bool A1EqualsA2AndB1EqualsB2 = A.X.Equal(otherSegment.A.X) && A.Y.Equal(otherSegment.A.Y) && B.X.Equal(otherSegment.B.X) && B.Y.Equal(otherSegment.B.Y);
+            bool A1EqualsB2AndB1EqualsA2 = A.X.Equal(otherSegment.B.X) && A.Y.Equal(otherSegment.B.Y) && B.X.Equal(otherSegment.A.X) && B.Y.Equal(otherSegment.A.Y);
+            return A1EqualsA2AndB1EqualsB2 || A1EqualsB2AndB1EqualsA2;
         }
 
         public override int GetHashCode() => (int)A.X ^ (int)A.Y ^ (int)B.X ^ (int)B.Y;
         public static bool operator ==(Segment2D obj1, Segment2D obj2) => Equals(obj1, obj2);
         public static bool operator !=(Segment2D obj1, Segment2D obj2) => !Equals(obj1, obj2);
-
 
         public static implicit operator Vector2D(Segment2D s) => new Vector2D(s.A, s.B);
     }

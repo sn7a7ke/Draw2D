@@ -134,8 +134,12 @@ namespace Plane2D
         #region override Base
         public IMoveable2D Shift(double dx, double dy) => new Circle2D((Point2D)Center.Shift(dx, dy), Radius);
         public IMoveable2D RotateAroundThePoint(double angle, Point2D center) => new Circle2D((Point2D)Center.RotateAroundThePoint(angle, center), Radius);
-        public IMoveable2D RotateAroundTheCenterOfShape(double angle) => this;
+        public IShape2D RotateAroundTheCenterOfShape(double angle) => this;
         public IMoveable2D SymmetryAboutPoint(Point2D center) => new Circle2D((Point2D)Center.SymmetryAboutPoint(center), Radius);
+        public IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => RotateAroundThePoint(angle, new Point2D(0, 0));
+
+
+
         public override string ToString() => GetType().Name + " C-" + Center.ToString() + " r-" + Radius;// + " c" + Center;
 
         public override bool Equals(object obj)
@@ -159,6 +163,7 @@ namespace Plane2D
             int hc = (int)(100 * Center.GetHashCode() * Radius);
             return hc;
         }
+
         #endregion
     }
 }

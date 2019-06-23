@@ -161,7 +161,10 @@ namespace Plane2D //2
                 vers[i] = (Point2D)vers[i].RotateAroundThePoint(angle, center);
             return new Polygon2D(vers);
         }
-        public virtual IMoveable2D RotateAroundTheCenterOfShape(double angle) => RotateAroundThePoint(angle, Center);
+        public virtual IShape2D RotateAroundTheCenterOfShape(double angle) => (Polygon2D)RotateAroundThePoint(angle, Center);
+
+        public virtual IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => (Polygon2D)RotateAroundThePoint(angle, new Point2D(0, 0));
+
         public virtual IMoveable2D SymmetryAboutPoint(Point2D center)
         {
             Point2D[] vers = GetVertices;

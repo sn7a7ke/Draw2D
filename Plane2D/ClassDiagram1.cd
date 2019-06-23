@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Plane2D.Circle2D" Collapsed="true">
-    <Position X="2.5" Y="3.25" Width="1.5" />
+    <Position X="1.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>MAGoIQAwAQSAACgUAAAAEEAAAAAAAAAAAAAgAAAIAAA=</HashCode>
+      <HashCode>MAGoIQAwAQSAACgUgAAAEEAAAAAAAIAAAAAgAAAIAiA=</HashCode>
       <FileName>Circle2D.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Plane2D.DoubleComparer" Collapsed="true">
-    <Position X="11.75" Y="0.5" Width="1.5" />
+    <Position X="8.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>DoubleComparer.cs</FileName>
@@ -17,14 +17,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Plane2D.DoubleExtended" Collapsed="true">
-    <Position X="11.75" Y="1.5" Width="1.5" />
+    <Position X="8.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAAAAAgAAAAAAAAIAQAAAAQAAAAAAAACE=</HashCode>
       <FileName>DoubleExtended.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Plane2D.Line2D" Collapsed="true">
-    <Position X="2.5" Y="4.25" Width="1.5" />
+    <Position X="2.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>MAAABQAwAACQAAAUhAAGAEAAABIAAKACABAAoAEAAiA=</HashCode>
       <FileName>Line2D.cs</FileName>
@@ -59,7 +59,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Plane2D.Segment2D" Collapsed="true">
-    <Position X="9.75" Y="2.5" Width="1.5" />
+    <Position X="8.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAEgAAAIABAAAAAAIAAAAAQIAEAAiA=</HashCode>
       <FileName>Segment2D.cs</FileName>
@@ -101,7 +101,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Plane2D.IFunction2D" Collapsed="true">
-    <Position X="3" Y="1.75" Width="1.5" />
+    <Position X="3" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAACAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IFunction2D.cs</FileName>

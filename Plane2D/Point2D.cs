@@ -9,18 +9,22 @@ namespace Plane2D
     public class Point2D : IMoveable2D, ICloneable, IPoint2D //: ITransformation
     {
         public Point2D(double x, double y) { X = x; Y = y; }
+
         private Point2D() { }
 
         public double X { get; protected set; }
+
         public double Y { get; protected set; }
 
         public double Distance(Point2D point) => Distance(this, point);
-        public static double Distance(Point2D A, Point2D B) => Math.Sqrt(Math.Pow(A.X - B.X, 2) + Math.Pow(A.Y - B.Y, 2));
-        public static Point2D Middle(Point2D A, Point2D B) => new Point2D((A.X + B.X) / 2, (A.Y + B.Y) / 2);
 
+        public static double Distance(Point2D A, Point2D B) => Math.Sqrt(Math.Pow(A.X - B.X, 2) + Math.Pow(A.Y - B.Y, 2));
+
+        public static Point2D Middle(Point2D A, Point2D B) => new Point2D((A.X + B.X) / 2, (A.Y + B.Y) / 2);
 
         #region IMoveable2D
         public virtual IMoveable2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
+
         public virtual IMoveable2D RotateAroundThePoint(double angle, Point2D center)
         {
             if (Math.Abs(angle).IsZero()) 
@@ -29,10 +33,10 @@ namespace Plane2D
             double yy = (X - center.X) * Math.Sin(angle) + (Y - center.Y) * Math.Cos(angle) + center.Y;
             return new Point2D(xx, yy);
         }
-        public virtual IMoveable2D RotateAroundTheCenterOfShape(double angle) => this;
+        public virtual IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => RotateAroundThePoint(angle, new Point2D(0, 0));
+
         public virtual IMoveable2D SymmetryAboutPoint(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
         #endregion
-
 
         /// <summary>
         /// lower left corner of the circum rectangle
@@ -106,6 +110,7 @@ namespace Plane2D
             else
                 return 0;            
         }
+
         private bool OnRectangle(Point2D LeftBottom, Point2D RightTop)
         {
             return ((Math.Abs(X - LeftBottom.X).IsZero() ||
@@ -115,6 +120,7 @@ namespace Plane2D
                     Math.Abs(Y - RightTop.Y).IsZero()) &&
                     IntoRectangle(X, LeftBottom.X, RightTop.X) == 0);
         }
+
         private bool IntoRectangle(Point2D LeftBottom, Point2D RightTop)
         {
             return (LeftBottom.X < X && X < RightTop.X) && (LeftBottom.Y < Y && Y < RightTop.Y);
@@ -152,6 +158,7 @@ namespace Plane2D
                 return false;
             return this.Equals(obj as Point2D);
         }
+
         public bool Equals(Point2D otherPoint)
         {
             if (otherPoint == null)
@@ -160,14 +167,21 @@ namespace Plane2D
         }
 
         public override int GetHashCode() => (int)X ^ (int)Y;
-        public override string ToString() => String.Format("({0},{1})", X, Y);
 
         public static bool operator ==(Point2D obj1, Point2D obj2) => Equals(obj1, obj2);
+
         public static bool operator !=(Point2D obj1, Point2D obj2) => !Equals(obj1, obj2);
+
         public static Point2D operator +(Point2D p1, Point2D p2) => new Point2D(p1.X + p2.X, p1.Y + p2.Y);
+
         public static Point2D operator -(Point2D p1, Point2D p2) => new Point2D(p1.X - p2.X, p1.Y - p2.Y);
+
         public static Point2D operator +(Point2D p1, double number) => (Point2D)p1.Shift(number, number);
+
         public static Point2D operator -(Point2D p1, double number) => (Point2D)p1.Shift(-number, -number);
+
+        public override string ToString() => String.Format("({0},{1})", X, Y);
+
 
 
         #region System.Drawing
@@ -185,7 +199,7 @@ namespace Plane2D
 
 
 
-        public object Clone() => new Point2D(X, Y);
+        public virtual object Clone() => new Point2D(X, Y);
 
         public enum PointPosition
         {

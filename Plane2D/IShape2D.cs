@@ -9,5 +9,7 @@ namespace Plane2D
         Point2D Center { get; }
         double Perimeter { get; }
         double Square { get; }
+        IShape2D RotateAroundTheCenterOfShape(double angle);
+
     }
 }
