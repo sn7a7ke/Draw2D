@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plane2D
 {
-    class DoubleComparer : IEqualityComparer<double>
+    public class DoubleComparer : IEqualityComparer<double>
     {
 
         public bool Equals(double x, double y) => x.GetHashCode() == y.GetHashCode();
