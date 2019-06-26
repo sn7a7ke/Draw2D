@@ -44,6 +44,12 @@ namespace Plane2D.Tests
         }
 
         [Test]
+        public void Ctor_Exception()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Line2D(0, 0, 3), "A and B should not be zero at the same time");
+        }
+
+        [Test]
         public void IsLineInKB_True()
         {
             Assert.IsTrue(l1.IsLineInKB);
@@ -84,16 +90,165 @@ namespace Plane2D.Tests
         }
 
         [Test]
-        public void IsPerpendicular()
+        public void IsParallel_True()
+        {
+            Assert.IsTrue(l1.IsParallel(new Line2D(4, 2, -8)));
+        }
+
+        [Test]
+        public void IsParallel_False()
+        {
+            Assert.IsFalse(l1.IsParallel(l2));
+        }
+
+        [Test]
+        public void IsParallelAxisX_True()
+        {
+            Assert.IsTrue(new Line2D(0, 2, -2).IsParallelAxisX());
+        }
+
+        [Test]
+        public void IsParallelAxisX_False()
+        {
+            Assert.IsFalse(l1.IsParallelAxisX());
+        }
+
+        [Test]
+        public void IsParallelAxisY_True()
+        {
+            Assert.IsTrue(l3.IsParallelAxisY());
+        }
+
+        [Test]
+        public void IsParallelAxisY_False()
+        {
+            Assert.IsFalse(l1.IsParallelAxisY());
+        }
+
+        [Test]
+        public void IsPerpendicular_True()
         {
             Assert.IsTrue(l1.IsPerpendicular(l2));
         }
 
         [Test]
+        public void IsPerpendicular_False()
+        {
+            Assert.IsFalse(l1.IsPerpendicular(l3));
+        }
+
+        [Test]
+        public void IsOnLine_True()
+        {
+            Assert.IsTrue(l1.IsOnLine(new Point2D(1, 2)));
+        }
+
+        [Test]
+        public void IsOnLine_False()
+        {
+            Assert.IsFalse(l1.IsOnLine(new Point2D(1, 3)));
+        }
+
+        [Test]
         public void DistanceFromPointToLine()
         {
-            Assert.IsTrue(Math.Abs(l1.DistanceFromPointToLine(new Point2D(6, 2)) - Math.Sqrt(20)) < DoubleExtended.Epsilon);
+            Assert.IsTrue(l1.DistanceFromPointToLine(new Point2D(6, 2)).Equal(Math.Sqrt(20)));
         }
+
+        [Test]
+        public void GetNormal()
+        {
+            Assert.IsTrue(l1.GetNormal().Equals(new Point2D(2, 1)));
+        }
+
+        [Test]
+        public void MaxX_Infinity()
+        {
+            var res = l1.MaxX;
+
+            Assert.IsTrue(double.IsPositiveInfinity(res));
+        }
+
+        [Test]
+        public void MaxX_Number()
+        {
+            Assert.IsTrue(l3.MaxX.Equal(-2.5));
+        }
+
+        [Test]
+        public void MaxY_Infinity()
+        {
+            var res = l1.MaxY;
+
+            Assert.IsTrue(double.IsPositiveInfinity(res));
+        }
+
+        [Test]
+        public void MaxY_Number()
+        {
+            Assert.IsTrue(new Line2D(0, 2, -2).MaxY.Equal(1));
+        }
+
+        [Test]
+        public void MinX_Infinity()
+        {
+            var res = l1.MinX;
+
+            Assert.IsTrue(double.IsNegativeInfinity(res));
+        }
+
+        [Test]
+        public void MinX_Number()
+        {
+            Assert.IsTrue(l3.MinX.Equal(-2.5));
+        }
+
+        [Test]
+        public void MinY_Infinity()
+        {
+            var res = l1.MinY;
+
+            Assert.IsTrue(double.IsNegativeInfinity(res));
+        }
+
+        [Test]
+        public void MinY_Number()
+        {
+            Assert.IsTrue(new Line2D(0, 2, -2).MinY.Equal(1));
+        }
+
+        [Test]
+        public void FuncYFromX_OneNumber()
+        {
+            var list = l1.FuncYFromX(1);
+            Assert.IsTrue(list.Count == 1);
+            Assert.IsTrue(list[0] == 2);
+        }
+
+        [Test]
+        public void FuncYFromX_Null()
+        {
+            var list = l3.FuncYFromX(1);
+            Assert.IsNull(list);
+        }
+
+        [Test]
+        public void InverseFuncXFromY_OneNumber()
+        {
+            var list = l1.InverseFuncXFromY(2);
+            Assert.IsTrue(list.Count == 1);
+            Assert.IsTrue(list[0] == 1);
+        }
+
+        [Test]
+        public void InverseFuncXFromY_Null()
+        {
+            var list = new Line2D(0, 2, 3).InverseFuncXFromY(1);
+            Assert.IsNull(list);
+        }
+
+
+
 
         [Test]
         public void GetTangent()

@@ -80,7 +80,7 @@ namespace Plane2D
 
         public double DistanceFromPointToLine(Point2D p) => Math.Abs(A * p.X + B * p.Y + C) / Math.Sqrt(A * A + B * B);
 
-        public Vector2D GetNormal => new Vector2D(A, B);
+        public Vector2D GetNormal() => new Vector2D(A, B);
 
         #region IFunction2D
         public double MaxX
