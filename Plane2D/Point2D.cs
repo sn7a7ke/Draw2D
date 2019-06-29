@@ -10,7 +10,7 @@ namespace Plane2D
     {
         public Point2D(double x, double y) { X = x; Y = y; }
 
-        private Point2D() { }
+        //private Point2D() { }
 
         public double X { get; protected set; }
 
@@ -97,6 +97,16 @@ namespace Plane2D
             return Distance(new Point2D(xx, yy));
         }
 
+        private bool OnRectangle(Point2D LeftBottom, Point2D RightTop)
+        {
+            return ((Math.Abs(X - LeftBottom.X).IsZero() ||
+                    Math.Abs(X - RightTop.X).IsZero()) &&
+                    IntoRectangle(Y, LeftBottom.Y, RightTop.Y) == 0) ||
+                    ((Math.Abs(Y - LeftBottom.Y).IsZero() ||
+                    Math.Abs(Y - RightTop.Y).IsZero()) &&
+                    IntoRectangle(X, LeftBottom.X, RightTop.X) == 0);
+        }
+
         /// <summary>
         /// closest coordinate
         /// </summary>
@@ -109,16 +119,6 @@ namespace Plane2D
                 return max;
             else
                 return 0;            
-        }
-
-        private bool OnRectangle(Point2D LeftBottom, Point2D RightTop)
-        {
-            return ((Math.Abs(X - LeftBottom.X).IsZero() ||
-                    Math.Abs(X - RightTop.X).IsZero()) &&
-                    IntoRectangle(Y, LeftBottom.Y, RightTop.Y) == 0) ||
-                    ((Math.Abs(Y - LeftBottom.Y).IsZero() ||
-                    Math.Abs(Y - RightTop.Y).IsZero()) &&
-                    IntoRectangle(X, LeftBottom.X, RightTop.X) == 0);
         }
 
         private bool IntoRectangle(Point2D LeftBottom, Point2D RightTop)
@@ -187,18 +187,21 @@ namespace Plane2D
         #region System.Drawing
         //TODO выкинуть из: класса и наследников?
         public static implicit operator PointF(Point2D p) => new PointF((float)p.X, (float)p.Y);
+
         public static implicit operator Point2D(PointF p) => new Point2D(p.X, p.Y);
+
         public static implicit operator Point(Point2D p) => new Point((int)p.X, (int)p.Y);
+
         public static implicit operator Point2D(Point p) => new Point2D(p.X, p.Y);
         
         public Point ToPointInCoordinateSystem(Point origin) => 
             new Point(origin.X + (int)X, origin.Y - (int)Y);
+
         public static Point2D ToPoint2DFromCoordinateSystem(Point origin, Point p) =>
             new Point2D(p.X - origin.X, origin.Y - p.Y);
         #endregion
 
-
-
+        
         public virtual object Clone() => new Point2D(X, Y);
 
         public enum PointPosition
