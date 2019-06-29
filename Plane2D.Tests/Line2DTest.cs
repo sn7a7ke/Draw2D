@@ -247,9 +247,6 @@ namespace Plane2D.Tests
             Assert.IsNull(list);
         }
 
-
-
-
         [Test]
         public void GetTangent()
         {
@@ -302,21 +299,74 @@ namespace Plane2D.Tests
         }
 
         [Test]
-        public void Intersect2()
+        public void Intersect_Null()
         {
             Assert.IsNull(l1.Intersect(l1));
         }
 
         [Test]
-        public void EqualsGood()
+        public void AngleBetweenLines()
+        {
+            Assert.IsTrue(l1.AngleBetweenLines(new Line2D(1, -2, 4)).Equals(Math.PI / 2));
+        }
+
+        [Test]
+        public void CheckGetHashCode_AIsNotNull()
+        {
+            Assert.IsTrue(l1.GetHashCode() == (int)(l1.B / l1.A * 101 + l1.C / l1.A));
+        }
+
+        [Test]
+        public void CheckGetHashCode_AIsNull()
+        {
+            Assert.IsTrue(new Line2D(0, 2, -2).GetHashCode() == (int)(0 / 2 * 101 + (-2) / 2));
+        }
+
+
+
+
+
+        [Test]
+        public void Equals_True()
         {
             Assert.IsTrue(l1.Equals(new Line2D(4, 2, -8)));
         }
 
         [Test]
-        public void EqualsBad()
+        public void Equals_False()
         {
             Assert.IsFalse(l1.Equals(new Line2D(4, 2, -6)));
+        }
+
+        [Test]
+        public void IsEquals_True()
+        {
+            Assert.IsTrue(l1 == new Line2D(4, 2, -8));
+        }
+
+        [Test]
+        public void IsEquals_Null_False()
+        {
+            Assert.IsFalse(Equals(l1, null));
+        }
+
+        [Test]
+        public void IsEqualsOneParam_Null_False()
+        {
+            Assert.IsFalse(l1.Equals(null));
+        }
+
+        [Test]
+        public void IsEqualsOneParam_Object_False()
+        {
+            object obj = null;
+            Assert.IsFalse(l1.Equals(obj));
+        }
+
+        [Test]
+        public void IsNotEquals()
+        {
+            Assert.IsTrue(l1 != l2);
         }
     }
 }
