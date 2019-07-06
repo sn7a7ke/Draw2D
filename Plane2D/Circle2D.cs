@@ -12,7 +12,7 @@ namespace Plane2D
         public Circle2D(double xCenter, double yCenter, double radius)
         {
             if (radius.LessOrEqual(0.0))
-                throw new ArgumentOutOfRangeException("Radius must be more than 0");
+                throw new ArgumentOutOfRangeException(nameof(radius), "Radius must be more than 0");
             Radius = radius;
             Center = new Point2D(xCenter, yCenter);
         }

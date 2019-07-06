@@ -22,13 +22,13 @@ namespace Plane2D.Tests
         [Test]
         public void Ctor_Exception()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Circle2D(p1, -2));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Circle2D(p1, -2), "Radius must be more than 0");
         }
 
         [Test]
         public void Ctor_Exception2()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Circle2D(p1, 0.0000000001));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Circle2D(p1, 0.0000000001), "Radius must be more than 0");
         }
 
         [Test]
