@@ -10,7 +10,7 @@ namespace Draw2D
     public class Presenter : IDisposable
     {
         private IMainForm _view;
-        private Bitmap bmp;
+        private Bitmap mainBmp;
         private Bitmap beforeFigureBmp;
         private Bitmap lastAngleFigureBmp;
         private Graphics graph;
@@ -22,9 +22,7 @@ namespace Draw2D
         private int deltaDraw = 5;
         private int deltaBmp = 100;
         private List<Polygon2D> polygons;
-        private Polygon2D polygon2D;
         private Polygon2D selectedPolygon2D;
-        private Point origin;
 
         const int minimumQuantityOfVertices = 3;
 
@@ -33,24 +31,25 @@ namespace Draw2D
         public Presenter(IMainForm view)
         {
             _view = view;
-            bmp = new Bitmap(_view.GetImageWidth, _view.GetImageHeight);
-            graph = Graphics.FromImage(bmp); // _view.Graph;
+            mainBmp = new Bitmap(_view.GetImageWidth, _view.GetImageHeight);
+            graph = Graphics.FromImage(mainBmp); // _view.Graph;
             color = Color.DarkRed;
             pen = new Pen(color);
-            origin = new Point(0, 400);
+            Point origin = new Point(0, 400);
             util = new Utility(pen, origin);
             util.DrawCoordinateAxes(graph, _view.GetImageWidth, _view.GetImageHeight);
 
             polygons = new List<Polygon2D>();
-            polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
+            Polygon2D polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
 
             polygons.Add(polygon2D);
+            SelectPolygon(polygon2D);
             graph.DrawPolygon(pen, util.GetPolygonInCoordinateSystem(polygon2D));
 
             points = new List<Point>();
-            _view.Image = bmp;
+            _view.Image = mainBmp;
 
-            beforeFigureBmp = new Bitmap(bmp);
+            beforeFigureBmp = new Bitmap(mainBmp);
             //lastAngleFigureBmp = new Bitmap(bmp);
 
             _view.DoDraw_Click += _view_DoInfo_Click;
@@ -91,16 +90,17 @@ namespace Draw2D
 
         private void _view_DoClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ClearPictureBox(bmp.Width, bmp.Height);
-            bmp = lastAngleFigureBmp;
-            _view.Image = bmp;
+            ClearPictureBox(mainBmp.Width, mainBmp.Height);
+            mainBmp = lastAngleFigureBmp;
+            _view.Image = mainBmp;
+            _view.OutputText = string.Empty;
             polygons.Clear();
         }
 
         private void _view_DoPictureBox_Resize(object sender, EventArgs e)
         {
-            if (_view.GetImageHeight > bmp.Height || _view.GetImageWidth >= bmp.Width)
-                RefreshPictureBox(bmp.Width + deltaBmp, bmp.Height + deltaBmp);
+            if (_view.GetImageHeight > mainBmp.Height || _view.GetImageWidth >= mainBmp.Width)
+                RefreshPictureBox(mainBmp.Width + deltaBmp, mainBmp.Height + deltaBmp);
         }
 
         private void _view_DoPictureBox_MouseMove(object sender, EventArgs e)
@@ -108,7 +108,7 @@ namespace Draw2D
             //if (!(e is MouseEventArgs))
             //    throw new ArgumentException(this + " isn't MouseEventArgs");
             MouseEventArgs em = (MouseEventArgs)e;
-            _view.SetLabelMouseLocation = String.Format("{0}:{1}", origin.X + em.X, origin.Y - em.Y);
+            _view.SetLabelMouseLocation = String.Format("{0}:{1}", util.Origin.X + em.X, util.Origin.Y - em.Y);
         }
 
         private void _view_DoPictureBox_MouseMove_Draw(object sender, EventArgs e)
@@ -120,11 +120,11 @@ namespace Draw2D
 
             if (points.Count != 0)
             {
-                _view.Image = lastAngleFigureBmp;
-                bmp = new Bitmap(lastAngleFigureBmp);
-                graph = Graphics.FromImage(bmp);
+                //_view.Image = lastAngleFigureBmp;
+                mainBmp = new Bitmap(lastAngleFigureBmp);
+                graph = Graphics.FromImage(mainBmp);
                 graph.DrawLine(pen, points[points.Count - 1], em.Location);
-                _view.Image = bmp;
+                _view.Image = mainBmp;
                 if (points.Count > 1 && Point2D.Distance(em.Location, points[0]) <= deltaDraw)
                     _view.SetCursorImage = Cursors.WaitCursor;
                 else
@@ -143,13 +143,13 @@ namespace Draw2D
                 Point mouseLocation = em.Location;
                 if (points.Count == 0)
                 {
-                    beforeFigureBmp = new Bitmap(bmp);
+                    beforeFigureBmp = new Bitmap(mainBmp);
                     points.Add(mouseLocation);
 
                     // COMMENT
-                    _view.Image = bmp;
+                    _view.Image = mainBmp;
 
-                    lastAngleFigureBmp = new Bitmap(bmp);
+                    lastAngleFigureBmp = new Bitmap(mainBmp);
                     _view.DoPictureBox_MouseMove += _view_DoPictureBox_MouseMove_Draw;
                 }
                 else if (Point2D.Distance(mouseLocation, points[0]) <= deltaDraw)
@@ -158,15 +158,16 @@ namespace Draw2D
                         RemoveLastVertex(minimumQuantityOfVertices - 1);
                     else
                     {
-                        polygon2D = util.GetPolygonFromCoordinateSystem(points);
+                        Polygon2D polygon2D = util.GetPolygonFromCoordinateSystem(points);
                         polygons.Add(polygon2D);
                         _view.Image = lastAngleFigureBmp;
-                        bmp = new Bitmap(lastAngleFigureBmp);
-                        graph = Graphics.FromImage(bmp);
+                        mainBmp = new Bitmap(lastAngleFigureBmp);
+                        graph = Graphics.FromImage(mainBmp);
                         graph.DrawLine(pen, points[points.Count - 1], points[0]);
                         points.Clear();
-                        _view.Image = bmp;
-                        lastAngleFigureBmp = new Bitmap(bmp);
+                        SelectPolygon(polygon2D);
+                        _view.Image = mainBmp;
+                        lastAngleFigureBmp = new Bitmap(mainBmp);
                     }
                     _view.SetCursorImage = Cursors.Cross;
                     _view.DoPictureBox_MouseMove -= _view_DoPictureBox_MouseMove_Draw;
@@ -177,8 +178,8 @@ namespace Draw2D
                 {
                     points.Add(mouseLocation);
                     graph.DrawLine(pen, points[points.Count - 2], points[points.Count - 1]);
-                    _view.Image = bmp;
-                    lastAngleFigureBmp = new Bitmap(bmp);
+                    _view.Image = mainBmp;
+                    lastAngleFigureBmp = new Bitmap(mainBmp);
                 }
             }
             if (mouseButton == MouseButtons.Right)
@@ -193,7 +194,7 @@ namespace Draw2D
                 selectedPolygon2D = (Polygon2D)selectedPolygon2D.Shift(_view.DeltaX, _view.DeltaY);
                 polygons.Add(selectedPolygon2D);
                 RefreshPictureBox();
-                lastAngleFigureBmp = new Bitmap(bmp);
+                lastAngleFigureBmp = new Bitmap(mainBmp);
             }
         }
 
@@ -206,7 +207,7 @@ namespace Draw2D
                     new Point2D(_view.DeltaX, _view.DeltaY));
                 polygons.Add(selectedPolygon2D);
                 RefreshPictureBox();
-                lastAngleFigureBmp = new Bitmap(bmp);
+                lastAngleFigureBmp = new Bitmap(mainBmp);
             }
         }
 
@@ -218,14 +219,22 @@ namespace Draw2D
                 selectedPolygon2D = (Polygon2D)selectedPolygon2D.SymmetryAboutPoint(new Point2D(_view.DeltaX, _view.DeltaY));
                 polygons.Add(selectedPolygon2D);
                 RefreshPictureBox();
-                lastAngleFigureBmp = new Bitmap(bmp);
+                lastAngleFigureBmp = new Bitmap(mainBmp);
             }
         }
 
         private void _view_DoSelect_Click(object sender, EventArgs e)
         {
-            SelectPolygon(polygon2D);
-            polygon2D = null;
+            if (polygons?.Count > 1)
+            {
+                int numberOfSelectedPolygon = polygons.IndexOf(selectedPolygon2D);
+                if (numberOfSelectedPolygon == -1)
+                    return;
+
+                selectedPolygon2D = (numberOfSelectedPolygon == polygons.Count - 1) ? polygons[0] : polygons[numberOfSelectedPolygon + 1];
+            }
+            RefreshPictureBox();
+            lastAngleFigureBmp = new Bitmap(mainBmp);
         }
 
         private void SelectPolygon(Polygon2D p)
@@ -234,21 +243,22 @@ namespace Draw2D
             {
                 selectedPolygon2D = p;
                 RefreshPictureBox();
-                StringBuilder sb = new StringBuilder(selectedPolygon2D.ToString() + Environment.NewLine);
-                for (int i = 0; i < selectedPolygon2D.QuantityVertices; i++)
-                {
-                    sb.Append("Vertex " + i + ": (" + selectedPolygon2D[i].X + ", " + selectedPolygon2D[i].Y + ")" + Environment.NewLine);
-                    //sb.Append(Environment.NewLine);
-                }
-
-                for (int i = 0; i < selectedPolygon2D.QuantityVertices; i++)
-                    sb.Append("Angle " + i + ": " + selectedPolygon2D[i].AngleDegree + Environment.NewLine);
-                sb.Append("QuantityVertices: " + selectedPolygon2D.QuantityVertices + Environment.NewLine);
-                sb.Append("Center: " + selectedPolygon2D.Center + Environment.NewLine);
-                sb.Append("Perimeter: " + selectedPolygon2D.Perimeter + Environment.NewLine);
-                sb.Append("Is convex: " + selectedPolygon2D.IsConvex);
-                _view.OutputText = sb.ToString();
+                _view.OutputText = GetPolygonDescription(selectedPolygon2D);
             }
+        }
+
+        private string GetPolygonDescription(Polygon2D polygon2D)
+        {
+            StringBuilder sb = new StringBuilder(polygon2D.ToString() + Environment.NewLine);
+            for (int i = 0; i < polygon2D.QuantityVertices; i++)
+                sb.Append("Vertex " + i + ": (" + polygon2D[i].X + ", " + polygon2D[i].Y + ")" + Environment.NewLine);
+            for (int i = 0; i < polygon2D.QuantityVertices; i++)
+                sb.Append("Angle " + i + ": " + polygon2D[i].AngleDegree + Environment.NewLine);
+            sb.Append("QuantityVertices: " + polygon2D.QuantityVertices + Environment.NewLine);
+            sb.Append("Center: " + polygon2D.Center + Environment.NewLine);
+            sb.Append("Perimeter: " + polygon2D.Perimeter + Environment.NewLine);
+            sb.Append("Is convex: " + polygon2D.IsConvex);
+            return sb.ToString();
         }
 
         private void _view_DoInfo_Click(object sender, EventArgs e)
@@ -258,21 +268,9 @@ namespace Draw2D
                 MessageBox.Show("Please, You must select polygon");
                 return;
             }
-
-            //Test
-
-
             InfoForm infoForm = new InfoForm();
             InfoPresenter infoPresenter = new InfoPresenter(infoForm, selectedPolygon2D);
             infoForm.Show();
-
-            //polygon2D = new Polygon2D(new Point2D(100, 100), new Point2D(200, 100), new Point2D(200, 200), new Point2D(100, 200));
-            //polygons.Add(polygon2D);
-            //// ОШИБКА!!!))) раскомментировать и перенести в метод Clear
-            ////graph = Graphics.FromImage(bmp);
-            //polygon2D.GetPolygonInCoordinateSystem(origin).Draw(graph, pen); 
-            //_view.Image = bmp;
-            //_view.OutputText = polygon2D.VerticesToString(Environment.NewLine);
         }
         #endregion
 
@@ -284,7 +282,7 @@ namespace Draw2D
             Graphics newGraph;
             newGraph = Graphics.FromImage(newBmp);
             util.DrawCoordinateAxes(newGraph, _view.GetImageWidth, _view.GetImageHeight);
-            bmp = newBmp;
+            mainBmp = newBmp;
             beforeFigureBmp = new Bitmap(newBmp);
             lastAngleFigureBmp = new Bitmap(newBmp);
         }
@@ -296,36 +294,33 @@ namespace Draw2D
                 selectedPolygon2D = polygons[nn];
                 RefreshPictureBox();
 
-                _view.OutputText = selectedPolygon2D.VerticesToString(Environment.NewLine) + Environment.NewLine
-                    + "QuantityVertices: " + selectedPolygon2D.QuantityVertices + Environment.NewLine
-                    + "Center: " + selectedPolygon2D.Center + Environment.NewLine
-                    + "Perimeter: " + selectedPolygon2D.Perimeter;
+                _view.OutputText = GetPolygonDescription(selectedPolygon2D);
             }
         }
         #endregion
 
 
-        private void RefreshPictureBox() => RefreshPictureBox(bmp.Width, bmp.Height);
+        private void RefreshPictureBox() => RefreshPictureBox(mainBmp.Width, mainBmp.Height);
 
         private void RefreshPictureBox(int width, int height)
         {
-            bmp = new Bitmap(width, height);
+            mainBmp = new Bitmap(width, height);
             Graphics newGraph;
-            newGraph = Graphics.FromImage(bmp);
+            newGraph = Graphics.FromImage(mainBmp);
             util.DrawCoordinateAxes(newGraph, _view.GetImageWidth, _view.GetImageHeight);
-            util.DrawShapes(newGraph, polygons);
+            util.DrawPolygons(newGraph, polygons);
             if (selectedPolygon2D != null)
             {
                 float penWidth = pen.Width;
                 pen.Width *= 2;
-                
-                newGraph.DrawPolygon(pen, util.GetPolygonInCoordinateSystem(selectedPolygon2D));                
+
+                newGraph.DrawPolygon(pen, util.GetPolygonInCoordinateSystem(selectedPolygon2D));
 
                 pen.Width = penWidth;
             }
-            _view.OutputText = bmp.Width.ToString() + " " + bmp.Height.ToString();
-            beforeFigureBmp = new Bitmap(bmp);
-            lastAngleFigureBmp = new Bitmap(bmp);
+            _view.OutputText = mainBmp.Width.ToString() + " " + mainBmp.Height.ToString();
+            beforeFigureBmp = new Bitmap(mainBmp);
+            lastAngleFigureBmp = new Bitmap(mainBmp);
             newGraph = Graphics.FromImage(lastAngleFigureBmp);
             util.DrawPoints(newGraph, points);
             _view.Image = lastAngleFigureBmp;
@@ -338,11 +333,11 @@ namespace Draw2D
             qty = qty > points.Count ? points.Count : qty;
             points.RemoveRange(points.Count - qty, qty);
             //points.RemoveAt(points.Count - 1);
-            bmp = new Bitmap(beforeFigureBmp);
-            graph = Graphics.FromImage(bmp);
+            mainBmp = new Bitmap(beforeFigureBmp);
+            graph = Graphics.FromImage(mainBmp);
             util.DrawPoints(graph, points);
-            _view.Image = bmp;
-            lastAngleFigureBmp = new Bitmap(bmp);
+            _view.Image = mainBmp;
+            lastAngleFigureBmp = new Bitmap(mainBmp);
             return true;
         }
 
@@ -356,7 +351,7 @@ namespace Draw2D
                 if (disposing)
                 {
                     // TODO: dispose managed state (managed objects).
-                    bmp.Dispose();
+                    mainBmp.Dispose();
                     beforeFigureBmp.Dispose();
                     lastAngleFigureBmp.Dispose();
                     graph.Dispose();

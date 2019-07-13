@@ -81,7 +81,7 @@
             this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox.Name = "pictureBox";
             this.tableLayoutPanel1.SetRowSpan(this.pictureBox, 2);
-            this.pictureBox.Size = new System.Drawing.Size(584, 411);
+            this.pictureBox.Size = new System.Drawing.Size(584, 436);
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             this.pictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseClick);
@@ -135,7 +135,7 @@
             this.clearToolStripMenuItem,
             this.Choose});
             this.Tools.Name = "Tools";
-            this.Tools.Size = new System.Drawing.Size(47, 20);
+            this.Tools.Size = new System.Drawing.Size(48, 20);
             this.Tools.Text = "Tools";
             this.Tools.Click += new System.EventHandler(this.ToolsToolStripMenuItem_Click);
             // 
@@ -176,7 +176,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 435);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 460);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 3;
@@ -233,7 +233,7 @@
             this.SelectPoly.Name = "SelectPoly";
             this.SelectPoly.Size = new System.Drawing.Size(75, 23);
             this.SelectPoly.TabIndex = 8;
-            this.SelectPoly.Text = "Select Poly";
+            this.SelectPoly.Text = "Next Poly";
             this.SelectPoly.UseVisualStyleBackColor = true;
             this.SelectPoly.Click += new System.EventHandler(this.Select_Click);
             // 
@@ -376,7 +376,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 411);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 436);
             this.tableLayoutPanel1.TabIndex = 10;
             // 
             // panel2
@@ -385,7 +385,7 @@
             this.panel2.Controls.Add(this.btnInfo);
             this.panel2.Controls.Add(this.SelectPoly);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(587, 214);
+            this.panel2.Location = new System.Drawing.Point(587, 239);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(194, 194);
             this.panel2.TabIndex = 1;
@@ -394,7 +394,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 457);
+            this.ClientSize = new System.Drawing.Size(784, 482);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.labelMouseLocation);
             this.Controls.Add(this.label1);
