@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Plane2D;
 
@@ -57,11 +56,9 @@ namespace Draw2D
                 current = new Point2D(GetNewCoorinateX(points[i].X), GetNewCoorinateY(points[i].Y));
                 newPoints.Add(current);
             }
+
             poly = new Polygon2D(newPoints.ToArray());
-
-
-            graph.DrawPolygon(pen, poly.GetPolygonInCoordinateSystem(origin).VerticesToPoint);
-            //poly.GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
+            graph.DrawPolygon(pen, util.GetPolygonInCoordinateSystem(poly));
 
             infoForm.Image = bmp;
             infoForm.LeftBottomText = LeftBottomPoint.ToString();
@@ -74,8 +71,6 @@ namespace Draw2D
                 infoForm.OutputText += new Line2D(tri.IntersectionAltitudes, tri.IntersectionBisectors).DistanceFromPointToLine(tri.IntersectionMedians);
 
             }
-
-
 
             infoForm.DoPictureBoxInfo_MouseMove += InfoForm_DoPictureBoxInfo_MouseMove;
             infoForm.DotVInfo_BeforeSelect += InfoForm_DotVInfo_BeforeSelect;
@@ -93,6 +88,7 @@ namespace Draw2D
         }
 
         private double GetNewCoorinateX(double k) => (k - LeftBottomPoint.X) * scale / 100;
+
         private double GetNewCoorinateY(double k) => (k - LeftBottomPoint.Y) * scale / 100;
 
         private int GetScale()
@@ -119,8 +115,8 @@ namespace Draw2D
         private void SetTreeViewInfo()
         {
             infoForm.TreeViewInfo.Nodes.Clear();
-
         }
+
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

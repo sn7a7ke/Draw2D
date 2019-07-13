@@ -2,11 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Draw2D
@@ -49,10 +45,7 @@ namespace Draw2D
             polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
 
             polygons.Add(polygon2D);
-
-
-            graph.DrawPolygon(pen, polygon2D.GetPolygonInCoordinateSystem(origin).VerticesToPoint);
-
+            graph.DrawPolygon(pen, util.GetPolygonInCoordinateSystem(polygon2D));
 
             points = new List<Point>();
             _view.Image = bmp;
@@ -165,7 +158,7 @@ namespace Draw2D
                         RemoveLastVertex(minimumQuantityOfVertices - 1);
                     else
                     {
-                        polygon2D = Polygon2D.GetPolygonFromCoordinateSystem(points, origin);
+                        polygon2D = util.GetPolygonFromCoordinateSystem(points);
                         polygons.Add(polygon2D);
                         _view.Image = lastAngleFigureBmp;
                         bmp = new Bitmap(lastAngleFigureBmp);
@@ -283,6 +276,7 @@ namespace Draw2D
         }
         #endregion
 
+
         #region MenuHandler
         private void ClearPictureBox(int width, int height)
         {
@@ -294,6 +288,7 @@ namespace Draw2D
             beforeFigureBmp = new Bitmap(newBmp);
             lastAngleFigureBmp = new Bitmap(newBmp);
         }
+
         private void ChooseShape(object sender, EventArgs e)
         {
             if (int.TryParse(((ToolStripMenuItem)sender).Name, out int nn))
@@ -305,13 +300,13 @@ namespace Draw2D
                     + "QuantityVertices: " + selectedPolygon2D.QuantityVertices + Environment.NewLine
                     + "Center: " + selectedPolygon2D.Center + Environment.NewLine
                     + "Perimeter: " + selectedPolygon2D.Perimeter;
-                // + Environment.NewLine + "Angle1: " + selectedPolygon2D.;
             }
         }
         #endregion
 
 
         private void RefreshPictureBox() => RefreshPictureBox(bmp.Width, bmp.Height);
+
         private void RefreshPictureBox(int width, int height)
         {
             bmp = new Bitmap(width, height);
@@ -323,11 +318,8 @@ namespace Draw2D
             {
                 float penWidth = pen.Width;
                 pen.Width *= 2;
-
-
-                newGraph.DrawPolygon(pen, selectedPolygon2D.GetPolygonInCoordinateSystem(origin).VerticesToPoint);
-                //selectedPolygon2D.GetPolygonInCoordinateSystem(origin).Draw(newGraph, pen);
-
+                
+                newGraph.DrawPolygon(pen, util.GetPolygonInCoordinateSystem(selectedPolygon2D));                
 
                 pen.Width = penWidth;
             }
@@ -338,6 +330,7 @@ namespace Draw2D
             util.DrawPoints(newGraph, points);
             _view.Image = lastAngleFigureBmp;
         }
+
         private bool RemoveLastVertex(int qty = 1)
         {
             if (points.Count == 0)

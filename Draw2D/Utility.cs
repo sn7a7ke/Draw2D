@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Plane2D;
 
 namespace Draw2D
@@ -15,7 +12,7 @@ namespace Draw2D
         private Pen pen;
         //private Pen originPen;
         private Point origin;
-        int deltaBmp;
+        private readonly int deltaBmp;
 
         public Utility(Pen pen, Point origin) //Graphics graph, 
         {
@@ -39,7 +36,8 @@ namespace Draw2D
         public void DrawShapes(Graphics graph, List<Polygon2D> polygons)
         {
             for (int i = 0; i < polygons.Count; i++)
-                graph.DrawPolygon(pen, polygons[i].GetPolygonInCoordinateSystem(origin).VerticesToPoint);
+                graph.DrawPolygon(pen, GetPolygonInCoordinateSystem(polygons[i]));
+
             //polygons[i].GetPolygonInCoordinateSystem(origin).Draw(graph, pen);
         }
         public void DrawPoints(Graphics graph, List<Point> points)
@@ -49,5 +47,26 @@ namespace Draw2D
                     graph.DrawLine(pen, points[i], points[i + 1]);
         }
 
+        public Point ToPointInCoordinateSystem(Point2D point) =>
+    new Point(origin.X + (int)point.X, origin.Y - (int)point.Y);
+
+        public Point2D ToPoint2DFromCoordinateSystem(Point p) =>
+            new Point2D(p.X - origin.X, origin.Y - p.Y);
+
+        public virtual Point[] GetPolygonInCoordinateSystem(Polygon2D polygon2D)
+        {
+            Point2D[] vers = polygon2D.GetVertices;
+            Point[] points = new Point[vers.Length];
+            for (int i = 0; i < vers.Length; i++)
+                points[i] = ToPointInCoordinateSystem(vers[i]);
+            return points;
+        }
+        public Polygon2D GetPolygonFromCoordinateSystem(List<Point> ps)
+        {
+            Point2D[] vers = new Point2D[ps.Count];
+            for (int i = 0; i < ps.Count; i++)
+                vers[i] = ToPoint2DFromCoordinateSystem(ps[i]);
+            return new Polygon2D(vers);
+        }
     }
 }

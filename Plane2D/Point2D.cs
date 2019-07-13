@@ -33,6 +33,7 @@ namespace Plane2D
             double yy = (X - center.X) * Math.Sin(angle) + (Y - center.Y) * Math.Cos(angle) + center.Y;
             return new Point2D(xx, yy);
         }
+
         public virtual IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => RotateAroundThePoint(angle, new Point2D(0, 0));
 
         public virtual IMoveable2D SymmetryAboutPoint(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
@@ -183,22 +184,10 @@ namespace Plane2D
         public override string ToString() => String.Format("({0},{1})", X, Y);
 
 
-
         #region System.Drawing
-        //TODO выкинуть из: класса и наследников?
-        public static implicit operator PointF(Point2D p) => new PointF((float)p.X, (float)p.Y);
-
-        public static implicit operator Point2D(PointF p) => new Point2D(p.X, p.Y);
-
         public static implicit operator Point(Point2D p) => new Point((int)p.X, (int)p.Y);
 
         public static implicit operator Point2D(Point p) => new Point2D(p.X, p.Y);
-        
-        public Point ToPointInCoordinateSystem(Point origin) => 
-            new Point(origin.X + (int)X, origin.Y - (int)Y);
-
-        public static Point2D ToPoint2DFromCoordinateSystem(Point origin, Point p) =>
-            new Point2D(p.X - origin.X, origin.Y - p.Y);
         #endregion
 
         
