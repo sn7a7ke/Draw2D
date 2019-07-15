@@ -17,13 +17,20 @@ namespace Draw2D
 
         public delegate void Source(Image image);
 
-        public Source Input{ get; set; }
-        public Point Origin { get ; private set; }
+        public Source Input { get; set; }
+
+        public Point Origin { get; private set; }
+
         public Polygon2D SelectedPolygon2D { get; private set; }
+
         public List<Polygon2D> Polygons2D { get; private set; }  // vertex in abolute coordinates Origin == (0, 0)
+
         public List<Point> Points { get; private set; } // points in screen coordinates (Left, Top) == (0, 0)
+
         public int Width { get; private set; }
+
         public int Height { get; private set; }
+
         public Pen PenForAll
         {
             get => _penForAll;
@@ -33,6 +40,7 @@ namespace Draw2D
                 _penForAll = value ?? _penForAll;
             }
         }
+
         public Pen PenForHighlighting
         {
             get => _PenForHighlighting;
@@ -42,7 +50,6 @@ namespace Draw2D
                 _PenForHighlighting = value ?? _PenForHighlighting;
             }
         }
-
 
         public Canvas(Point origin, int width, int height) //Graphics graph, 
         {
@@ -78,18 +85,48 @@ namespace Draw2D
         {
             var polygon2D = FindPolygon2D(currentPolygon2D);
             polygon2D = newPolygon2D;
+            if (SelectedPolygon2D == currentPolygon2D)
+                SelectedPolygon2D = newPolygon2D;
+            RefreshPictureBox();
         }
 
         private Polygon2D FindPolygon2D(Polygon2D polygon2D)
         {
             return Polygons2D.Find(p => p.Equals(polygon2D));
         }
+
+        public void SelectPolygon2D(int number)
+        {
+            int count = Polygons2D.Count;
+            if (count > 0 && number >= 0 && number < count)
+            {
+                Polygon2D newSelectedPolygon2D = Polygons2D[number];
+                if (SelectedPolygon2D != newSelectedPolygon2D)
+                {
+                    SelectedPolygon2D = newSelectedPolygon2D;
+                    RefreshPictureBox();
+                }                
+            }
+        }
         #endregion
 
 
         #region Points
+        public void AddPoint(Point point)
+        {
+            Points.Add(point);
+            int count = Points.Count;
+            if (count > 1)
+                DrawLine(Points[count - 2], Points[count - 1]);
+        }
 
-
+        public void RemovePoint(Point point)
+        {
+            int count = Points.Count;
+            if (count > 1)
+                Points.RemoveAt(count - 1);
+            RefreshPictureBox();
+        }
         #endregion
 
 
@@ -124,10 +161,10 @@ namespace Draw2D
         }
 
         private void DrawCoordinateAxes()
-        {            
+        {
             Pen penForCoordAxes = new Pen(PenForAll.Color) { CustomEndCap = new AdjustableArrowCap(5, 5, false) };
             _graph.DrawLine(penForCoordAxes, new Point(0, Origin.Y - Height), new Point(0, Origin.Y));
-            _graph.DrawLine(penForCoordAxes, new Point(0, 0), new Point(Width - Origin.X - _deltaBmp, 0));            
+            _graph.DrawLine(penForCoordAxes, new Point(0, 0), new Point(Width - Origin.X - _deltaBmp, 0));
         }
 
         private void DrawLine(Point p1, Point p2)
@@ -138,7 +175,7 @@ namespace Draw2D
 
         private void DrawPolygon(Polygon2D polygon2D)
         {
-                _graph.DrawPolygon(PenForAll, GetPolygonInCoordinateSystem(polygon2D));
+            _graph.DrawPolygon(PenForAll, GetPolygonInCoordinateSystem(polygon2D));
         }
 
         private void DrawPolygons()
