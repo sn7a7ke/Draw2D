@@ -14,7 +14,6 @@ namespace Draw2D
         private Bitmap beforeFigureBmp;
         private Bitmap lastAngleFigureBmp;
         private Graphics graph;
-        private Color color;
         private Pen pen;
         //int scale=1;
 
@@ -33,8 +32,7 @@ namespace Draw2D
             _view = view;
             mainBmp = new Bitmap(_view.GetImageWidth, _view.GetImageHeight);
             graph = Graphics.FromImage(mainBmp); // _view.Graph;
-            color = Color.DarkRed;
-            pen = new Pen(color);
+            pen = new Pen(Color.DarkRed);
             Point origin = new Point(0, 400);
             util = new Utility(pen, origin);
             util.DrawCoordinateAxes(graph, _view.GetImageWidth, _view.GetImageHeight);
