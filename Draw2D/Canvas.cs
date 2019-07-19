@@ -34,6 +34,7 @@ namespace Draw2D
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(Width), "Sizes of canvas must be positive");
                 _width = value;
+                RefreshPictureBox();
             }
         }
 
@@ -46,6 +47,7 @@ namespace Draw2D
                 if (value >= 0)
                     throw new ArgumentOutOfRangeException(nameof(Height), "Sizes of canvas must be positive");
                 _height = value;
+                RefreshPictureBox();
             }
         }
 
@@ -59,7 +61,7 @@ namespace Draw2D
                 _penForAll = value ?? _penForAll;
             }
         }
-        
+
         private Pen _PenForHighlighting;
         public Pen PenForHighlighting
         {
@@ -71,9 +73,8 @@ namespace Draw2D
             }
         }
 
-        public Polygon2D SelectedPolygon2D { get; private set; }
 
-        public List<Polygon2D> Polygons2D { get; private set; }  // vertex in abolute coordinates Origin == (0, 0)
+        public Polygons2DOnCanvas Polygons2D { get; set; }
 
         public List<Point> Points { get; private set; } // points in screen coordinates (Left, Top) == (0, 0)
 
@@ -90,52 +91,6 @@ namespace Draw2D
 
             ClearAll();
         }
-
-
-        #region Polygon2D
-        public void AddPolygon2D(Polygon2D polygon2D)
-        {
-            Polygons2D.Add(polygon2D);
-            DrawPolygon(polygon2D);
-        }
-
-        public void RemovePolygon2D(Polygon2D polygon2D)
-        {
-            Polygons2D.Remove(polygon2D);
-            if (SelectedPolygon2D == polygon2D)
-                SelectedPolygon2D = null;
-            RefreshPictureBox();
-        }
-
-        public void ChangePolygon2D(Polygon2D currentPolygon2D, Polygon2D newPolygon2D)
-        {
-            var polygon2D = FindPolygon2D(currentPolygon2D);
-            polygon2D = newPolygon2D;
-            if (SelectedPolygon2D == currentPolygon2D)
-                SelectedPolygon2D = newPolygon2D;
-            RefreshPictureBox();
-        }
-
-        private Polygon2D FindPolygon2D(Polygon2D polygon2D)
-        {
-            return Polygons2D.Find(p => p.Equals(polygon2D));
-        }
-
-        public void SelectPolygon2DByNumber(int number)
-        {
-            int count = Polygons2D.Count;
-            if (count > 0 && number >= 0 && number < count)
-            {
-                Polygon2D newSelectedPolygon2D = Polygons2D[number];
-                if (SelectedPolygon2D != newSelectedPolygon2D)
-                {
-                    SelectedPolygon2D = newSelectedPolygon2D;
-                    RefreshPictureBox();
-                }
-            }
-        }
-        #endregion
-
 
         #region Points
         public void AddPoint(Point point)
@@ -156,19 +111,22 @@ namespace Draw2D
         #endregion
 
 
-        private void RefreshPictureBox() => RefreshPictureBox(Width, Height);
-
-        private void RefreshPictureBox(int width, int height)
+        private void RefreshPictureBox()
         {
             ClearPictureBox();
-            DrawPolygons();
-            if (SelectedPolygon2D != null)
-            {
-                _graph.DrawPolygon(PenForHighlighting, GetPolygonInCoordinateSystem(SelectedPolygon2D));
-            }
+            RefreshPolygons();
             //_view.OutputText = _mainBmp.Width.ToString() + " " + _mainBmp.Height.ToString();            
             DrawPoints();
             //OutputImage?.Invoke(MainBmp);
+        }
+
+        private void RefreshPolygons()
+        {
+            DrawPolygons();
+            if (Polygons2D.Selected != null)
+            {
+                _graph.DrawPolygon(PenForHighlighting, GetPolygonInCoordinateSystem(Polygons2D.Selected));
+            }
         }
 
         private void ClearPictureBox()
@@ -181,8 +139,10 @@ namespace Draw2D
         public void ClearAll()
         {
             ClearPictureBox();
-            Polygons2D = new List<Polygon2D>();
-            SelectedPolygon2D = null;
+            Polygons2D = new Polygons2DOnCanvas
+            {
+                Refresh = RefreshPolygons
+            };
             Points = new List<Point>();
             //OutputImage?.Invoke(MainBmp);
         }
@@ -207,8 +167,8 @@ namespace Draw2D
 
         private void DrawPolygons()
         {
-            for (int i = 0; i < Polygons2D.Count; i++)
-                DrawPolygon(Polygons2D[i]);
+            for (int i = 0; i < Polygons2D.List.Count; i++)
+                DrawPolygon(Polygons2D.List[i]);
         }
 
         private void DrawPoints()
@@ -239,6 +199,67 @@ namespace Draw2D
             for (int i = 0; i < points.Count; i++)
                 vers[i] = ToPoint2DFromCoordinateSystem(points[i]);
             return new Polygon2D(vers);
+        }
+
+
+        public class Polygons2DOnCanvas
+        {
+            public Polygon2D Selected { get; private set; }
+
+            public List<Polygon2D> List { get; private set; }  // vertex in abolute coordinates Origin == (0, 0)
+
+            public delegate void DrawOnePolygon(Polygon2D polygon2D);
+
+            public delegate void RefreshPolygons();
+
+            public RefreshPolygons Refresh { get; set; } // for correct work must be filling
+
+            public void Add(Polygon2D polygon2D)
+            {
+                List.Add(polygon2D);
+                Refresh?.Invoke();
+            }
+
+            public void Remove(Polygon2D polygon2D)
+            {
+                List.Remove(polygon2D);
+                if (Selected == polygon2D)
+                    Selected = null;
+                Refresh?.Invoke();
+            }
+
+            public void Change(Polygon2D currentPolygon2D, Polygon2D newPolygon2D)
+            {
+                var polygon2D = Find(currentPolygon2D);
+                polygon2D = newPolygon2D;
+                if (Selected == currentPolygon2D)
+                    Selected = newPolygon2D;
+                Refresh?.Invoke();
+            }
+
+            private Polygon2D Find(Polygon2D polygon2D)
+            {
+                return List.Find(p => p.Equals(polygon2D));
+            }
+
+            public void Select(int number)
+            {
+                int count = List.Count;
+                if (count > 0 && number >= 0 && number < count)
+                {
+                    Polygon2D newSelectedPolygon2D = List[number];
+                    if (Selected != newSelectedPolygon2D)
+                    {
+                        Selected = newSelectedPolygon2D;
+                        Refresh?.Invoke();
+                    }
+                }
+            }
+
+            public void Select(Polygon2D newSelectedPolygon2D)
+            {
+                Selected = Find(newSelectedPolygon2D);
+            }
         }
     }
 }
