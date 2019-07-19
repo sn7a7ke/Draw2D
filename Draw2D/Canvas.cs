@@ -9,28 +9,47 @@ namespace Draw2D
     class Canvas
     {
         private readonly int _deltaBmp;
-        private Pen _penForAll;
-        private Pen _PenForHighlighting;
-
-        private Bitmap _mainBmp;
         private Graphics _graph;
 
-        public delegate void Source(Image image);
+        public Bitmap MainBmp { get; private set; }
 
-        public Source Input { get; set; }
+        Point _origin;
+        public Point Origin
+        {
+            get => _origin;
+            private set
+            {
+                if (value.X < 0 || value.Y < 0)
+                    throw new ArgumentOutOfRangeException(nameof(Origin), "Cordinates isn't negative.");
+                _origin = value;
+            }
+        }
 
-        public Point Origin { get; private set; }
+        private int _width;
+        public int Width
+        {
+            get => _width;
+            private set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(Width), "Sizes of canvas must be positive");
+                _width = value;
+            }
+        }
 
-        public Polygon2D SelectedPolygon2D { get; private set; }
+        private int _height;
+        public int Height
+        {
+            get => _height;
+            private set
+            {
+                if (value >= 0)
+                    throw new ArgumentOutOfRangeException(nameof(Height), "Sizes of canvas must be positive");
+                _height = value;
+            }
+        }
 
-        public List<Polygon2D> Polygons2D { get; private set; }  // vertex in abolute coordinates Origin == (0, 0)
-
-        public List<Point> Points { get; private set; } // points in screen coordinates (Left, Top) == (0, 0)
-
-        public int Width { get; private set; }
-
-        public int Height { get; private set; }
-
+        private Pen _penForAll;
         public Pen PenForAll
         {
             get => _penForAll;
@@ -40,7 +59,8 @@ namespace Draw2D
                 _penForAll = value ?? _penForAll;
             }
         }
-
+        
+        private Pen _PenForHighlighting;
         public Pen PenForHighlighting
         {
             get => _PenForHighlighting;
@@ -50,6 +70,12 @@ namespace Draw2D
                 _PenForHighlighting = value ?? _PenForHighlighting;
             }
         }
+
+        public Polygon2D SelectedPolygon2D { get; private set; }
+
+        public List<Polygon2D> Polygons2D { get; private set; }  // vertex in abolute coordinates Origin == (0, 0)
+
+        public List<Point> Points { get; private set; } // points in screen coordinates (Left, Top) == (0, 0)
 
         public Canvas(Point origin, int width, int height) //Graphics graph, 
         {
@@ -95,7 +121,7 @@ namespace Draw2D
             return Polygons2D.Find(p => p.Equals(polygon2D));
         }
 
-        public void SelectPolygon2D(int number)
+        public void SelectPolygon2DByNumber(int number)
         {
             int count = Polygons2D.Count;
             if (count > 0 && number >= 0 && number < count)
@@ -105,7 +131,7 @@ namespace Draw2D
                 {
                     SelectedPolygon2D = newSelectedPolygon2D;
                     RefreshPictureBox();
-                }                
+                }
             }
         }
         #endregion
@@ -142,13 +168,13 @@ namespace Draw2D
             }
             //_view.OutputText = _mainBmp.Width.ToString() + " " + _mainBmp.Height.ToString();            
             DrawPoints();
-            Input?.Invoke(_mainBmp);
+            //OutputImage?.Invoke(MainBmp);
         }
 
         private void ClearPictureBox()
         {
-            _mainBmp = new Bitmap(Width, Height);
-            _graph = Graphics.FromImage(_mainBmp);
+            MainBmp = new Bitmap(Width, Height);
+            _graph = Graphics.FromImage(MainBmp);
             DrawCoordinateAxes();
         }
 
@@ -158,6 +184,7 @@ namespace Draw2D
             Polygons2D = new List<Polygon2D>();
             SelectedPolygon2D = null;
             Points = new List<Point>();
+            //OutputImage?.Invoke(MainBmp);
         }
 
         private void DrawCoordinateAxes()
