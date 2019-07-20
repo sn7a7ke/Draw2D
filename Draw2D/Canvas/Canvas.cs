@@ -36,7 +36,6 @@ namespace Draw2D.Canvas
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(Width), "Sizes of canvas must be positive");
                 _width = value;
-                RefreshPictureBox();
             }
         }
 
@@ -46,10 +45,9 @@ namespace Draw2D.Canvas
             get => _height;
             private set
             {
-                if (value >= 0)
+                if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(Height), "Sizes of canvas must be positive");
                 _height = value;
-                RefreshPictureBox();
             }
         }
 
@@ -75,8 +73,7 @@ namespace Draw2D.Canvas
             }
         }
 
-
-        public Polygons2DOnCanvas Polygons2D { get; set; } // vertex in abolute coordinates Origin == (0, 0)
+        public Polygons2DOnCanvas Polygons2D { get; private set; } // vertex in abolute coordinates Origin == (0, 0)
 
         public PointsOnCanvas Points { get; private set; } // points in screen coordinates (Left, Top) == (0, 0)
 
@@ -86,19 +83,22 @@ namespace Draw2D.Canvas
             Width = width;
             Height = height;
             _deltaBmp = 100;
-
             PenForAll = new Pen(Color.DarkRed);
             PenForHighlighting = (Pen)PenForAll.Clone();
             PenForHighlighting.Width *= 2;
-
-            ClearAll();
+            Clear();
         }
 
-        private void RefreshPictureBox()
+        public void Resize(int width, int height)
         {
-            ClearPictureBox();
+            Width = width;
+            Height = height;
+        }
+
+        public void Refresh()
+        {
+            Draw();
             RefreshPolygons();
-            //_view.OutputText = _mainBmp.Width.ToString() + " " + _mainBmp.Height.ToString();            
             RefreshPoints();
         }
 
@@ -113,45 +113,39 @@ namespace Draw2D.Canvas
 
         private void RefreshPoints()
         {
-            if (Points.List.Count > 1)
+            if (Points.List.Count > 0)
             {
                 for (int i = 0; i < Points.List.Count - 1; i++)
                     DrawLine(Points.List[i], Points.List[i + 1]);
-                DrawLine(Points.List[Points.List.Count], Points.Temporary);
+                DrawLine(Points.List[Points.List.Count - 1], Points.Temporary);
             }
         }
 
-        private void ClearPictureBox()
+        private void Draw()
         {
             MainBmp = new Bitmap(Width, Height);
             _graph = Graphics.FromImage(MainBmp);
             DrawCoordinateAxes();
         }
 
-        public void ClearAll()
+        public void Clear()
         {
-            ClearPictureBox();
-            Polygons2D = new Polygons2DOnCanvas
-            {
-                Refresh = RefreshPictureBox
-            };
-            Points = new PointsOnCanvas()
-            {
-                Refresh = RefreshPictureBox
-            };
+            Draw();
+            Polygons2D = new Polygons2DOnCanvas();
+            Points = new PointsOnCanvas();
         }
 
         private void DrawCoordinateAxes()
         {
             Pen penForCoordAxes = new Pen(PenForAll.Color) { CustomEndCap = new AdjustableArrowCap(5, 5, false) };
-            _graph.DrawLine(penForCoordAxes, new Point(0, Origin.Y - Height), new Point(0, Origin.Y));
-            _graph.DrawLine(penForCoordAxes, new Point(0, 0), new Point(Width - Origin.X - _deltaBmp, 0));
+            _graph.DrawLine(penForCoordAxes, new Point(Origin.X, Origin.Y), new Point(Width, Origin.Y));
+            _graph.DrawLine(penForCoordAxes, new Point(Origin.X, Origin.Y), new Point(0, 0));
         }
 
         private void DrawLine(Point p1, Point p2)
         {
-            _graph.DrawLine(PenForAll, new Point(Origin.X + p1.X, Origin.Y - p1.Y),
-                                new Point(Origin.X + p2.X, Origin.Y - p2.Y));
+            _graph.DrawLine(PenForAll, new Point(p1.X, p1.Y),
+                    new Point(p2.X, p2.Y));
         }
 
         private void DrawPolygon(Polygon2D polygon2D)
@@ -186,6 +180,13 @@ namespace Draw2D.Canvas
             for (int i = 0; i < points.Count; i++)
                 vers[i] = ToPoint2DFromCoordinateSystem(points[i]);
             return new Polygon2D(vers);
+        }
+
+        public void AddPolygon()
+        {
+            Polygon2D poly = GetPolygonFromCoordinateSystem(Points.List);
+            Points.Clear();
+            Polygons2D.Add(poly);            
         }
     }
 }
