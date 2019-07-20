@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Canvas\PointsOnCanvas.cs" />
+    <Compile Include="Canvas\Polygons2DOnCanvas.cs" />
     <Compile Include="IInfoForm.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -63,7 +65,7 @@
     <Compile Include="Presenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Canvas.cs" />
+    <Compile Include="Canvas\Canvas.cs" />
     <Compile Include="Utility.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
