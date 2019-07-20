@@ -46,7 +46,7 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnInfo = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.labelMouseLocation = new System.Windows.Forms.Label();
+            this.labelMouseLocation3 = new System.Windows.Forms.Label();
             this.Output = new System.Windows.Forms.Label();
             this.SelectPoly = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -60,6 +60,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.labelMouseLocation = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -175,7 +176,8 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
+            this.toolStripStatusLabel1,
+            this.labelMouseLocation});
             this.statusStrip1.Location = new System.Drawing.Point(0, 460);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
@@ -207,15 +209,15 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "X,Y:";
             // 
-            // labelMouseLocation
+            // labelMouseLocation3
             // 
-            this.labelMouseLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelMouseLocation.AutoSize = true;
-            this.labelMouseLocation.Location = new System.Drawing.Point(24, 443);
-            this.labelMouseLocation.Name = "labelMouseLocation";
-            this.labelMouseLocation.Size = new System.Drawing.Size(22, 13);
-            this.labelMouseLocation.TabIndex = 6;
-            this.labelMouseLocation.Text = "0,0";
+            this.labelMouseLocation3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelMouseLocation3.AutoSize = true;
+            this.labelMouseLocation3.Location = new System.Drawing.Point(24, 443);
+            this.labelMouseLocation3.Name = "labelMouseLocation3";
+            this.labelMouseLocation3.Size = new System.Drawing.Size(22, 13);
+            this.labelMouseLocation3.TabIndex = 6;
+            this.labelMouseLocation3.Text = "0,0";
             // 
             // Output
             // 
@@ -390,13 +392,19 @@
             this.panel2.Size = new System.Drawing.Size(194, 194);
             this.panel2.TabIndex = 1;
             // 
+            // labelMouseLocation
+            // 
+            this.labelMouseLocation.Name = "labelMouseLocation";
+            this.labelMouseLocation.Size = new System.Drawing.Size(10, 17);
+            this.labelMouseLocation.Text = ".";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 482);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.labelMouseLocation);
+            this.Controls.Add(this.labelMouseLocation3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -430,7 +438,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Button btnInfo;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label labelMouseLocation;
+        private System.Windows.Forms.Label labelMouseLocation3;
         private System.Windows.Forms.Label Output;
         private System.Windows.Forms.Button SelectPoly;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -454,6 +462,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ToolStripStatusLabel labelMouseLocation;
     }
 }
 
