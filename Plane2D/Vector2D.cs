@@ -32,6 +32,8 @@ namespace Plane2D
 
         public double Length => Distance(new Point2D(0, 0), this);//{ get => Math.Sqrt(X * X + Y * Y); }
 
+        public Vector2D Ort => new Vector2D(X / Length, Y / Length);
+
         public double AngleBetweenVectors(Vector2D B) => AngleBetweenVectors(this, B);
 
         public static double VectorProduct(Vector2D A, Vector2D B) => A.X * B.Y - A.Y * B.X;
@@ -68,7 +70,7 @@ namespace Plane2D
         public override IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => new Vector2D((Point2D)new Point2D(X, Y).RotateAroundTheCenterOfCoordinates(angle));
 
         public override IMoveable2D SymmetryAboutPoint(Point2D center) => new Vector2D((Point2D)new Point2D(X, Y).SymmetryAboutPoint(new Point2D(0, 0)));
- 
+                 
         public static Vector2D operator +(Vector2D v1, Vector2D v2) => v1.Add(v2);
 
         public static Vector2D operator -(Vector2D v1, Vector2D v2) => v1.Sub(v2);

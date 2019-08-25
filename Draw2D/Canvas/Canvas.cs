@@ -12,6 +12,8 @@ namespace Draw2D.Canvas
 
         private readonly int _deltaBmp;
         private Graphics _graph;
+        int _fontSizeInPixels = 14;
+        string _fontName = "Courier New";
 
         public Bitmap MainBmp { get; private set; }
 
@@ -107,8 +109,32 @@ namespace Draw2D.Canvas
             DrawPolygons();
             if (Polygons2D.Selected != null)
             {
-                _graph.DrawPolygon(PenForHighlighting, GetPolygonInCoordinateSystem(Polygons2D.Selected));
+                var vertices = GetPolygonInCoordinateSystem(Polygons2D.Selected);
+                _graph.DrawPolygon(PenForHighlighting, vertices);
+                DrawVeticesNames(Polygons2D.Selected);
             }
+        }
+
+        private void DrawVeticesNames(Polygon2D poly)
+        {
+            var nameOfVertices = poly.GetNameOfVertices();
+            Point placeForText;
+            using (Font myFont = new Font(_fontName, _fontSizeInPixels, GraphicsUnit.Pixel))
+            {
+                for (int i = 0; i < nameOfVertices.Length; i++)
+                {
+                    placeForText = TextPlaceNew(nameOfVertices[i], poly[i], poly);
+                    _graph.DrawString(nameOfVertices[i], myFont, Brushes.Green, ToPointInCoordinateSystem(placeForText));
+                }
+            }
+        }
+
+        public Point2D[] PointArrayToPoint2DArray(Point[] points)
+        {
+            var points2D = new Point2D[points.Length];
+            for (int i = 0; i < points.Length; i++)
+                points2D[i] = points[i];
+            return points2D;
         }
 
         private void RefreshPoints()
@@ -186,7 +212,46 @@ namespace Draw2D.Canvas
         {
             Polygon2D poly = GetPolygonFromCoordinateSystem(Points.List);
             Points.Clear();
-            Polygons2D.Add(poly);            
+            Polygons2D.Add(poly);
         }
+
+        private Point2D TextPlaceNew(string text, Point2D point2D, Polygon2D polygon2D)
+        {
+            var previosPoint = Point2D.Middle(polygon2D[point2D].Previous, point2D);
+            var nextPoint = Point2D.Middle(polygon2D[point2D].Next, point2D);
+            var ort = new Vector2D(new Line2D(previosPoint, nextPoint).IntersectPerpendicularFromPointWithLine(point2D), point2D).Ort;
+            var half = _fontSizeInPixels / 2;
+            return new Point2D(point2D.X - half + half * ort.X, point2D.Y + half + half * ort.Y);
+        }
+
+        //private Point TextPlace(string text, Point point, Polygon2D polygon2D)
+        //{
+        //    var position = polygon2D.WhereIsPointInRelationToPolygon(point);
+        //    var one = _fontSizeInPixels;
+        //    var half = one / 2;
+        //    switch (position)
+        //    {
+        //        case Polygon2D.PointPositionInRelationToPolygon.left:
+        //            return new Point(point.X - one, point.Y + half);
+        //        case Polygon2D.PointPositionInRelationToPolygon.right:
+        //            return new Point(point.X, point.Y + half);
+        //        case Polygon2D.PointPositionInRelationToPolygon.above:
+        //            return new Point(point.X - half, point.Y + one);
+        //        case Polygon2D.PointPositionInRelationToPolygon.below:
+        //            return new Point(point.X - half, point.Y);
+        //        case Polygon2D.PointPositionInRelationToPolygon.leftAbove:
+        //            return new Point(point.X - one, point.Y + one);
+        //        case Polygon2D.PointPositionInRelationToPolygon.leftBelow:
+        //            return new Point(point.X - one, point.Y);
+        //        case Polygon2D.PointPositionInRelationToPolygon.rightAbove:
+        //            return new Point(point.X, point.Y + one);
+        //        case Polygon2D.PointPositionInRelationToPolygon.rightBelow:
+        //            return new Point(point.X, point.Y);
+        //        case Polygon2D.PointPositionInRelationToPolygon.inside:
+        //            return new Point(point.X - half, point.Y + half);
+        //        default:
+        //            throw new IndexOutOfRangeException("No such position");
+        //    }
+        //}
     }
 }

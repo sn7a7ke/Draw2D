@@ -10,13 +10,13 @@ namespace Plane2D
     public class Polygon2D : IShape2D
     {
         protected PolygonVertex2D _head;
-        private char[] nameOfVertices;
+        private string[] nameOfVertices;
 
-        public Polygon2D(params Point2D[] vertices) : this(vertices, GetDefaultNameOfVertex(vertices.Length))
-        {            
+        public Polygon2D(params Point2D[] vertices) : this(vertices, GetDefaultNameOfVertex(vertices?.Length ?? 0))
+        {
         }
 
-        public Polygon2D(Point2D[] vertices, char[] nameOfVertices)
+        public Polygon2D(Point2D[] vertices, string[] nameOfVertices)
         {
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
             if (vertices.Length < 3)
@@ -53,7 +53,7 @@ namespace Plane2D
             }
         }
 
-        public char[] GetNameOfVertices()
+        public string[] GetNameOfVertices()
         {
             return nameOfVertices;
         }
@@ -213,17 +213,50 @@ namespace Plane2D
         public virtual bool IsWithoutIntersect => true;
         // =========================================================
 
+        public PointPositionInRelationToPolygon WhereIsPointInRelationToPolygon(Point2D point2D)
+        {
+            if (point2D.X >= MaxX && point2D.Y >= MaxY)
+                return PointPositionInRelationToPolygon.rightAbove;
+            if (point2D.X >= MaxX && point2D.Y <= MinY)
+                return PointPositionInRelationToPolygon.rightBelow;
+            if (point2D.X <= MinX && point2D.Y <= MinY)
+                return PointPositionInRelationToPolygon.leftBelow;
+            if (point2D.X <= MinX && point2D.Y >= MaxY)
+                return PointPositionInRelationToPolygon.leftAbove;
+            if (point2D.X >= MaxX)
+                return PointPositionInRelationToPolygon.right;
+            if (point2D.X <= MinX)
+                return PointPositionInRelationToPolygon.left;
+            if (point2D.Y >= MaxY)
+                return PointPositionInRelationToPolygon.above;
+            if (point2D.Y <= MinY)
+                return PointPositionInRelationToPolygon.below;
+            return PointPositionInRelationToPolygon.inside;
+        }
 
         public override string ToString() => GetType().Name + " v" + QuantityVertices + " c" + Center;
 
         public string VerticesToString(string separator = " ") => string.Join(separator, _head);
 
-        static protected char[] GetDefaultNameOfVertex(int count)
+        static protected string[] GetDefaultNameOfVertex(int count)
         {
-            char[] vertices = new char[count];
+            string[] vertices = new string[count];
             for (int i = 0; i < count; i++)
-                vertices[i] = (char)(65 + i);
+                vertices[i] = ((char)(65 + i)).ToString();
             return vertices;
+        }
+
+        public enum PointPositionInRelationToPolygon
+        {
+            left,
+            right,
+            above,
+            below,
+            leftAbove,
+            leftBelow,
+            rightAbove,
+            rightBelow,
+            inside
         }
     }
 }
