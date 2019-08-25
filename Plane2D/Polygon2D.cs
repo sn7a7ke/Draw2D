@@ -10,15 +10,22 @@ namespace Plane2D
     public class Polygon2D : IShape2D
     {
         protected PolygonVertex2D _head;
+        private char[] nameOfVertices;
 
-        public Polygon2D(params Point2D[] vertices)
+        public Polygon2D(params Point2D[] vertices) : this(vertices, GetDefaultNameOfVertex(vertices.Length))
+        {            
+        }
+
+        public Polygon2D(Point2D[] vertices, char[] nameOfVertices)
         {
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
             if (vertices.Length < 3)
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
-
+            if (vertices.Length != nameOfVertices.Length)
+                throw new ArgumentOutOfRangeException("The quantity vertices are not equal quantity name of vertices");
             _head = new PolygonVertex2D(vertices);
             QuantityVertices = _head.Count;
+            this.nameOfVertices = nameOfVertices;
         }
 
         protected Polygon2D(PolygonVertex2D head)
@@ -44,6 +51,11 @@ namespace Plane2D
                     ;
                 return current;
             }
+        }
+
+        public char[] GetNameOfVertices()
+        {
+            return nameOfVertices;
         }
 
         public PolygonVertex2D this[Point2D point2D]
@@ -205,5 +217,13 @@ namespace Plane2D
         public override string ToString() => GetType().Name + " v" + QuantityVertices + " c" + Center;
 
         public string VerticesToString(string separator = " ") => string.Join(separator, _head);
+
+        static protected char[] GetDefaultNameOfVertex(int count)
+        {
+            char[] vertices = new char[count];
+            for (int i = 0; i < count; i++)
+                vertices[i] = (char)(65 + i);
+            return vertices;
+        }
     }
 }
