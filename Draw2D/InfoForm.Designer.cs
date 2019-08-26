@@ -45,18 +45,22 @@
             // 
             // pictureBoxInfo
             // 
+            this.pictureBoxInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxInfo.BackgroundImage = global::Draw2D.Properties.Resources.Background10x10;
-            this.pictureBoxInfo.Location = new System.Drawing.Point(11, 54);
+            this.pictureBoxInfo.Location = new System.Drawing.Point(11, 40);
             this.pictureBoxInfo.Name = "pictureBoxInfo";
-            this.pictureBoxInfo.Size = new System.Drawing.Size(481, 321);
+            this.pictureBoxInfo.Size = new System.Drawing.Size(581, 480);
             this.pictureBoxInfo.TabIndex = 0;
             this.pictureBoxInfo.TabStop = false;
             this.pictureBoxInfo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxInfo_MouseMove);
             // 
             // Output
             // 
+            this.Output.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Output.AutoSize = true;
-            this.Output.Location = new System.Drawing.Point(504, 37);
+            this.Output.Location = new System.Drawing.Point(598, 24);
             this.Output.Name = "Output";
             this.Output.Size = new System.Drawing.Size(10, 13);
             this.Output.TabIndex = 1;
@@ -67,9 +71,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.lblMouseLocation});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 436);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 536);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(884, 22);
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -91,7 +95,7 @@
             this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(884, 24);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -103,8 +107,9 @@
             // 
             // lblLeftBottom
             // 
+            this.lblLeftBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblLeftBottom.AutoSize = true;
-            this.lblLeftBottom.Location = new System.Drawing.Point(13, 378);
+            this.lblLeftBottom.Location = new System.Drawing.Point(8, 523);
             this.lblLeftBottom.Name = "lblLeftBottom";
             this.lblLeftBottom.Size = new System.Drawing.Size(10, 13);
             this.lblLeftBottom.TabIndex = 11;
@@ -112,7 +117,7 @@
             // 
             // lblRightTop
             // 
-            this.lblRightTop.Location = new System.Drawing.Point(392, 38);
+            this.lblRightTop.Location = new System.Drawing.Point(392, 24);
             this.lblRightTop.Name = "lblRightTop";
             this.lblRightTop.Size = new System.Drawing.Size(100, 13);
             this.lblRightTop.TabIndex = 12;
@@ -121,7 +126,8 @@
             // 
             // tVInfo
             // 
-            this.tVInfo.Location = new System.Drawing.Point(499, 169);
+            this.tVInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tVInfo.Location = new System.Drawing.Point(601, 314);
             this.tVInfo.Name = "tVInfo";
             this.tVInfo.Size = new System.Drawing.Size(241, 206);
             this.tVInfo.TabIndex = 13;
@@ -131,7 +137,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 458);
+            this.ClientSize = new System.Drawing.Size(884, 558);
             this.Controls.Add(this.tVInfo);
             this.Controls.Add(this.lblRightTop);
             this.Controls.Add(this.lblLeftBottom);
@@ -142,9 +148,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(800, 496);
+            this.MaximumSize = new System.Drawing.Size(900, 596);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(800, 496);
+            this.MinimumSize = new System.Drawing.Size(900, 596);
             this.Name = "InfoForm";
             this.Text = "InfoForm";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInfo)).EndInit();
