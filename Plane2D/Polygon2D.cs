@@ -145,7 +145,7 @@ namespace Plane2D
         {
             get
             {
-                if (IsWithSelfIntersect)
+                if (!IsWithSelfIntersect)
                 {
                     double sum = 0;
                     foreach (PolygonVertex2D v in _head)
