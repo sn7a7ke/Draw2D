@@ -10,15 +10,22 @@ namespace Plane2D
     public class Polygon2D : IShape2D
     {
         protected PolygonVertex2D _head;
+        private string[] nameOfVertices;
 
-        public Polygon2D(params Point2D[] vertices)
+        public Polygon2D(params Point2D[] vertices) : this(vertices, GetDefaultNameOfVertex(vertices?.Length ?? 0))
+        {
+        }
+
+        public Polygon2D(Point2D[] vertices, string[] nameOfVertices)
         {
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
             if (vertices.Length < 3)
                 throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
-
+            if (vertices.Length != nameOfVertices.Length)
+                throw new ArgumentOutOfRangeException("The quantity vertices are not equal quantity name of vertices");
             _head = new PolygonVertex2D(vertices);
             QuantityVertices = _head.Count;
+            this.nameOfVertices = nameOfVertices;
         }
 
         protected Polygon2D(PolygonVertex2D head)
@@ -44,6 +51,11 @@ namespace Plane2D
                     ;
                 return current;
             }
+        }
+
+        public string[] GetNameOfVertices()
+        {
+            return nameOfVertices;
         }
 
         public PolygonVertex2D this[Point2D point2D]
@@ -82,6 +94,8 @@ namespace Plane2D
             {
                 StringBuilder sb = new StringBuilder(ToString() + Environment.NewLine);
                 sb.Append("IsConvex: " + IsConvex + Environment.NewLine);
+                sb.Append("SelfIntersect: " + IsWithSelfIntersect + Environment.NewLine);
+                
                 sb.Append($"Perimeter: {Perimeter,10:#,###.00}" + Environment.NewLine);
                 sb.Append($"Square:   {Square,10:#,###.00}" + Environment.NewLine);
                 return sb.ToString();
@@ -131,7 +145,7 @@ namespace Plane2D
         {
             get
             {
-                if (IsWithoutIntersect)
+                if (IsWithSelfIntersect)
                 {
                     double sum = 0;
                     foreach (PolygonVertex2D v in _head)
@@ -198,12 +212,74 @@ namespace Plane2D
 
 
         // === НЕ РЕАЛИЗОВАНО!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ===
-        public virtual bool IsWithoutIntersect => true;
+        public virtual bool IsWithSelfIntersect
+        {
+            get
+            {
+                if (QuantityVertices < 4)
+                    return false;
+                Segment2D chekedSegment;
+                Segment2D anotherSegment;
+                for (int i = 0; i < QuantityVertices - 3; i++)
+                {
+                    chekedSegment = new Segment2D(this[i], this[i].Next);
+                    for (int j = i + 2; j < QuantityVertices; j++)
+                    {
+                        anotherSegment = new Segment2D(this[j], this[j].Next);
+                        if (Segment2D.IsIntersectSegmentABAndCD(chekedSegment, anotherSegment))
+                            return true;
+                    }
+                }
+                return false;
+            }
+        }
+
         // =========================================================
 
+        public PointPositionInRelationToPolygon WhereIsPointInRelationToPolygon(Point2D point2D)
+        {
+            if (point2D.X >= MaxX && point2D.Y >= MaxY)
+                return PointPositionInRelationToPolygon.rightAbove;
+            if (point2D.X >= MaxX && point2D.Y <= MinY)
+                return PointPositionInRelationToPolygon.rightBelow;
+            if (point2D.X <= MinX && point2D.Y <= MinY)
+                return PointPositionInRelationToPolygon.leftBelow;
+            if (point2D.X <= MinX && point2D.Y >= MaxY)
+                return PointPositionInRelationToPolygon.leftAbove;
+            if (point2D.X >= MaxX)
+                return PointPositionInRelationToPolygon.right;
+            if (point2D.X <= MinX)
+                return PointPositionInRelationToPolygon.left;
+            if (point2D.Y >= MaxY)
+                return PointPositionInRelationToPolygon.above;
+            if (point2D.Y <= MinY)
+                return PointPositionInRelationToPolygon.below;
+            return PointPositionInRelationToPolygon.inside;
+        }
 
         public override string ToString() => GetType().Name + " v" + QuantityVertices + " c" + Center;
 
         public string VerticesToString(string separator = " ") => string.Join(separator, _head);
+
+        static protected string[] GetDefaultNameOfVertex(int count)
+        {
+            string[] vertices = new string[count];
+            for (int i = 0; i < count; i++)
+                vertices[i] = ((char)(65 + i)).ToString();
+            return vertices;
+        }
+
+        public enum PointPositionInRelationToPolygon
+        {
+            left,
+            right,
+            above,
+            below,
+            leftAbove,
+            leftBelow,
+            rightAbove,
+            rightBelow,
+            inside
+        }
     }
 }

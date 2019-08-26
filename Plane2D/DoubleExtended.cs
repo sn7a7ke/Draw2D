@@ -17,5 +17,9 @@ namespace Plane2D
         public static bool Less(this double d1, double d2) => d2 - d1 >= Epsilon;
 
         public static bool LessOrEqual(this double d1, double d2) => d2 - d1 > -Epsilon;
+
+        public static bool Positive(this double d1) => d1.More(0);
+
+        public static bool Negative(this double d1) => d1.Less(0);
     }
 }
