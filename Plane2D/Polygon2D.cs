@@ -10,7 +10,7 @@ namespace Plane2D
     public class Polygon2D : IShape2D
     {
         protected PolygonVertex2D _head;
-        private string[] nameOfVertices;
+        private string[] _nameOfVertices;
 
         public Polygon2D(params Point2D[] vertices) : this(vertices, GetDefaultNameOfVertex(vertices?.Length ?? 0))
         {
@@ -25,7 +25,7 @@ namespace Plane2D
                 throw new ArgumentOutOfRangeException("The quantity vertices are not equal quantity name of vertices");
             _head = new PolygonVertex2D(vertices);
             QuantityVertices = _head.Count;
-            this.nameOfVertices = nameOfVertices;
+            this._nameOfVertices = nameOfVertices;
         }
 
         protected Polygon2D(PolygonVertex2D head)
@@ -55,7 +55,7 @@ namespace Plane2D
 
         public string[] GetNameOfVertices()
         {
-            return nameOfVertices;
+            return _nameOfVertices;
         }
 
         public PolygonVertex2D this[Point2D point2D]
@@ -100,9 +100,11 @@ namespace Plane2D
                 sb.Append($"Is convex: {IsConvex}" + Environment.NewLine);
                 sb.Append($"SelfIntersect: {IsWithSelfIntersect}" + Environment.NewLine);
                 for (int i = 0; i < QuantityVertices; i++)
-                    sb.Append($"Vertex {i}: ({this[i].X}, {this[i].Y})" + Environment.NewLine);
+                    sb.Append($"Vertex {_nameOfVertices[i]}: {this[i]}" + Environment.NewLine);
                 for (int i = 0; i < QuantityVertices; i++)
-                    sb.Append($"Angle {i}: {this[i].AngleDegree}" + Environment.NewLine);
+                    sb.Append($"Angle {_nameOfVertices[i]}: {this[i].AngleDegree}" + Environment.NewLine);
+                for (int i = 0; i < QuantityVertices; i++)
+                    sb.Append($"MiddleLine for {_nameOfVertices[i]}: {this[i].MiddleLine.Length}" + Environment.NewLine);
                 return sb.ToString();
             }
         }
