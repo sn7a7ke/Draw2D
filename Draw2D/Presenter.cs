@@ -172,28 +172,12 @@ namespace Draw2D
         #endregion
 
 
-        private string GetPolygonDescription(Polygon2D polygon2D)
-        {
-            StringBuilder sb = new StringBuilder(polygon2D.ToString() + Environment.NewLine);
-            for (int i = 0; i < polygon2D.QuantityVertices; i++)
-                sb.Append("Vertex " + i + ": (" + polygon2D[i].X + ", " + polygon2D[i].Y + ")" + Environment.NewLine);
-            for (int i = 0; i < polygon2D.QuantityVertices; i++)
-                sb.Append("Angle " + i + ": " + polygon2D[i].AngleDegree + Environment.NewLine);
-            sb.Append("QuantityVertices: " + polygon2D.QuantityVertices + Environment.NewLine);
-            sb.Append("Center: " + polygon2D.Center + Environment.NewLine);
-            sb.Append("Perimeter: " + polygon2D.Perimeter + Environment.NewLine);
-            sb.Append("Is convex: " + polygon2D.IsConvex + Environment.NewLine);
-            sb.Append("SelfIntersect: " + polygon2D.IsWithSelfIntersect);
-
-            return sb.ToString();
-        }
-
         private void RefreshPictureBox()
         {
             _canvas.Refresh();
             _view.Image = _canvas.MainBmp;
             if (_canvas.Polygons2D.Selected != null)
-                _view.OutputText = GetPolygonDescription(_canvas.Polygons2D.Selected);
+                _view.OutputText = _canvas.Polygons2D.Selected.Summary;
             else
                 _view.OutputText = _canvas.Width.ToString() + " " + _canvas.Height.ToString();
         }

@@ -10,8 +10,8 @@
         double DistanceToRectangle(Point2D LeftBottom, Point2D RightTop);
         bool Equals(object obj);
         int GetHashCode();
-        //Point ToPointInCoordinateSystem(Point origin);
         string ToString();
+        string ToString(string format);
         Point2D.PointPosition WhatQuarter();
         Point2D.PointPosition WhatQuarterRelatively(Point2D p);
     }

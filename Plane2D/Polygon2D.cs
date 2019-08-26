@@ -93,11 +93,16 @@ namespace Plane2D
             get
             {
                 StringBuilder sb = new StringBuilder(ToString() + Environment.NewLine);
-                sb.Append("IsConvex: " + IsConvex + Environment.NewLine);
-                sb.Append("SelfIntersect: " + IsWithSelfIntersect + Environment.NewLine);
-                
+                sb.Append($"QuantityVertices: {QuantityVertices}" + Environment.NewLine);
+                sb.Append($"Center: {Center}" + Environment.NewLine);
                 sb.Append($"Perimeter: {Perimeter,10:#,###.00}" + Environment.NewLine);
                 sb.Append($"Square:   {Square,10:#,###.00}" + Environment.NewLine);
+                sb.Append($"Is convex: {IsConvex}" + Environment.NewLine);
+                sb.Append($"SelfIntersect: {IsWithSelfIntersect}" + Environment.NewLine);
+                for (int i = 0; i < QuantityVertices; i++)
+                    sb.Append($"Vertex {i}: ({this[i].X}, {this[i].Y})" + Environment.NewLine);
+                for (int i = 0; i < QuantityVertices; i++)
+                    sb.Append($"Angle {i}: {this[i].AngleDegree}" + Environment.NewLine);
                 return sb.ToString();
             }
         }

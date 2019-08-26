@@ -6,11 +6,9 @@ namespace Plane2D
     /// <summary>
     /// Point defined by coordinates: (X, Y)
     /// </summary>
-    public class Point2D : IMoveable2D, ICloneable, IPoint2D //: ITransformation
+    public class Point2D : ICloneable, IMoveable2D, IPoint2D
     {
         public Point2D(double x, double y) { X = x; Y = y; }
-
-        //private Point2D() { }
 
         public double X { get; protected set; }
 
@@ -181,7 +179,9 @@ namespace Plane2D
 
         public static Point2D operator -(Point2D p1, double number) => (Point2D)p1.Shift(-number, -number);
 
-        public override string ToString() => String.Format("({0},{1})", X, Y);
+        public override string ToString() => String.Format($"({X}, {Y})");
+
+        public string ToString(string format) => String.Format($"({X.ToString(format)}, {Y.ToString(format)})");
 
 
         #region System.Drawing
