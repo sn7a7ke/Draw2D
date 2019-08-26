@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-using Plane2D;
-
-namespace Plane2D //2
+namespace Plane2D
 {
     public class PolygonVertex2D : Point2D, IEnumerable<PolygonVertex2D>
     {
-
         public PolygonVertex2D Next { get; internal set; } // ПОЧЕМУ нельзя protected???
         public PolygonVertex2D Previous { get; internal set; }
 
@@ -45,14 +38,7 @@ namespace Plane2D //2
         {
             if (!_isEmpty || p == null)
                 throw new ArgumentException(nameof(p));
-
-
             PolygonVertex2D pv = CreateVertex(p);
-            //PolygonVertex2D pv = new PolygonVertex2D(p)
-            //{
-            //    _isEmpty = false
-            //};
-
 
             if (Next == null)
             {
@@ -85,23 +71,13 @@ namespace Plane2D //2
             _isEmpty = false;
         }
 
-        public double Angle
-        {
-            get
-            {
-                //if (Next == Previous) throw new ArgumentOutOfRangeException("Polygon must have at least three vertices");
-                return Vector2D.AngleBetweenVectors(Previous, this, Next);
-            }
-        }
-        public double AngleDegree
-        {
-            get
-            {
-                return (Vector2D.AngleBetweenVectors(Previous, this, Next) / Math.PI) * 180;
-            }
-        }
+        public double Angle => Vector2D.AngleBetweenVectors(Previous, this, Next);
 
+        public double AngleDegree => (Vector2D.AngleBetweenVectors(Previous, this, Next) / Math.PI) * 180;
 
+        public Segment2D MiddleLine => new Segment2D(new Point2D((X + Previous.X) / 2, (Y + Previous.Y) / 2), new Point2D((X + Next.X) / 2, (Y + Next.Y) / 2));
+
+        
         #region IEnumerable
         public IEnumerator GetEnumerator()
         {
@@ -114,6 +90,7 @@ namespace Plane2D //2
                 currentNode = currentNode.Next;
             } while (currentNode != this);//} while (currentNode != null && currentNode != this); //кольцевой список
         }
+
         IEnumerator<PolygonVertex2D> IEnumerable<PolygonVertex2D>.GetEnumerator()
         {
             //return (IEnumerator<PolygonVertex2D>)GetEnumerator();

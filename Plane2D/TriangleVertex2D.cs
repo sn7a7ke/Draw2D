@@ -49,7 +49,5 @@ namespace Plane2D
                 return (oneK * u + twoK) / (1 + u);
             }
         }
-
-        public Segment2D MiddleLine => new Segment2D(new Point2D((X + Previous.X) / 2, (Y + Previous.Y) / 2), new Point2D((X + Next.X) / 2, (Y + Next.Y) / 2));
     }
 }
