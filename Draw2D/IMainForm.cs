@@ -7,7 +7,6 @@ namespace Draw2D
     public interface IMainForm
     {
         Image Image { get; set; }
-        //Graphics Graph { get; }
         int GetImageHeight { get; }
         int GetImageWidth { get; }
         int DeltaX { get; }

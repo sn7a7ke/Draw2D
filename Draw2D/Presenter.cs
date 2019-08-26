@@ -18,7 +18,7 @@ namespace Draw2D
         {
             _view = view;
             Point origin = new Point(0, 400);
-            _canvas = new Canvas.Canvas(origin, _view.GetImageWidth + 200, _view.GetImageHeight + 200);
+            _canvas = new Canvas.Canvas(origin, _view.GetImageWidth, _view.GetImageHeight);
             Polygon2D polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
             _canvas.Polygons2D.Add(polygon2D);
             RefreshPictureBox();
@@ -70,13 +70,15 @@ namespace Draw2D
 
         private void _view_DoPictureBox_Resize(object sender, EventArgs e)
         {
-            int newDeltaWidth = 0;
-            int newDeltaHeight = 0;
-            if (_view.GetImageHeight > _canvas.Height)
-                newDeltaHeight = deltaBmp;
+            int newWidth = _canvas.Width;
+            int newHeight = _canvas.Height;
             if (_view.GetImageWidth >= _canvas.Width)
-                newDeltaWidth = deltaBmp;
-            _canvas.Resize(_canvas.Height + newDeltaWidth, _canvas.Width + newDeltaHeight);
+                newWidth = _view.GetImageWidth;
+            if (_view.GetImageHeight > _canvas.Height)
+                newHeight = _view.GetImageHeight;
+            _canvas.Resize(newWidth, newHeight);
+
+            //_canvas.Resize(_view.GetImageWidth, _view.GetImageHeight);
             RefreshPictureBox();
         }
 
@@ -180,7 +182,9 @@ namespace Draw2D
             sb.Append("QuantityVertices: " + polygon2D.QuantityVertices + Environment.NewLine);
             sb.Append("Center: " + polygon2D.Center + Environment.NewLine);
             sb.Append("Perimeter: " + polygon2D.Perimeter + Environment.NewLine);
-            sb.Append("Is convex: " + polygon2D.IsConvex);
+            sb.Append("Is convex: " + polygon2D.IsConvex + Environment.NewLine);
+            sb.Append("SelfIntersect: " + polygon2D.IsWithSelfIntersect);
+
             return sb.ToString();
         }
 

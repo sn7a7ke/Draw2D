@@ -13,17 +13,13 @@ namespace Draw2D
     public partial class MainForm : Form, IMainForm
     {
         #region IView
-        public Image Image { get { return pictureBox.Image; } set { pictureBox.Image = value; } } //Bitmap
-        //public Graphics Graph => pictureBox. CreateGraphics();
+        public Image Image { get { return pictureBox.Image; } set { pictureBox.Image = value; } }
         public int GetImageHeight => pictureBox.Height;
         public int GetImageWidth => pictureBox.Width;
         public int DeltaX => (int)nUD_DeltaX.Value;
         public int DeltaY => (int)nUD_DeltaY.Value;
         public decimal Angle=> nUD_Angle.Value;
 
-        //public List<string> Shapes { get;  set; }
-        //public int GetImageHeight => pictureBox.Size.Height;
-        //public int GetImageWidth => pictureBox.Size.Width;
         public MenuStrip MenuS { get => menuStrip1; set => menuStrip1=value; }
 
         public string SetLabelMouseLocation { set { labelMouseLocation.Text = value; } }
@@ -70,7 +66,6 @@ namespace Draw2D
 
 
         #endregion
-
         public MainForm()
         {
             InitializeComponent();

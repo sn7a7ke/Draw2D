@@ -44,6 +44,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labelMouseLocation = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnInfo = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.labelMouseLocation3 = new System.Windows.Forms.Label();
@@ -60,7 +61,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.labelMouseLocation = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -187,6 +187,12 @@
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // labelMouseLocation
+            // 
+            this.labelMouseLocation.Name = "labelMouseLocation";
+            this.labelMouseLocation.Size = new System.Drawing.Size(10, 17);
+            this.labelMouseLocation.Text = ".";
             // 
             // btnInfo
             // 
@@ -391,12 +397,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(194, 194);
             this.panel2.TabIndex = 1;
-            // 
-            // labelMouseLocation
-            // 
-            this.labelMouseLocation.Name = "labelMouseLocation";
-            this.labelMouseLocation.Size = new System.Drawing.Size(10, 17);
-            this.labelMouseLocation.Text = ".";
             // 
             // MainForm
             // 
