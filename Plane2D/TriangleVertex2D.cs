@@ -8,27 +8,31 @@ namespace Plane2D
 {
     public class TriangleVertex2D : PolygonVertex2D
     {
-        public TriangleVertex2D(params Point2D[] ps) : base(ps)
-        {
-            if (ps.Length != 3)
-                throw new ArgumentOutOfRangeException("The quantity vertices must be equally 3");
-        }
-        protected TriangleVertex2D(Point2D p) : base(p)
+        public TriangleVertex2D() : this(new Point2D(0, 0))
         {
         }
 
-        protected override PolygonVertex2D CreateVertex(Point2D p)
+        public TriangleVertex2D(Point2D p) : base(p)
         {
-            PolygonVertex2D pv = new TriangleVertex2D(p)
-            {
-                _isEmpty = false
-            };
+        }
+
+        public override PolygonVertex2D FactoryMethod(Point2D point2D) => new TriangleVertex2D(point2D);
+
+        internal new static TriangleVertex2D[] CreateVertices(Point2D[] point2Ds)
+        {
+            int length = point2Ds.Length;
+            TriangleVertex2D[] pv = new TriangleVertex2D[length];
+            for (int i = 0; i < length; i++)
+                pv[i] = new TriangleVertex2D(point2Ds[i]);
             return pv;
         }
 
         public Segment2D OppositeSide => new Segment2D(Next, Previous);
+
         public Segment2D Altitude => new Segment2D(this, new Line2D(Previous, Next).IntersectPerpendicularFromPointWithLine(this));
+
         public Segment2D Median => new Segment2D(this, new Point2D((Previous.X + Next.X) / 2, (Previous.Y + Next.Y) / 2));
+
         public Segment2D Bisector
         {
             get
@@ -39,6 +43,7 @@ namespace Plane2D
                 return new Segment2D(this, new Point2D(xx, yy));
             }
         }
+
         private double GetKoordinate(double lambda, double oneK, double twoK)
         {
             if (oneK <= twoK)

@@ -79,7 +79,7 @@ namespace Draw2D.Canvas
 
         public PointsOnCanvas Points { get; private set; } // points in screen coordinates (Left, Top) == (0, 0)
 
-        public Canvas(Point origin, int width, int height) //Graphics graph, 
+        public Canvas(Point origin, int width, int height)
         {
             Origin = origin;
             Width = width;
@@ -117,14 +117,13 @@ namespace Draw2D.Canvas
 
         private void DrawVeticesNames(Polygon2D poly)
         {
-            var nameOfVertices = poly.GetNameOfVertices();
             Point placeForText;
             using (Font myFont = new Font(_fontName, _fontSizeInPixels, GraphicsUnit.Pixel))
             {
-                for (int i = 0; i < nameOfVertices.Length; i++)
+                for (int i = 0; i < poly.QuantityVertices; i++)
                 {
-                    placeForText = TextPlaceNew(nameOfVertices[i], poly[i], poly);
-                    _graph.DrawString(nameOfVertices[i], myFont, Brushes.Green, ToPointInCoordinateSystem(placeForText));
+                    placeForText = TextPlaceNew(poly[i], poly);
+                    _graph.DrawString(poly[i].Name, myFont, Brushes.Green, ToPointInCoordinateSystem(placeForText));
                 }
             }
         }
@@ -215,7 +214,7 @@ namespace Draw2D.Canvas
             Polygons2D.Add(poly);
         }
 
-        private Point2D TextPlaceNew(string text, Point2D point2D, Polygon2D polygon2D)
+        private Point2D TextPlaceNew(Point2D point2D, Polygon2D polygon2D)
         {
             var previosPoint = Point2D.Middle(polygon2D[point2D].Previous, point2D);
             var nextPoint = Point2D.Middle(polygon2D[point2D].Next, point2D);
@@ -223,35 +222,5 @@ namespace Draw2D.Canvas
             var half = _fontSizeInPixels / 2;
             return new Point2D(point2D.X - half + half * ort.X, point2D.Y + half + half * ort.Y);
         }
-
-        //private Point TextPlace(string text, Point point, Polygon2D polygon2D)
-        //{
-        //    var position = polygon2D.WhereIsPointInRelationToPolygon(point);
-        //    var one = _fontSizeInPixels;
-        //    var half = one / 2;
-        //    switch (position)
-        //    {
-        //        case Polygon2D.PointPositionInRelationToPolygon.left:
-        //            return new Point(point.X - one, point.Y + half);
-        //        case Polygon2D.PointPositionInRelationToPolygon.right:
-        //            return new Point(point.X, point.Y + half);
-        //        case Polygon2D.PointPositionInRelationToPolygon.above:
-        //            return new Point(point.X - half, point.Y + one);
-        //        case Polygon2D.PointPositionInRelationToPolygon.below:
-        //            return new Point(point.X - half, point.Y);
-        //        case Polygon2D.PointPositionInRelationToPolygon.leftAbove:
-        //            return new Point(point.X - one, point.Y + one);
-        //        case Polygon2D.PointPositionInRelationToPolygon.leftBelow:
-        //            return new Point(point.X - one, point.Y);
-        //        case Polygon2D.PointPositionInRelationToPolygon.rightAbove:
-        //            return new Point(point.X, point.Y + one);
-        //        case Polygon2D.PointPositionInRelationToPolygon.rightBelow:
-        //            return new Point(point.X, point.Y);
-        //        case Polygon2D.PointPositionInRelationToPolygon.inside:
-        //            return new Point(point.X - half, point.Y + half);
-        //        default:
-        //            throw new IndexOutOfRangeException("No such position");
-        //    }
-        //}
     }
 }

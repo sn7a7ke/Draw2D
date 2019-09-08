@@ -60,16 +60,17 @@ namespace Plane2D.Tests
         [Test]
         public void Ctor2()
         {
-            Assert.Throws<ArgumentNullException>(() => new Polygon2D(null));
+            Point2D[] vertices = null;
+            Assert.Throws<ArgumentNullException>(() => new Polygon2D(vertices));
         }
 
-        [Test]
-        public void GetNameOfVertex()
-        {
-            Assert.IsNotNull(pl1.GetNameOfVertices());
-            Assert.IsTrue(pl1.GetNameOfVertices().Length == pl1.QuantityVertices);
-            Assert.IsTrue(pl1.GetNameOfVertices()[3] == 'D'.ToString());
-        }
+        //[Test]
+        //public void GetNameOfVertex()
+        //{
+        //    Assert.IsNotNull(pl1.GetNameOfVertices());
+        //    Assert.IsTrue(pl1.GetNameOfVertices().Length == pl1.QuantityVertices);
+        //    Assert.IsTrue(pl1.GetNameOfVertices()[3] == 'D'.ToString());
+        //}
 
         [Test]
         public void WhereIsPointInRelationToPolygon_leftAbove()

@@ -9,36 +9,20 @@ namespace Plane2D
     /// </summary>
     public class Polygon2D : IShape2D
     {
-        protected PolygonVertex2D _head;
-        private string[] _nameOfVertices;
+        protected IVertices<PolygonVertex2D> vertices;
 
-        public Polygon2D(params Point2D[] vertices) : this(vertices, GetDefaultNameOfVertex(vertices?.Length ?? 0))
+        public Polygon2D(params Point2D[] vertices) : this(new Vertices<PolygonVertex2D>(PolygonVertex2D.CreateVertices(vertices ?? throw new ArgumentNullException(nameof(vertices)))))
         {
         }
 
-        public Polygon2D(Point2D[] vertices, string[] nameOfVertices)
+        public Polygon2D(IVertices<PolygonVertex2D> vertices)
         {
-            if (vertices == null) throw new ArgumentNullException(nameof(vertices));
-            if (vertices.Length < 3)
-                throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
-            if (vertices.Length != nameOfVertices.Length)
-                throw new ArgumentOutOfRangeException("The quantity vertices are not equal quantity name of vertices");
-            _head = new PolygonVertex2D(vertices);
-            QuantityVertices = _head.Count;
-            this._nameOfVertices = nameOfVertices;
+            this.vertices = vertices ?? throw new ArgumentNullException(nameof(vertices));
+
+            QuantityVertices = vertices.Count;
         }
 
-        protected Polygon2D(PolygonVertex2D head)
-        {
-            if (head == null) throw new ArgumentNullException(nameof(head));
-            if (head.Count < 3)
-                throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
-
-            _head = head;
-            QuantityVertices = _head.Count;
-        }
-
-        public int QuantityVertices { get; private set; }
+        public int QuantityVertices { get; private set; } 
 
         public PolygonVertex2D this[int index]
         {
@@ -46,16 +30,11 @@ namespace Plane2D
             {
                 if (index < 0 || index >= QuantityVertices)
                     throw new ArgumentOutOfRangeException(nameof(index));
-                PolygonVertex2D current = _head;
+                PolygonVertex2D current = vertices.Head;
                 for (int i = 0; i < index; i++, current = current.Next)
                     ;
                 return current;
             }
-        }
-
-        public string[] GetNameOfVertices()
-        {
-            return _nameOfVertices;
         }
 
         public PolygonVertex2D this[Point2D point2D]
@@ -64,7 +43,7 @@ namespace Plane2D
             {
                 if (point2D == null)
                     return null;
-                PolygonVertex2D current = _head;
+                PolygonVertex2D current = vertices.Head;
                 for (int i = 0; i < QuantityVertices; i++, current = current.Next)
                     if (point2D == current)
                         return current;
@@ -80,7 +59,7 @@ namespace Plane2D
             {
                 // Array!?
                 List<Point2D> verticies = new List<Point2D>();
-                foreach (PolygonVertex2D item in _head)
+                foreach (PolygonVertex2D item in vertices)
                     verticies.Add(item);
                 return verticies.ToArray();
             }
@@ -100,11 +79,11 @@ namespace Plane2D
                 sb.Append($"Is convex: {IsConvex}" + Environment.NewLine);
                 sb.Append($"SelfIntersect: {IsWithSelfIntersect}" + Environment.NewLine);
                 for (int i = 0; i < QuantityVertices; i++)
-                    sb.Append($"Vertex {_nameOfVertices[i]}: {this[i]}" + Environment.NewLine);
+                    sb.Append($"Vertex {this[i].Name}: {this[i]}" + Environment.NewLine);
                 for (int i = 0; i < QuantityVertices; i++)
-                    sb.Append($"Angle {_nameOfVertices[i]}: {this[i].AngleDegree}" + Environment.NewLine);
+                    sb.Append($"Angle {this[i].Name}: {this[i].AngleDegree}" + Environment.NewLine);
                 for (int i = 0; i < QuantityVertices; i++)
-                    sb.Append($"MiddleLine for {_nameOfVertices[i]}: {this[i].MiddleLine.Length}" + Environment.NewLine);
+                    sb.Append($"MiddleLine for {this[i].Name}: {this[i].MiddleLine.Length}" + Environment.NewLine);
                 return sb.ToString();
             }
         }
@@ -128,7 +107,7 @@ namespace Plane2D
             {
                 double xx = 0;
                 double yy = 0;
-                foreach (PolygonVertex2D item in _head)
+                foreach (PolygonVertex2D item in vertices)
                 {
                     xx += item.X;
                     yy += item.Y;
@@ -142,7 +121,7 @@ namespace Plane2D
             get
             {
                 double perim = 0;
-                foreach (PolygonVertex2D item in _head)
+                foreach (PolygonVertex2D item in vertices)
                     perim += item.Distance(item.Next);
                 return perim;
             }
@@ -155,7 +134,7 @@ namespace Plane2D
                 if (!IsWithSelfIntersect)
                 {
                     double sum = 0;
-                    foreach (PolygonVertex2D v in _head)
+                    foreach (PolygonVertex2D v in vertices)
                         sum += (v.X + v.Next.X) * (v.Y - v.Next.Y);
                     return Math.Abs(sum) / 2;
                 }
@@ -208,7 +187,7 @@ namespace Plane2D
         protected double AngleSum()
         {
             double sum = 0;
-            foreach (PolygonVertex2D item in _head)
+            foreach (PolygonVertex2D item in vertices)
                 sum += new Vector2D(item, item.Next).AngleBetweenVectors(new Vector2D(item.Next, item.Next.Next));
 
             sum = Math.PI * QuantityVertices - sum;
@@ -217,8 +196,6 @@ namespace Plane2D
 
         public static double AngleSumForConvex(int n) => n < 3 ? 0 : (n - 2) * Math.PI;
 
-
-        // === НЕ РЕАЛИЗОВАНО!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ===
         public virtual bool IsWithSelfIntersect
         {
             get
@@ -240,8 +217,6 @@ namespace Plane2D
                 return false;
             }
         }
-
-        // =========================================================
 
         public PointPositionInRelationToPolygon WhereIsPointInRelationToPolygon(Point2D point2D)
         {
@@ -266,15 +241,7 @@ namespace Plane2D
 
         public override string ToString() => GetType().Name + " v" + QuantityVertices + " c" + Center;
 
-        public string VerticesToString(string separator = " ") => string.Join(separator, _head);
-
-        static protected string[] GetDefaultNameOfVertex(int count)
-        {
-            string[] vertices = new string[count];
-            for (int i = 0; i < count; i++)
-                vertices[i] = ((char)(65 + i)).ToString();
-            return vertices;
-        }
+        public string VerticesToString(string separator = " ") => string.Join(separator, vertices);
 
         public enum PointPositionInRelationToPolygon
         {

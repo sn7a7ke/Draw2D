@@ -8,11 +8,17 @@ namespace Plane2D
     /// </summary>
     public class Point2D : ICloneable, IMoveable2D, IPoint2D
     {
-        public Point2D(double x, double y) { X = x; Y = y; }
+        public Point2D(double x, double y) : this(x, y, string.Empty)
+        {
+        }
+
+        public Point2D(double x, double y, string name) { X = x; Y = y; Name = name; }
 
         public double X { get; protected set; }
 
         public double Y { get; protected set; }
+
+        public string Name { get; protected set; }
 
         public double Distance(Point2D point) => Distance(this, point);
 

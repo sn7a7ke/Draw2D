@@ -14,18 +14,24 @@ namespace Plane2D
     public class Triangle2D : Polygon2D
     {
         public TriangleVertex2D A { get; private set; }
+
         public TriangleVertex2D B { get; private set; }
+
         public TriangleVertex2D C { get; private set; }
 
-        public Triangle2D(Point2D A, Point2D B, Point2D C) : base(new TriangleVertex2D(A, B, C))
+        public Triangle2D(params Point2D[] point2Ds) : base(new Vertices<TriangleVertex2D>(point2Ds))
         {
-            this.A = (TriangleVertex2D)_head;
-            this.B = (TriangleVertex2D)_head.Next;
-            this.C = (TriangleVertex2D)_head.Next.Next;
+            if (point2Ds?.Length != 3)
+                throw new ArgumentOutOfRangeException("The quantity vertices must be equally 3");
+            A = (TriangleVertex2D)vertices.Head;
+            B = (TriangleVertex2D)A.Next;
+            C = (TriangleVertex2D)A.Previous;
         }
 
         public Point2D IntersectionAltitudes => new Line2D(A.Altitude.A, A.Altitude.B).Intersect(new Line2D(B.Altitude.A, B.Altitude.B));
+
         public Point2D IntersectionMedians => new Line2D(A.Median.A, A.Median.B).Intersect(new Line2D(B.Median.A, B.Median.B));
+
         public Point2D IntersectionBisectors
         {
             get
@@ -38,11 +44,14 @@ namespace Plane2D
         }
 
         public Circle2D CircumCircle => Circle2D.GetCircle(A, B, C);
+
         public Circle2D InscribedCircle => new Circle2D(Incenter, Inradius);
 
         // PRIVATE???
         public double Circumradius => A.OppositeSide.Length * B.OppositeSide.Length * C.OppositeSide.Length / (4 * Square);
+
         public double Inradius => 2 * Square / Perimeter;
+
         public Point2D Incenter
         {
             get
@@ -76,7 +85,6 @@ namespace Plane2D
             Point2D[] ps = ((Polygon2D)base.SymmetryAboutPoint(center)).GetVertices;
             return new Triangle2D(ps[0], ps[1], ps[2]);
         }
-
         #endregion
 
 

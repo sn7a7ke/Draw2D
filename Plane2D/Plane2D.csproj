@@ -58,6 +58,7 @@
     <Compile Include="IMoveable2D.cs" />
     <Compile Include="IPoint2D.cs" />
     <Compile Include="IScope.cs" />
+    <Compile Include="IVertices.cs" />
     <Compile Include="Line2D.cs" />
     <Compile Include="Point2D.cs" />
     <Compile Include="Polygon2D.cs" />
@@ -67,7 +68,9 @@
     <Compile Include="IShape2D.cs" />
     <Compile Include="Triangle2D.cs" />
     <Compile Include="TriangleVertex2D.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="Vector2D.cs" />
+    <Compile Include="Vertices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
