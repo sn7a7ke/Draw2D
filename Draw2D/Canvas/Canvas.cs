@@ -111,11 +111,11 @@ namespace Draw2D.Canvas
             {
                 var vertices = GetPolygonInCoordinateSystem(Polygons2D.Selected);
                 _graph.DrawPolygon(PenForHighlighting, vertices);
-                DrawVeticesNames(Polygons2D.Selected);
+                DrawVerticesNames(Polygons2D.Selected);
             }
         }
 
-        private void DrawVeticesNames(Polygon2D poly)
+        private void DrawVerticesNames(Polygon2D poly)
         {
             Point placeForText;
             using (Font myFont = new Font(_fontName, _fontSizeInPixels, GraphicsUnit.Pixel))
