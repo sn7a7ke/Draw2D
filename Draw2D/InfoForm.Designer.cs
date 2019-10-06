@@ -57,9 +57,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxInfo.BackgroundImage = global::Draw2D.Properties.Resources.Background10x10;
-            this.pictureBoxInfo.Location = new System.Drawing.Point(3, 16);
+            this.pictureBoxInfo.Location = new System.Drawing.Point(3, 3);
             this.pictureBoxInfo.Name = "pictureBoxInfo";
-            this.pictureBoxInfo.Size = new System.Drawing.Size(675, 474);
+            this.pictureBoxInfo.Size = new System.Drawing.Size(675, 500);
             this.pictureBoxInfo.TabIndex = 0;
             this.pictureBoxInfo.TabStop = false;
             this.pictureBoxInfo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxInfo_MouseMove);
@@ -117,7 +117,7 @@
             // 
             this.lblLeftBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblLeftBottom.AutoSize = true;
-            this.lblLeftBottom.Location = new System.Drawing.Point(3, 493);
+            this.lblLeftBottom.Location = new System.Drawing.Point(3, 490);
             this.lblLeftBottom.Name = "lblLeftBottom";
             this.lblLeftBottom.Size = new System.Drawing.Size(10, 13);
             this.lblLeftBottom.TabIndex = 11;
@@ -125,10 +125,13 @@
             // 
             // lblRightTop
             // 
-            this.lblRightTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblRightTop.Location = new System.Drawing.Point(575, 0);
+            this.lblRightTop.AutoSize = true;
+            this.lblRightTop.BackColor = System.Drawing.Color.Transparent;
+            this.lblRightTop.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblRightTop.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblRightTop.Location = new System.Drawing.Point(668, 0);
             this.lblRightTop.Name = "lblRightTop";
-            this.lblRightTop.Size = new System.Drawing.Size(100, 13);
+            this.lblRightTop.Size = new System.Drawing.Size(10, 13);
             this.lblRightTop.TabIndex = 12;
             this.lblRightTop.Text = ".";
             this.lblRightTop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
