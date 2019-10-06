@@ -19,7 +19,7 @@ namespace Draw2D
             _view = view;
             Point origin = new Point(0, 400);
             _canvas = new Canvas.Canvas(origin, _view.GetImageWidth, _view.GetImageHeight);
-            Polygon2D polygon2D = new Polygon2D(new Point2D(100, 10), new Point2D(50, 100), new Point2D(150, 100));
+            Polygon2D polygon2D = new Polygon2D(new Point2D(100, 10, "A"), new Point2D(50, 100, "B"), new Point2D(150, 100, "C"));
             _canvas.Polygons2D.Add(polygon2D);
             RefreshPictureBox();
 

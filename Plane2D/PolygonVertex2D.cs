@@ -13,7 +13,7 @@ namespace Plane2D
         {
         }
 
-        public PolygonVertex2D(Point2D p) : base(p?.X ??  throw new ArgumentNullException(nameof(p)), p.Y)
+        public PolygonVertex2D(Point2D p) : base(p?.X ??  throw new ArgumentNullException(nameof(p)), p.Y, p.Name)
         {
         }
 
@@ -22,9 +22,10 @@ namespace Plane2D
         internal static PolygonVertex2D[] CreateVertices(Point2D[] point2Ds)
         {
             int length = point2Ds.Length;
+            Point2D[] newPoint2Ds = Utility.CheckAndSetNames(point2Ds);
             PolygonVertex2D[] pv = new PolygonVertex2D[length];
             for (int i = 0; i < length; i++)
-                pv[i] = new PolygonVertex2D(point2Ds[i]);
+                pv[i] = new PolygonVertex2D(newPoint2Ds[i]);
             return pv;
         }
 

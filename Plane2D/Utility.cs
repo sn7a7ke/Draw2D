@@ -17,17 +17,23 @@ namespace Plane2D
                 vertices[i] = ((char)('A' + i)).ToString();
             return vertices;
         }
+        public static Point2D[] CheckAndSetNames(Point2D[] point2Ds)
+        {
+            for (int i = 0; i < point2Ds.Length; i++)
+                if (string.IsNullOrEmpty(point2Ds[i].Name))
+                    return SetNames(point2Ds);
+            return point2Ds;
+        }
 
         public static Point2D[] SetNames(Point2D[] point2Ds)
         {
-            if (point2Ds == null)
-                throw new ArgumentNullException(nameof(point2Ds));
-
             return SetNames(point2Ds, GetDefaultNames(point2Ds.Length));
         }
 
         public static Point2D[] SetNames(Point2D[] point2Ds, string[] nameOfVertices)
         {
+            if (point2Ds == null)
+                throw new ArgumentNullException(nameof(point2Ds));
             if (point2Ds?.Length != nameOfVertices?.Length)
                 throw new ArgumentOutOfRangeException("The number of points is not equal to the number of their names");
 
