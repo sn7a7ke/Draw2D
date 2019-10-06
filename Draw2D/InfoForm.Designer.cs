@@ -38,9 +38,17 @@
             this.lblLeftBottom = new System.Windows.Forms.Label();
             this.lblRightTop = new System.Windows.Forms.Label();
             this.tVInfo = new System.Windows.Forms.TreeView();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInfo)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBoxInfo
@@ -49,9 +57,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxInfo.BackgroundImage = global::Draw2D.Properties.Resources.Background10x10;
-            this.pictureBoxInfo.Location = new System.Drawing.Point(11, 40);
+            this.pictureBoxInfo.Location = new System.Drawing.Point(3, 16);
             this.pictureBoxInfo.Name = "pictureBoxInfo";
-            this.pictureBoxInfo.Size = new System.Drawing.Size(581, 480);
+            this.pictureBoxInfo.Size = new System.Drawing.Size(675, 474);
             this.pictureBoxInfo.TabIndex = 0;
             this.pictureBoxInfo.TabStop = false;
             this.pictureBoxInfo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxInfo_MouseMove);
@@ -60,7 +68,7 @@
             // 
             this.Output.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Output.AutoSize = true;
-            this.Output.Location = new System.Drawing.Point(598, 24);
+            this.Output.Location = new System.Drawing.Point(3, 0);
             this.Output.Name = "Output";
             this.Output.Size = new System.Drawing.Size(10, 13);
             this.Output.TabIndex = 1;
@@ -109,7 +117,7 @@
             // 
             this.lblLeftBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblLeftBottom.AutoSize = true;
-            this.lblLeftBottom.Location = new System.Drawing.Point(8, 523);
+            this.lblLeftBottom.Location = new System.Drawing.Point(3, 493);
             this.lblLeftBottom.Name = "lblLeftBottom";
             this.lblLeftBottom.Size = new System.Drawing.Size(10, 13);
             this.lblLeftBottom.TabIndex = 11;
@@ -117,7 +125,8 @@
             // 
             // lblRightTop
             // 
-            this.lblRightTop.Location = new System.Drawing.Point(392, 24);
+            this.lblRightTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblRightTop.Location = new System.Drawing.Point(575, 0);
             this.lblRightTop.Name = "lblRightTop";
             this.lblRightTop.Size = new System.Drawing.Size(100, 13);
             this.lblRightTop.TabIndex = 12;
@@ -126,30 +135,69 @@
             // 
             // tVInfo
             // 
-            this.tVInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tVInfo.Location = new System.Drawing.Point(601, 314);
+            this.tVInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tVInfo.Location = new System.Drawing.Point(0, 0);
             this.tVInfo.Name = "tVInfo";
-            this.tVInfo.Size = new System.Drawing.Size(241, 206);
+            this.tVInfo.Size = new System.Drawing.Size(194, 194);
             this.tVInfo.TabIndex = 13;
             this.tVInfo.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.tVInfo_BeforeSelect);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(884, 512);
+            this.tableLayoutPanel1.TabIndex = 14;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblRightTop);
+            this.panel1.Controls.Add(this.lblLeftBottom);
+            this.panel1.Controls.Add(this.pictureBoxInfo);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.tableLayoutPanel1.SetRowSpan(this.panel1, 2);
+            this.panel1.Size = new System.Drawing.Size(678, 506);
+            this.panel1.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.Output);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(687, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(194, 306);
+            this.panel2.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.tVInfo);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(687, 315);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(194, 194);
+            this.panel3.TabIndex = 2;
             // 
             // InfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 558);
-            this.Controls.Add(this.tVInfo);
-            this.Controls.Add(this.lblRightTop);
-            this.Controls.Add(this.lblLeftBottom);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.Output);
-            this.Controls.Add(this.pictureBoxInfo);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(900, 596);
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(900, 596);
             this.Name = "InfoForm";
             this.Text = "InfoForm";
@@ -158,6 +206,12 @@
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,5 +229,9 @@
         private System.Windows.Forms.Label lblLeftBottom;
         private System.Windows.Forms.Label lblRightTop;
         private System.Windows.Forms.TreeView tVInfo;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
     }
 }
