@@ -82,8 +82,6 @@ namespace Plane2D
                     sb.Append($"Vertex {this[i].Name}: {this[i]}" + Environment.NewLine);
                 for (int i = 0; i < QuantityVertices; i++)
                     sb.Append($"Angle {this[i].Name}: {this[i].AngleDegree}" + Environment.NewLine);
-                for (int i = 0; i < QuantityVertices; i++)
-                    sb.Append($"MiddleLine for {this[i].Name}: {this[i].MiddleLine.Length}" + Environment.NewLine);
                 return sb.ToString();
             }
         }
