@@ -22,7 +22,7 @@ namespace Plane2D
             QuantityVertices = vertices.Count;
         }
 
-        public int QuantityVertices { get; private set; } 
+        public int QuantityVertices { get; private set; }
 
         public PolygonVertex2D this[int index]
         {
@@ -67,25 +67,6 @@ namespace Plane2D
 
 
         #region IShape
-        public virtual string Summary
-        {
-            get
-            {
-                StringBuilder sb = new StringBuilder(ToString() + Environment.NewLine);
-                sb.Append($"QuantityVertices: {QuantityVertices}" + Environment.NewLine);
-                sb.Append($"Center: {Center}" + Environment.NewLine);
-                sb.Append($"Perimeter: {Perimeter,10:#,###.00}" + Environment.NewLine);
-                sb.Append($"Square:   {Square,10:#,###.00}" + Environment.NewLine);
-                sb.Append($"Is convex: {IsConvex}" + Environment.NewLine);
-                sb.Append($"SelfIntersect: {IsWithSelfIntersect}" + Environment.NewLine);
-                for (int i = 0; i < QuantityVertices; i++)
-                    sb.Append($"Vertex {this[i].Name}: {this[i]}" + Environment.NewLine);
-                for (int i = 0; i < QuantityVertices; i++)
-                    sb.Append($"Angle {this[i].Name}: {this[i].AngleDegree}" + Environment.NewLine);
-                return sb.ToString();
-            }
-        }
-
         public virtual bool IsConvex
         {
             get
@@ -237,7 +218,9 @@ namespace Plane2D
             return PointPositionInRelationToPolygon.inside;
         }
 
-        public override string ToString() => GetType().Name + " v" + QuantityVertices + " c" + Center;
+        public override string ToString() => ToString(string.Empty);
+
+        public virtual string ToString(string format) => GetType().Name + " v" + QuantityVertices + " c" + Center.ToString(format);
 
         public string VerticesToString(string separator = " ") => string.Join(separator, vertices);
 

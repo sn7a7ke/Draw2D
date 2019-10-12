@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plane2D
 {
@@ -179,7 +177,9 @@ namespace Plane2D
         }
         public double AngleBetweenLines(Line2D l) => Vector2D.AngleBetweenVectors(new Vector2D(A, B), new Vector2D(l.A, l.B));
 
-        public override string ToString() => string.Format($"{A} * x + {B} * y + {C} = 0");
+        public override string ToString() => ToString(string.Empty);
+
+        public string ToString(string format) => string.Format($"{A.ToString(format)} * x + {B.ToString(format)} * y + {C.ToString(format)} = 0");
 
         public override bool Equals(object obj)
         {

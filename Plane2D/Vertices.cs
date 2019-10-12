@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plane2D
 {
     public class Vertices<T> : IEnumerable<T>, IVertices<T> where T : PolygonVertex2D, new()
     {
         public T Head { get; protected set; }
+
         public int Count { get; protected set; } = 0;
 
         public Vertices(Point2D[] point2Ds) : this(CreateVertices(point2Ds))

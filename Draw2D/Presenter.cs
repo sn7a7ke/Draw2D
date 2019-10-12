@@ -17,8 +17,12 @@ namespace Draw2D
         public Presenter(IMainForm view)
         {
             _view = view;
+            Configuration.GetAppConfig();
+            DoubleExtended.Epsilon = Configuration.Epsilon;
+
             Point origin = new Point(0, 400);
             _canvas = new Canvas.Canvas(origin, _view.GetImageWidth, _view.GetImageHeight);
+            _canvas.OutputNumberFormat = Configuration.OutputNumberFormat;
             Polygon2D polygon2D = new Polygon2D(new Point2D(100, 10, "A"), new Point2D(50, 100, "B"), new Point2D(150, 100, "C"));
             _canvas.Polygons2D.Add(polygon2D);
             RefreshPictureBox();
@@ -177,7 +181,7 @@ namespace Draw2D
             _canvas.Refresh();
             _view.Image = _canvas.MainBmp;
             if (_canvas.Polygons2D.Selected != null)
-                _view.OutputText = _canvas.Polygons2D.Selected.Summary;
+                _view.OutputText = _canvas.Summary(_canvas.Polygons2D.Selected);
             else
                 _view.OutputText = _canvas.Width.ToString() + " " + _canvas.Height.ToString();
         }

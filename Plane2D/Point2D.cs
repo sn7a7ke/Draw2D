@@ -187,7 +187,7 @@ namespace Plane2D
 
         public override string ToString() => String.Format($"({X}, {Y})");
 
-        public string ToString(string format) => String.Format($"({X.ToString(format)}, {Y.ToString(format)})");
+        public virtual string ToString(string format) => String.Format($"({X.ToString(format)}, {Y.ToString(format)})");
 
 
         #region System.Drawing

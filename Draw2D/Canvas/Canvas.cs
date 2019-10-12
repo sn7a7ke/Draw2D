@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Text;
 using Plane2D;
 
 namespace Draw2D.Canvas
@@ -69,6 +70,8 @@ namespace Draw2D.Canvas
         public Polygons2DOnCanvas Polygons2D { get; private set; } // vertex in abolute coordinates Origin == (0, 0)
 
         public PointsOnCanvas Points { get; private set; } // points in screen coordinates (Left, Top) == (0, 0)
+
+        public string OutputNumberFormat { get; set; } = "#,###.##";
 
         public Canvas(Point origin, int width, int height)
         {
@@ -208,6 +211,24 @@ namespace Draw2D.Canvas
             var ort = new Vector2D(new Line2D(previosPoint, nextPoint).IntersectPerpendicularFromPointWithLine(point2D), point2D).Ort;
             var half = _fontSizeInPixels / 2;
             return new Point2D(point2D.X - half + half * ort.X, point2D.Y + half + half * ort.Y);
+        }
+
+        public string Summary(Polygon2D polygon2D) => Summary(polygon2D, OutputNumberFormat);
+
+        public string Summary(Polygon2D polygon2D, string outputNumberFormat)
+        {
+            StringBuilder sb = new StringBuilder(polygon2D.ToString() + Environment.NewLine);
+            sb.Append($"QuantityVertices: {polygon2D.QuantityVertices}" + Environment.NewLine);
+            sb.Append($"Center: {polygon2D.Center}" + Environment.NewLine);
+            sb.Append($"Perimeter: {polygon2D.Perimeter.ToString(outputNumberFormat), 10}" + Environment.NewLine);
+            sb.Append($"Square:   {polygon2D.Square.ToString(outputNumberFormat), 10}" + Environment.NewLine);
+            sb.Append($"Is convex: {polygon2D.IsConvex}" + Environment.NewLine);
+            sb.Append($"SelfIntersect: {polygon2D.IsWithSelfIntersect}" + Environment.NewLine);
+            for (int i = 0; i < polygon2D.QuantityVertices; i++)
+                sb.Append($"Vertex {polygon2D[i].Name}: {polygon2D[i].ToString(outputNumberFormat)}" + Environment.NewLine);
+            for (int i = 0; i < polygon2D.QuantityVertices; i++)
+                sb.Append($"Angle {polygon2D[i].Name}: {polygon2D[i].Angle.ToString(outputNumberFormat)}" + Environment.NewLine);
+            return sb.ToString();
         }
     }
 }

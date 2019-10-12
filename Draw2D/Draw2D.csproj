@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Canvas\PointsOnCanvas.cs" />
     <Compile Include="Canvas\Polygons2DOnCanvas.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="IInfoForm.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plane2D
 {
@@ -97,7 +92,9 @@ namespace Plane2D
 
         public static bool operator !=(Vector2D obj1, Vector2D obj2) => !Equals(obj1, obj2);
 
-        public override string ToString() => String.Format("[{0}], Length-{1}", base.ToString(), Length);
+        public override string ToString() => ToString(string.Empty);
+
+        public override string ToString(string format) => String.Format($"[{base.ToString(format)}], Length-{Length.ToString(format)}");
 
         public override object Clone() => new Vector2D(X, Y);
     }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Plane2D
+﻿namespace Plane2D
 {
     public class TriangleVertex2D : PolygonVertex2D
     {

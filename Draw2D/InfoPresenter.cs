@@ -19,6 +19,7 @@ namespace Draw2D
         private int[] scales = { 1, 2, 5, 10, 20, 50, 100};
         private int scale;
         private const int stepScale = 100;
+        private string _outputNumberFormat = "0.##";
 
         private Bitmap bmp;
         private Graphics graph;
@@ -61,15 +62,13 @@ namespace Draw2D
             graph.DrawPolygon(pen, util.GetPolygonInCoordinateSystem(poly));
 
             infoForm.Image = bmp;
-            infoForm.LeftBottomText = LeftBottomPoint.ToString();
-            infoForm.RightTopText = new Point2D(infoForm.GetImageWidth * 100 / scale + LeftBottomPoint.X, infoForm.GetImageHeight * 100 / scale + LeftBottomPoint.Y).ToString();
+            infoForm.LeftBottomText = LeftBottomPoint.ToString(_outputNumberFormat);
+            infoForm.RightTopText = new Point2D(infoForm.GetImageWidth * 100 / scale + LeftBottomPoint.X, infoForm.GetImageHeight * 100 / scale + LeftBottomPoint.Y).ToString(_outputNumberFormat);
+            infoForm.OutputText = selectedPolygon2D.ToString() + scale.ToString();
 
-            infoForm.OutputText = selectedPolygon2D.Summary + scale.ToString();
-            //infoForm.OutputText = LeftBottomPoint.ToString() + " " + scale.ToString()+ Environment.NewLine;
             if (selectedPolygon2D is Triangle2D tri)
             {
                 infoForm.OutputText += new Line2D(tri.IntersectionAltitudes, tri.IntersectionBisectors).DistanceFromPointToLine(tri.IntersectionMedians);
-
             }
 
             infoForm.DoPictureBoxInfo_MouseMove += InfoForm_DoPictureBoxInfo_MouseMove;

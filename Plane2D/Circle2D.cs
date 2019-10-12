@@ -16,9 +16,11 @@ namespace Plane2D
             Radius = radius;
             Center = new Point2D(xCenter, yCenter);
         }
+
         public Circle2D(Point2D Center, double radius) : this(Center.X, Center.Y, radius)
         {
         }
+
         public static Circle2D GetCircle(Point2D p1, Point2D p2, Point2D p3)
         {
             Line2D l1 = new Line2D(p1, p2);
@@ -47,13 +49,19 @@ namespace Plane2D
             Point2D center = l1.PerpendicularFromPoint(mp1).Intersect(l2.PerpendicularFromPoint(mp2));
             return new Circle2D(center, center.Distance(p1));
         }
+
         public double Radius { get; private set; }
+
 
         #region IFunction
         public double MaxX => Center.X + Radius;
+
         public double MaxY => Center.Y + Radius;
+
         public double MinX => Center.X - Radius;
+
         public double MinY => Center.Y - Radius;
+
         public List<double> FuncYFromX(double x)
         {
             if (x.Less(MinX) || x.More(MaxX))
@@ -63,6 +71,7 @@ namespace Plane2D
             answer.Add(Center.Y - Root(x - Center.X));
             return answer;
         }
+
         public List<double> InverseFuncXFromY(double y)
         {
             if (y.Less(MinY) || y.More(MaxY))
@@ -72,6 +81,7 @@ namespace Plane2D
             answer.Add(Center.X - Root(y - Center.Y));
             return answer;
         }
+
         public Line2D GetTangent(Point2D p)
         {
             if (IsOnTheCircle(p) != 0)
@@ -87,10 +97,12 @@ namespace Plane2D
             double b = p.Y - k * p.X;
             return new Line2D(k, b);
         }
+
         private double Root(double coordinate)
         {
             return Math.Sqrt(UnderRoot(coordinate));
         }
+
         private double UnderRoot(double coordinate)
         {
             return Radius * Radius - coordinate * coordinate;
@@ -99,10 +111,12 @@ namespace Plane2D
 
 
         #region IShape
-        public string Summary => Center.ToString() + " S-" + Square;
         public bool IsConvex => true;
+
         public double Square => Math.PI * Radius * Radius;
+
         public double Perimeter => 2 * Math.PI * Radius;
+
         public Point2D Center { get; private set; }
         #endregion
 
@@ -133,14 +147,18 @@ namespace Plane2D
 
         #region override Base
         public IMoveable2D Shift(double dx, double dy) => new Circle2D((Point2D)Center.Shift(dx, dy), Radius);
+
         public IMoveable2D RotateAroundThePoint(double angle, Point2D center) => new Circle2D((Point2D)Center.RotateAroundThePoint(angle, center), Radius);
+
         public IShape2D RotateAroundTheCenterOfShape(double angle) => this;
+
         public IMoveable2D SymmetryAboutPoint(Point2D center) => new Circle2D((Point2D)Center.SymmetryAboutPoint(center), Radius);
+
         public IMoveable2D RotateAroundTheCenterOfCoordinates(double angle) => RotateAroundThePoint(angle, new Point2D(0, 0));
 
+        public override string ToString() => ToString(string.Empty); //GetType().Name + " C-" + Center.ToString() + " r-" + Radius;
 
-
-        public override string ToString() => GetType().Name + " C-" + Center.ToString() + " r-" + Radius;// + " c" + Center;
+        public string ToString(string format) => GetType().Name + " C-" + Center.ToString(format) + " r-" + Radius.ToString(format);
 
         public override bool Equals(object obj)
         {
@@ -155,15 +173,12 @@ namespace Plane2D
                 return false;
             return this.GetHashCode() == otherCircle.GetHashCode();
         }
+
         public static bool operator ==(Circle2D obj1, Circle2D obj2) => Equals(obj1, obj2);
+
         public static bool operator !=(Circle2D obj1, Circle2D obj2) => !Equals(obj1, obj2);
 
-        public override int GetHashCode()
-        {
-            int hc = (int)(100 * Center.GetHashCode() * Radius);
-            return hc;
-        }
-
+        public override int GetHashCode() => (int)(100 * Center.GetHashCode() * Radius);
         #endregion
     }
 }

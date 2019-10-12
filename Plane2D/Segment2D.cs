@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plane2D
 {
     public class Segment2D
     {
         public Point2D A { get; private set; }
+
         public Point2D B { get; private set; }
 
         public Segment2D(Point2D pointA, Point2D pointB)
@@ -18,6 +15,7 @@ namespace Plane2D
         }
 
         public Point2D Middle => Point2D.Middle(A, B);
+
         public double Length => A.Distance(B);
 
         public static bool IsIntersectSegmentABAndCD(Segment2D AB, Segment2D CD)
@@ -29,7 +27,9 @@ namespace Plane2D
             return IntersectLineABWithSegmentCD && IntersectLineCDWithSegmentAB;
         }
 
-        public override string ToString() => String.Format("[{0}-{1}], Length-{2}", A, B, Length);
+        public override string ToString() => ToString(string.Empty);
+
+        public string ToString(string format) => String.Format($"[{A.ToString(format)}-{B.ToString(format)}], Length-{Length.ToString(format)}");
 
         public override bool Equals(object obj)
         {            
@@ -37,6 +37,7 @@ namespace Plane2D
                 return false;
             return this.Equals(obj as Segment2D);
         }
+
         public bool Equals(Segment2D otherSegment)
         {
             if (otherSegment == null)
@@ -47,7 +48,9 @@ namespace Plane2D
         }
 
         public override int GetHashCode() => (int)A.X ^ (int)A.Y ^ (int)B.X ^ (int)B.Y;
+
         public static bool operator ==(Segment2D obj1, Segment2D obj2) => Equals(obj1, obj2);
+
         public static bool operator !=(Segment2D obj1, Segment2D obj2) => !Equals(obj1, obj2);
 
         public static implicit operator Vector2D(Segment2D s) => new Vector2D(s.A, s.B);
