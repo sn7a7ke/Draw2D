@@ -12,16 +12,11 @@ namespace Draw2D
         int DeltaX { get; }
         int DeltaY { get; }
         decimal Angle { get; }
-
         MenuStrip MenuS { get; set; }
-
         string SetLabelMouseLocation { set; }
-
         string OutputText { get; set; }
         Cursor SetCursorImage { set; }
         string About { get; set; }
-
-
 
         // Mouse Event
         event EventHandler DoDraw_Click;
@@ -38,6 +33,5 @@ namespace Draw2D
         //Menu Event
         event EventHandler DoClearToolStripMenuItem_Click;
         event EventHandler DoToolsToolStripMenuItem_Click;
-
     }
 }
