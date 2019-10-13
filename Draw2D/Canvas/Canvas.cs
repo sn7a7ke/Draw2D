@@ -10,7 +10,6 @@ namespace Draw2D.Canvas
     class Canvas
     {
         public const int minimumQuantityOfVertices = 3;
-
         private Graphics _graph;
         private readonly int _fontSizeInPixels = 14;
         private readonly string _fontName = "Courier New";
@@ -125,8 +124,8 @@ namespace Draw2D.Canvas
             if (Points.List.Count == 0)
                 return;
             for (int i = 0; i < Points.List.Count - 1; i++)
-                DrawLine(Points.List[i], Points.List[i + 1]);
-            DrawLine(Points.List[Points.List.Count - 1], Points.Temporary);
+                DrawLine(Points.List[i], Points.List[i + 1]); // SCALE!!!
+            DrawLine(Points.List[Points.List.Count - 1], Points.Temporary); // SCALE!!!
         }
 
         private void Draw()
@@ -145,14 +144,13 @@ namespace Draw2D.Canvas
 
         private void DrawCoordinateAxes()
         {
-            _graph.DrawLine(PenForCoordAxes, new Point(0, Origin.Y), new Point(Width, Origin.Y));
-            _graph.DrawLine(PenForCoordAxes, new Point(Origin.X, Height), new Point(Origin.X, 0));
+            _graph.DrawLine(PenForCoordAxes, new Point(0, Origin.Y), new Point(Width, Origin.Y)); // SCALE!!!
+            _graph.DrawLine(PenForCoordAxes, new Point(Origin.X, Height), new Point(Origin.X, 0)); // SCALE!!!
         }
 
         private void DrawLine(Point p1, Point p2)
         {
-            _graph.DrawLine(PenForAll, new Point(p1.X, p1.Y),
-                    new Point(p2.X, p2.Y));
+            _graph.DrawLine(PenForAll, new Point(p1.X, p1.Y), new Point(p2.X, p2.Y)); // SCALE!!!
         }
 
         private void DrawPolygon(Pen penForAll, Polygon2D polygon2D)
@@ -180,7 +178,7 @@ namespace Draw2D.Canvas
         private Point2D ToPoint2DFromCoordinateSystem(Point point) =>
             new Point2D(point.X - Origin.X, Origin.Y - point.Y);
 
-        private Point[] GetPolygonInCoordinateSystem(Polygon2D polygon2D)
+        private Point[] GetPolygonInCoordinateSystem(Polygon2D polygon2D) // SCALE!!!
         {
             Point2D[] vers = polygon2D.GetVertices;
             Point[] points = new Point[vers.Length];
