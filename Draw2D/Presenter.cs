@@ -1,7 +1,6 @@
 ﻿using Plane2D;
 using System;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Draw2D
@@ -9,9 +8,8 @@ namespace Draw2D
     public class Presenter
     {
         private IMainForm _view;
-        private int deltaDraw = 5;
-        private int deltaBmp = 100;
-        const int minimumQuantityOfVertices = 3;
+        private int _deltaDraw = 5;
+        private const int _minimumQuantityOfVertices = 3;
         private Canvas.Canvas _canvas;
 
         public Presenter(IMainForm view)
@@ -81,22 +79,20 @@ namespace Draw2D
             if (_view.GetImageHeight > _canvas.Height)
                 newHeight = _view.GetImageHeight;
             _canvas.Resize(newWidth, newHeight);
-
-            //_canvas.Resize(_view.GetImageWidth, _view.GetImageHeight);
             RefreshPictureBox();
         }
 
         private void _view_DoPictureBox_MouseMove(object sender, EventArgs e)
         {
             MouseEventArgs em = (MouseEventArgs)e;
-            _view.SetLabelMouseLocation = String.Format("{0}:{1}", _canvas.Origin.X + em.X, _canvas.Origin.Y - em.Y);
+            _view.SetLabelMouseLocation = String.Format($"{_canvas.Origin.X + em.X}:{_canvas.Origin.Y - em.Y}");
         }
 
         private void _view_DoPictureBox_MouseMove_Draw(object sender, EventArgs e)
         {
             MouseEventArgs em = (MouseEventArgs)e;
             _canvas.Points.Temporary = em.Location;
-            if (_canvas.Points.Count > 1 && Point2D.Distance(em.Location, _canvas.Points.First) <= deltaDraw)
+            if (_canvas.Points.Count > 1 && Point2D.Distance(em.Location, _canvas.Points.First) <= _deltaDraw)
                 _view.SetCursorImage = Cursors.WaitCursor;
             else
                 _view.SetCursorImage = Cursors.Cross;
@@ -115,9 +111,9 @@ namespace Draw2D
                     _canvas.Points.Add(mouseLocation);
                     _view.DoPictureBox_MouseMove += _view_DoPictureBox_MouseMove_Draw;
                 }
-                else if (Point2D.Distance(mouseLocation, _canvas.Points.First) <= deltaDraw)
+                else if (Point2D.Distance(mouseLocation, _canvas.Points.First) <= _deltaDraw)
                 {
-                    if (_canvas.Points.Count < minimumQuantityOfVertices)
+                    if (_canvas.Points.Count < _minimumQuantityOfVertices)
                         _canvas.Points.Clear();
                     else
                         _canvas.AddPolygon();
@@ -143,7 +139,7 @@ namespace Draw2D
         private void _view_DoRotate_Click(object sender, EventArgs e)
         {
             Polygon2D poly = (Polygon2D)_canvas.Polygons2D.Selected.RotateAroundThePoint((double)_view.Angle,
-                    new Point2D(_view.DeltaX, _view.DeltaY));
+                new Point2D(_view.DeltaX, _view.DeltaY));
             _canvas.Polygons2D.ChangeSelected(poly);
             RefreshPictureBox();
         }
@@ -151,7 +147,7 @@ namespace Draw2D
         private void _view_DoSymmetry_Click(object sender, EventArgs e)
         {
             Polygon2D poly = (Polygon2D)_canvas.Polygons2D.Selected.RotateAroundThePoint((double)_view.Angle,
-        new Point2D(_view.DeltaX, _view.DeltaY));
+                new Point2D(_view.DeltaX, _view.DeltaY));
             _canvas.Polygons2D.ChangeSelected(poly);
             RefreshPictureBox();
         }
@@ -165,13 +161,13 @@ namespace Draw2D
         private void _view_DoInfo_Click(object sender, EventArgs e)
         {
             if (_canvas.Polygons2D.Selected == null)
-            {
                 MessageBox.Show("Please, You must select polygon");
-                return;
+            else
+            {
+                InfoForm infoForm = new InfoForm();
+                InfoPresenter infoPresenter = new InfoPresenter(infoForm, _canvas.Polygons2D.Selected);
+                infoForm.Show();
             }
-            InfoForm infoForm = new InfoForm();
-            InfoPresenter infoPresenter = new InfoPresenter(infoForm, _canvas.Polygons2D.Selected);
-            infoForm.Show();
         }
         #endregion
 
