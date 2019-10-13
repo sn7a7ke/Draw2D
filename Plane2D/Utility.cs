@@ -13,6 +13,7 @@ namespace Plane2D
                 vertices[i] = ((char)('A' + i)).ToString();
             return vertices;
         }
+
         public static Point2D[] CheckAndSetNames(Point2D[] point2Ds)
         {
             for (int i = 0; i < point2Ds.Length; i++)
@@ -32,7 +33,6 @@ namespace Plane2D
                 throw new ArgumentNullException(nameof(point2Ds));
             if (point2Ds?.Length != nameOfVertices?.Length)
                 throw new ArgumentOutOfRangeException("The number of points is not equal to the number of their names");
-
             int length = point2Ds.Length;
             Point2D[] newPoint2Ds = new Point2D[length];
             for (int i = 0; i < length; i++)

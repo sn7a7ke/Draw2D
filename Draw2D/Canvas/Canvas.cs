@@ -145,8 +145,8 @@ namespace Draw2D.Canvas
 
         private void DrawCoordinateAxes()
         {
-            _graph.DrawLine(PenForCoordAxes, new Point(Origin.X, Origin.Y), new Point(Width, Origin.Y));
-            _graph.DrawLine(PenForCoordAxes, new Point(Origin.X, Origin.Y), new Point(0, 0));
+            _graph.DrawLine(PenForCoordAxes, new Point(0, Origin.Y), new Point(Width, Origin.Y));
+            _graph.DrawLine(PenForCoordAxes, new Point(Origin.X, Height), new Point(Origin.X, 0));
         }
 
         private void DrawLine(Point p1, Point p2)

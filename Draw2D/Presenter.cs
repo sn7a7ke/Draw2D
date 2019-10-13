@@ -18,7 +18,7 @@ namespace Draw2D
             Configuration.GetAppConfig();
             DoubleExtended.Epsilon = Configuration.Epsilon;
 
-            Point origin = new Point(0, 400);
+            Point origin = new Point(200, 400);
             _canvas = new Canvas.Canvas(origin, _view.GetImageWidth, _view.GetImageHeight);
             _canvas.OutputNumberFormat = Configuration.OutputNumberFormat;
             Polygon2D polygon2D = new Polygon2D(new Point2D(100, 10, "A"), new Point2D(50, 100, "B"), new Point2D(150, 100, "C"));
