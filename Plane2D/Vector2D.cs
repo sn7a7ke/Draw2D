@@ -25,7 +25,7 @@ namespace Plane2D
 
         public double ScalarProduct(Vector2D B) => ScalarProduct(this, B);
 
-        public double Length => Distance(new Point2D(0, 0), this);//{ get => Math.Sqrt(X * X + Y * Y); }
+        public double Length => Distance(new Point2D(0, 0), this);
 
         public Vector2D Ort => new Vector2D(X / Length, Y / Length);
 

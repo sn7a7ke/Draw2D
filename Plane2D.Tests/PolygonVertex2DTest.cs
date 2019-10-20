@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Plane2D.Tests
 {

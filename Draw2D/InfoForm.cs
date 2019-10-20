@@ -13,7 +13,6 @@ namespace Draw2D
     public partial class InfoForm : Form, IInfoForm
     {
         #region IView
-
         public Image Image { get { return pictureBoxInfo.Image; } set { pictureBoxInfo.Image = value; } } //Bitmap
         public string LeftBottomText { get { return lblLeftBottom.Text; } set { lblLeftBottom.Text= value; } }
         public string RightTopText { get { return lblRightTop.Text; } set { lblRightTop.Text = value; } }
@@ -25,28 +24,21 @@ namespace Draw2D
         public string OutputText { get { return Output.Text; } set { Output.Text = value; } }
         public TreeView TreeViewInfo { get { return tVInfo; } set { tVInfo = value; } }
 
-
         //PictureBox Event
         public event EventHandler DoPictureBoxInfo_MouseMove;
         public event EventHandler DotVInfo_BeforeSelect;
-
-
         #endregion
-
 
 
         #region Проброс событий
         private void pictureBoxInfo_MouseMove(object sender, MouseEventArgs e) => DoPictureBoxInfo_MouseMove?.Invoke(this, e);
         private void tVInfo_BeforeSelect(object sender, TreeViewCancelEventArgs e) => DotVInfo_BeforeSelect?.Invoke(this, e);
-
-
-
         #endregion
+
 
         public InfoForm()
         {
             InitializeComponent();
         }
-
     }
 }

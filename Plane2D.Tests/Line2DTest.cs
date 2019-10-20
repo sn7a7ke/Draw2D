@@ -24,6 +24,7 @@ namespace Plane2D.Tests
         {
             Assert.IsTrue(l1.Equals(new Line2D(2, 1, -4)));
         }
+
         [Test]
         public void Ctor_kb_True()
         {
@@ -165,7 +166,6 @@ namespace Plane2D.Tests
         public void MaxX_Infinity()
         {
             var res = l1.MaxX;
-
             Assert.IsTrue(double.IsPositiveInfinity(res));
         }
 
@@ -179,7 +179,6 @@ namespace Plane2D.Tests
         public void MaxY_Infinity()
         {
             var res = l1.MaxY;
-
             Assert.IsTrue(double.IsPositiveInfinity(res));
         }
 
@@ -193,7 +192,6 @@ namespace Plane2D.Tests
         public void MinX_Infinity()
         {
             var res = l1.MinX;
-
             Assert.IsTrue(double.IsNegativeInfinity(res));
         }
 
@@ -207,7 +205,6 @@ namespace Plane2D.Tests
         public void MinY_Infinity()
         {
             var res = l1.MinY;
-
             Assert.IsTrue(double.IsNegativeInfinity(res));
         }
 
@@ -319,12 +316,8 @@ namespace Plane2D.Tests
         [Test]
         public void CheckGetHashCode_AIsNull()
         {
-            Assert.IsTrue(new Line2D(0, 2, -2).GetHashCode() == (int)(0 / 2 * 101 + (-2) / 2));
+            Assert.IsTrue(new Line2D(0, 2, -2).GetHashCode() == 0 / 2 * 101 + (-2) / 2);
         }
-
-
-
-
 
         [Test]
         public void Equals_True()

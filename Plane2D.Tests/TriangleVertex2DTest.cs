@@ -20,9 +20,7 @@ namespace Plane2D.Tests
             p2 = new Point2D(4, 5);
             p3 = new Point2D(4, 1);
             p4 = new Point2D(1, 3);
-
             triangle2D = new Triangle2D(new Point2D[] { p1, p2, p3 });
-
             tv1 = triangle2D.A;
         }
 

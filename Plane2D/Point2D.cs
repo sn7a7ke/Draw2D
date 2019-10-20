@@ -6,7 +6,7 @@ namespace Plane2D
     /// <summary>
     /// Point defined by coordinates: (X, Y)
     /// </summary>
-    public class Point2D : ICloneable, IMoveable2D, IPoint2D
+    public class Point2D : ICloneable, IPoint2D
     {
         public Point2D(double x, double y) : this(x, y, string.Empty)
         {
@@ -26,6 +26,7 @@ namespace Plane2D
 
         public static Point2D Middle(Point2D A, Point2D B) => new Point2D((A.X + B.X) / 2, (A.Y + B.Y) / 2);
 
+        
         #region IMoveable2D
         public virtual IMoveable2D Shift(double dx, double dy) => new Point2D(X + dx, Y + dy);
 
@@ -42,6 +43,7 @@ namespace Plane2D
 
         public virtual IMoveable2D SymmetryAboutPoint(Point2D center) => new Point2D(2 * center.X - X, 2 * center.Y - Y);
         #endregion
+
 
         /// <summary>
         /// lower left corner of the circum rectangle
@@ -88,7 +90,7 @@ namespace Plane2D
         public double DistanceToRectangle(Point2D LeftBottom, Point2D RightTop)
         {
             if (LeftBottom.X >= RightTop.X || LeftBottom.Y >= RightTop.Y)
-                throw new ArgumentOutOfRangeException("wrong set LeftBottom and RightTop");
+                throw new ArgumentOutOfRangeException(nameof(LeftBottom), "Wrong set LeftBottom or RightTop");
             if (OnRectangle(LeftBottom, RightTop))
                 return 0;
             if (IntoRectangle(LeftBottom, RightTop))

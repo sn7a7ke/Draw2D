@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Plane2D
 {
     public class PolygonVertex2D : Point2D
     {
         public PolygonVertex2D Next { get; internal set; } // ПОЧЕМУ нельзя protected???
+
         public PolygonVertex2D Previous { get; internal set; }
 
         public PolygonVertex2D() : this(new Point2D(0, 0))

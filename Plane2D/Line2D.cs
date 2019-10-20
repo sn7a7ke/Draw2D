@@ -11,7 +11,6 @@ namespace Plane2D
     {
         public Line2D(double A, double B, double C)
         {
-            //if (A == 0 && B == 0)
             if (A.IsZero() && B.IsZero())
                 throw new ArgumentOutOfRangeException("A and B should not be zero at the same time");
             this.A = A;
@@ -80,6 +79,7 @@ namespace Plane2D
 
         public Vector2D GetNormal() => new Vector2D(A, B);
 
+        
         #region IFunction2D
         public double MaxX
         {
@@ -154,6 +154,7 @@ namespace Plane2D
         }
         #endregion
 
+
         public Line2D PerpendicularFromPoint(Point2D p) => new Line2D(-B, A, B * p.X - A * p.Y);
 
         public Point2D IntersectPerpendicularFromPointWithLine(Point2D p)
@@ -175,6 +176,7 @@ namespace Plane2D
             xx = (B * line.C - C * line.B) / denominator;
             return new Point2D(xx, yy);
         }
+
         public double AngleBetweenLines(Line2D l) => Vector2D.AngleBetweenVectors(new Vector2D(A, B), new Vector2D(l.A, l.B));
 
         public override string ToString() => ToString(string.Empty);
@@ -196,9 +198,10 @@ namespace Plane2D
             double det = A * otherLine.B - A * otherLine.C - B * otherLine.A + B * otherLine.C + C * otherLine.A - C * otherLine.B;
             return det.IsZero();
         }
+
         public override int GetHashCode() => (A.IsZero()) ? (int)(A / B * 101 + C / B) : (int)(B / A * 101 + C / A);
 
-        public static bool operator ==(Line2D obj1, Line2D obj2) => Equals(obj1, obj2); // obj1.Equals(obj2);
+        public static bool operator ==(Line2D obj1, Line2D obj2) => Equals(obj1, obj2);
 
         public static bool operator !=(Line2D obj1, Line2D obj2) => !Equals(obj1, obj2);
     }

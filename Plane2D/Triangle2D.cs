@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plane2D
 {
@@ -22,7 +18,7 @@ namespace Plane2D
         public Triangle2D(params Point2D[] point2Ds) : base(new Vertices<TriangleVertex2D>(point2Ds))
         {
             if (point2Ds?.Length != 3)
-                throw new ArgumentOutOfRangeException("The quantity vertices must be equally 3");
+                throw new ArgumentOutOfRangeException(nameof(point2Ds), "The quantity vertices must be equally 3");
             A = (TriangleVertex2D)vertices.Head;
             B = (TriangleVertex2D)A.Next;
             C = (TriangleVertex2D)A.Previous;
@@ -47,7 +43,6 @@ namespace Plane2D
 
         public Circle2D InscribedCircle => new Circle2D(Incenter, Inradius);
 
-        // PRIVATE???
         public double Circumradius => A.OppositeSide.Length * B.OppositeSide.Length * C.OppositeSide.Length / (4 * Square);
 
         public double Inradius => 2 * Square / Perimeter;

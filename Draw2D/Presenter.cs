@@ -119,7 +119,7 @@ namespace Draw2D
                         _canvas.AddPolygon();
                     _view.SetCursorImage = Cursors.Cross;
                     _view.DoPictureBox_MouseMove -= _view_DoPictureBox_MouseMove_Draw;
-                    GC.Collect(0, GCCollectionMode.Forced); // === а надо ли??
+                    //GC.Collect(0, GCCollectionMode.Forced); // === а надо ли??
                 }
                 else
                     _canvas.Points.Add(mouseLocation);
@@ -146,8 +146,7 @@ namespace Draw2D
 
         private void _view_DoSymmetry_Click(object sender, EventArgs e)
         {
-            Polygon2D poly = (Polygon2D)_canvas.Polygons2D.Selected.RotateAroundThePoint((double)_view.Angle,
-                new Point2D(_view.DeltaX, _view.DeltaY));
+            Polygon2D poly = (Polygon2D)_canvas.Polygons2D.Selected.SymmetryAboutPoint(new Point2D(_view.DeltaX, _view.DeltaY));
             _canvas.Polygons2D.ChangeSelected(poly);
             RefreshPictureBox();
         }

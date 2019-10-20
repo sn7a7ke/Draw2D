@@ -8,7 +8,7 @@ namespace Draw2D
 {
     public class Scale
     {
-        private double[] _scale = { 0.1, 0.25, 0.5, 1, 2, 5, 10 };
+        private readonly double[] _scale = { 0.1, 0.25, 0.5, 1, 2, 5, 10 };
         private int _index = 3;
 
         public int Length => _scale.Length;

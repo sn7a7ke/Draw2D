@@ -40,7 +40,7 @@ namespace Draw2D
             scale = GetScale();
 
             bmp = new Bitmap(infoForm.GetImageWidth, infoForm.GetImageHeight);            
-            graph = Graphics.FromImage(bmp); // _view.Graph;
+            graph = Graphics.FromImage(bmp);
             color = Color.DarkRed;
             pen = new Pen(color);
 
@@ -118,7 +118,7 @@ namespace Draw2D
 
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -126,33 +126,15 @@ namespace Draw2D
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
                     bmp.Dispose();
                     graph.Dispose();
                     pen.Dispose();
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~InfoPresenter() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
-        }
+        public void Dispose() => Dispose(true);
         #endregion
     }
 }

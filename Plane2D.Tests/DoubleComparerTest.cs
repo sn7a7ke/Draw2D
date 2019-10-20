@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Plane2D.Tests
 {
@@ -15,6 +13,5 @@ namespace Plane2D.Tests
             double d = 2.45;
             Assert.IsTrue(dc.GetHashCode(d) == ((int)Math.Truncate(d) ^ (int)Math.Truncate(d / DoubleExtended.Epsilon)));
         }
-
     }
 }

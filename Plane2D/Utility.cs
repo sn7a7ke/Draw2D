@@ -7,7 +7,7 @@ namespace Plane2D
         public static string[] GetDefaultNames(int count)
         {
             if (count < 1)
-                throw new ArgumentOutOfRangeException("The number names should be positive");
+                throw new ArgumentOutOfRangeException(nameof(count), "The number names should be positive");
             string[] vertices = new string[count];
             for (int i = 0; i < count; i++)
                 vertices[i] = ((char)('A' + i)).ToString();
@@ -32,7 +32,8 @@ namespace Plane2D
             if (point2Ds == null)
                 throw new ArgumentNullException(nameof(point2Ds));
             if (point2Ds?.Length != nameOfVertices?.Length)
-                throw new ArgumentOutOfRangeException("The number of points is not equal to the number of their names");
+                throw new ArgumentOutOfRangeException(nameof(nameOfVertices), 
+                    "The number of points is not equal to the number of their names");
             int length = point2Ds.Length;
             Point2D[] newPoint2Ds = new Point2D[length];
             for (int i = 0; i < length; i++)

@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Draw2D
 {
-    public class Configuration
+    public static class Configuration
     {
         public static double Epsilon { get; set; } = 0.0000001;
         public static string OutputNumberFormat { get; set; } = "#,###.##";

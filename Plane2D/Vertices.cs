@@ -16,8 +16,8 @@ namespace Plane2D
 
         public Vertices(T[] vertices)
         {
-            if (vertices?.Length < 3) // если null ????
-                throw new ArgumentOutOfRangeException("The quantity vertices must be no less 3");
+            if (vertices?.Length < 3)
+                throw new ArgumentOutOfRangeException(nameof(vertices), "The quantity vertices must be no less 3");
             Count = vertices.Length;
             Head = vertices[0];
             for (int i = 1; i < Count; i++)
@@ -76,10 +76,7 @@ namespace Plane2D
             } while (currentNode != Head);
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
     }
 }

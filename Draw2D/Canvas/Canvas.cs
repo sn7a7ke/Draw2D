@@ -23,7 +23,7 @@ namespace Draw2D.Canvas
         {
             get => _origin;
             private set => _origin = (value.X < 0 || value.Y < 0)
-                ? throw new ArgumentOutOfRangeException(nameof(Origin), "Cordinates isn't negative.")
+                ? throw new ArgumentOutOfRangeException(nameof(value), "Cordinates isn't negative.")
                 : value;
         }
 
@@ -33,7 +33,7 @@ namespace Draw2D.Canvas
             get => _width;
             private set => _width = (value >= 0)
                 ? value
-                : throw new ArgumentOutOfRangeException(nameof(Width), "Sizes of canvas must be positive");
+                : throw new ArgumentOutOfRangeException(nameof(value), "Sizes of canvas must be positive");
         }
 
         private int _height;
@@ -42,7 +42,7 @@ namespace Draw2D.Canvas
             get => _height;
             private set => _height = (value >= 0)
                 ? value
-                : throw new ArgumentOutOfRangeException(nameof(Height), "Sizes of canvas must be positive");
+                : throw new ArgumentOutOfRangeException(nameof(value), "Sizes of canvas must be positive");
         }
 
         private Pen _penForAll;
